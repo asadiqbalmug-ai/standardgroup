@@ -24,6 +24,3 @@ Thumbs.db
 *.njsproj
 *.sln
 
-# Large image sequence frames (served statically, not tracked in git)
-public/sec3/
-public/sec3m/
