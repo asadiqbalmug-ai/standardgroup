@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Archivo+Black&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[#F9F6F0] text-[#1a1a1a] font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: #A58B62;
+    color: #070707;
+  }
+  ::-webkit-scrollbar { width: 4px; height: 0px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+}
+
+@layer utilities {
+  .font-serif-italic {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+  }
+  .font-major {
+    font-family: 'Major Mono Display', monospace;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .font-archivo {
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: 400;
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor;
+  }
+  .font-manrope {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+  }
+  .font-quicksand {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+  }
+  .text-3d-shadow {
+    text-shadow: 
+      2px 2px 0 rgba(0,0,0,0.15),
+      4px 4px 0 rgba(0,0,0,0.12),
+      6px 6px 0 rgba(0,0,0,0.08),
+      8px 8px 12px rgba(0,0,0,0.25);
+  }
+  .magnetic-text {
+    display: inline-block;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+  }
+  .magnetic-text:hover {
+    transform: translate(3px, -3px);
+  }
+  .magnetic-btn {
+    display: inline-flex;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .magnetic-btn:hover {
+    transform: translate(4px, -4px);
+    box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
