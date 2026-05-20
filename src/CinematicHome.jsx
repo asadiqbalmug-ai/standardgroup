@@ -58,61 +58,126 @@ const Img = ({src, alt='', className='', style={}}) => <img src={src} alt={alt} 
    ████  CLUSTER A — DARK  ████████████████████████████████
    ═══════════════════════════════════════════════════════════ */
 
-/* ── 1. HERO ── */
+/* ── 1. HERO — POLISHED ── */
 function Hero() {
-  const sec = useRef(null), h1 = useRef(null), sub = useRef(null), cta = useRef(null)
+  const sec = useRef(null), h1 = useRef(null), sub = useRef(null), cta = useRef(null), label = useRef(null)
+  const floatRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // hero image parallax
-      gsap.to('.hero-img',{yPercent:20,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
+      // Multi-layer parallax: background moves slower than foreground elements
+      gsap.to('.hero-img',{yPercent:15,scale:1.15,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
+      gsap.to('.hero-overlay',{opacity:0.95,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
 
-      // char-by-char reveal
+      // Floating accent orbs drift
+      gsap.to('.float-orb',{y:-30,x:20,duration:8,ease:'sine.inOut',yoyo:true,repeat:-1,stagger:{amount:4,from:'random'}})
+
+      // Label reveal first
+      gsap.fromTo(label.current,{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:1,delay:0.3,ease:'power3.out'})
+
+      // Word-by-word reveal for h1 (cleaner than char-by-char at this size)
       const el = h1.current; if(!el) return
-      const txt = el.textContent; el.innerHTML = ''
-      txt.split('').forEach(ch => { const s = document.createElement('span'); s.textContent = ch===' '?'\u00A0':ch; s.className='hch'; s.style.cssText='display:inline-block;opacity:0;transform:translateY(80px)'; el.appendChild(s) })
-      const tl = gsap.timeline({delay:0.5})
-      tl.to('.hch',{opacity:1,y:0,duration:0.9,stagger:0.025,ease:'power3.out'})
-        .fromTo(sub.current,{opacity:0,y:40},{opacity:1,y:0,duration:1,ease:'power3.out'},'-=0.5')
-        .fromTo(cta.current,{opacity:0,y:30},{opacity:1,y:0,duration:0.8,ease:'power3.out'},'-=0.6')
+      const words = el.textContent.split(' ')
+      el.innerHTML = words.map(w => `<span class='hw' style='display:inline-block;opacity:0;transform:translateY(60px) rotateX(-40deg)'>${w}</span>`).join(' ')
+      const tl = gsap.timeline({delay:0.6})
+      tl.to('.hw',{opacity:1,y:0,rotateX:0,duration:0.8,stagger:0.08,ease:'power3.out',transformOrigin:'center bottom'})
+        .fromTo(sub.current,{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1,ease:'power3.out'},'-=0.4')
+        .fromTo(cta.current,{opacity:0,y:20,scale:0.95},{opacity:1,y:0,scale:1,duration:0.7,ease:'back.out(1.7)'},'-=0.5')
+
+      // Depth number parallax
+      gsap.to('.depth-mark',{yPercent:-40,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
     }, sec)
     return () => ctx.revert()
   },[])
 
   return (
     <section ref={sec} className="relative h-screen flex items-end overflow-hidden" style={{background:C.dark}}>
+      {/* Grain texture overlay */}
+      <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}} />
+
+      {/* Background with vignette */}
       <div className="absolute inset-0">
-        <img src="/pics/bathroominterior.jpg" alt="" className="hero-img w-full h-full object-cover" style={{transform:'scale(1.1)'}} />
-        <div className="absolute inset-0" style={{background:'linear-gradient(to top, rgba(12,12,11,0.92) 0%, rgba(12,12,11,0.5) 40%, rgba(12,12,11,0.25) 100%)'}} />
+        <img src="/pics/bathroominterior.jpg" alt="" className="hero-img w-full h-full object-cover" style={{transform:'scale(1.15)'}} />
+        <div className="hero-overlay absolute inset-0" style={{background:'linear-gradient(to top, rgba(12,12,11,0.95) 0%, rgba(12,12,11,0.6) 35%, rgba(12,12,11,0.2) 65%, rgba(12,12,11,0.4) 100%)'}} />
+        {/* Vignette corners */}
+        <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(12,12,11,0.3) 100%)'}} />
       </div>
-      {/* Big depth number */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 font-major text-[28vw] leading-none pointer-events-none select-none" style={{color:C.accentL,opacity:0.03}}>SG</div>
+
+      {/* Floating accent orbs */}
+      <div ref={floatRef} className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="float-orb absolute w-64 h-64 rounded-full blur-[100px] opacity-20" style={{background:C.accentL,left:'10%',top:'20%'}} />
+        <div className="float-orb absolute w-48 h-48 rounded-full blur-[80px] opacity-10" style={{background:'#14B8A6',right:'20%',top:'40%'}} />
+        <div className="float-orb absolute w-32 h-32 rounded-full blur-[60px] opacity-15" style={{background:C.accent,left:'60%',bottom:'30%'}} />
+      </div>
+
+      {/* Depth mark */}
+      <div className="depth-mark absolute right-[5%] top-1/2 -translate-y-1/2 font-major text-[22vw] leading-none pointer-events-none select-none" style={{color:C.accentL,opacity:0.04}}>SG</div>
+
+      {/* Vertical accent line */}
+      <div className="absolute left-6 md:left-10 top-0 bottom-0 w-px hidden lg:block" style={{background:'linear-gradient(to bottom, transparent, rgba(20,184,166,0.3) 20%, rgba(20,184,166,0.3) 80%, transparent)'}} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pb-20 md:pb-28 w-full">
-        <p className="font-major text-base md:text-lg lg:text-xl tracking-[0.08em] uppercase mb-6" style={{color:C.accentL}}>standard group</p>
-        <h1 ref={h1} className="font-serif italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white leading-[1.02] mb-8 max-w-4xl" style={{perspective:'1000px'}}>
-          Building the UAE, One Material at a Time.
-        </h1>
-        <p ref={sub} className="font-onest text-white/50 text-base md:text-lg max-w-xl leading-relaxed mb-10" style={{opacity:0}}>
-          Two decades of excellence. 31+ global brands. 500+ premium products. From foundations to finishing — we supply the materials that build the UAE.
+        {/* Label with accent bar */}
+        <div ref={label} className="flex items-center gap-4 mb-8" style={{opacity:0}}>
+          <div className="w-12 h-[2px]" style={{background:C.accentL}} />
+          <p className="font-major text-sm md:text-base lg:text-lg tracking-[0.12em] uppercase" style={{color:C.accentL}}>standard group</p>
+        </div>
+
+        {/* Main headline with perspective container */}
+        <div className="mb-8" style={{perspective:'1200px'}}>
+          <h1 ref={h1} className="font-serif italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white leading-[1.05] max-w-5xl">
+            Building the UAE, One Material at a Time.
+          </h1>
+        </div>
+
+        {/* Subtitle with max readability */}
+        <p ref={sub} className="font-onest text-white/60 text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed mb-12" style={{opacity:0,textShadow:'0 2px 20px rgba(0,0,0,0.3)'}}>
+          Two decades of excellence. <span style={{color:C.accentL}}>31+ global brands.</span> 500+ premium products. From foundations to finishing — we supply the materials that build the UAE.
         </p>
-        <div ref={cta} className="flex flex-wrap gap-4" style={{opacity:0}}>
+
+        {/* CTA with improved spacing */}
+        <div ref={cta} className="flex flex-wrap items-center gap-5" style={{opacity:0}}>
           <MagBtn href="#categories">Explore Products</MagBtn>
           <MagBtn href="#contact" ghost>Get a Quote →</MagBtn>
+          {/* Trust badges */}
+          <div className="hidden md:flex items-center gap-4 ml-6 pl-6 border-l border-white/10">
+            <div className="text-center">
+              <div className="font-major text-lg" style={{color:C.accentL}}>20+</div>
+              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Years</div>
+            </div>
+            <div className="text-center">
+              <div className="font-major text-lg" style={{color:C.accentL}}>31+</div>
+              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Brands</div>
+            </div>
+            <div className="text-center">
+              <div className="font-major text-lg" style={{color:C.accentL}}>500+</div>
+              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Products</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Ticker */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-white/5" style={{background:'rgba(15,118,110,0.06)'}}>
-        <div className="ticker-wrap py-3.5">
+      {/* Bottom ticker with improved styling */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-white/5 backdrop-blur-sm" style={{background:'rgba(15,118,110,0.08)'}}>
+        <div className="ticker-wrap py-4">
           <div className="ticker-track flex whitespace-nowrap">
             {[...Array(4)].map((_,i)=>(
-              <span key={i} className="font-major text-sm md:text-base tracking-[0.06em] text-white/25 uppercase mx-12">
-                20+ Years &nbsp;·&nbsp; 31+ Brands &nbsp;·&nbsp; 500+ Products &nbsp;·&nbsp; Trusted Across UAE &nbsp;·&nbsp; We Set Standards &nbsp;·&nbsp;
+              <span key={i} className="font-major text-sm md:text-base tracking-[0.08em] text-white/30 uppercase mx-12 flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 20+ Years
+                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 31+ Brands
+                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 500+ Products
+                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> Trusted Across UAE
+                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> We Set Standards
               </span>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute right-8 bottom-24 hidden lg:flex flex-col items-center gap-2 animate-bounce-slow">
+        <span className="font-major text-[10px] uppercase tracking-widest text-white/20 rotate-90 origin-center translate-x-6">Scroll</span>
+        <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
       </div>
     </section>
   )
@@ -768,6 +833,8 @@ export default function CinematicHome() {
         .overflow-hidden:hover .mq-l,.overflow-hidden:hover .mq-r{animation-play-state:paused}
         @keyframes fp{0%,100%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:0.6}50%{transform:translateY(-80px) translateX(30px);opacity:0.3}90%{opacity:0}}
         .animate-float-p{animation:fp 8s ease-in-out infinite}
+        @keyframes bounce-slow{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+        .animate-bounce-slow{animation:bounce-slow 2s ease-in-out infinite}
       `}</style>
     </div>
   )
