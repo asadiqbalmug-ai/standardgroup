@@ -31,7 +31,7 @@
   .font-major {
     font-family: 'Major Mono Display', monospace;
     font-weight: 400;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -113,4 +113,10 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
+}
+
+@media (min-width: 1024px) {
+  .cinematic-cursor * {
+    cursor: none !important;
+  }
 }

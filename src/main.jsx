@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
+import CinematicHome from './CinematicHome.jsx'
 import Layout from './components/Layout.jsx'
 import MilanoWaterHeaters from './pages/MilanoWaterHeaters.jsx'
 import WaterClosets from './pages/WaterClosets.jsx'
@@ -26,8 +27,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* Homepage has its own inline Navbar+Footer */}
-        <Route path="/" element={<App />} />
+        {/* Cinematic Homepage */}
+        <Route path="/" element={<CinematicHome />} />
+        {/* Old homepage as fallback */}
+        <Route path="/classic" element={<App />} />
 
         {/* All product pages share Layout (Navbar + Footer) */}
         <Route element={<Layout />}>
