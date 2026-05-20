@@ -51,6 +51,20 @@ function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Restore nav scroll position after navigation
+  useEffect(() => {
+    const savedScroll = sessionStorage.getItem('navScrollLeft')
+    if (navScrollRef.current && savedScroll) {
+      navScrollRef.current.scrollLeft = parseInt(savedScroll, 10)
+    }
+  }, [location.pathname])
+
+  const saveNavScroll = () => {
+    if (navScrollRef.current) {
+      sessionStorage.setItem('navScrollLeft', navScrollRef.current.scrollLeft.toString())
+    }
+  }
+
   const filteredNav = searchQ.trim()
     ? categoryNav.filter(n => n.label.toLowerCase().includes(searchQ.toLowerCase()))
     : categoryNav
@@ -128,6 +142,7 @@ function Navbar() {
                 <a
                   key={item.href}
                   href={item.href}
+                  onClick={saveNavScroll}
                   className={`inline-flex items-center px-4 py-2.5 text-[11.5px] tracking-[0.04em] transition-all duration-200 whitespace-nowrap font-medium
                     ${active ? 'text-white' : item.bold ? 'text-[#1a1a1a]' : 'text-[#555]'}`}
                   style={active ? { backgroundColor: item.accent } : {}}
