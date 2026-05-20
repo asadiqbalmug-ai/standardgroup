@@ -250,16 +250,6 @@ function Hero() {
       gsap.fromTo('.hero-subtitle', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', delay: 0.6 })
       gsap.fromTo('.hero-cta', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.8 })
 
-      const titleEl = titleRef.current
-      if (titleEl) {
-        gsap.to(titleEl, {
-          y: -15,
-          duration: 2,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1
-        })
-      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -269,23 +259,23 @@ function Hero() {
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80" 
-          alt="Modern architectural building" 
+          src="/sghs.png" 
+          alt="Standard Group Showroom" 
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-[#F9F6F0]/85" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 pt-[76px] pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-5 lg:px-16 pt-[68px] sm:pt-[76px] pb-16 lg:pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-0">
           <div>
             <h1 className="mb-6">
-              <span ref={titleRef} className="hero-title-line block font-quicksand text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] leading-[1.1] tracking-[0.06em] mb-2 inline-block text-3d-shadow">
-                Standard Group
+              <span ref={titleRef} className="hero-title-line block font-quicksand text-2xl sm:text-4xl lg:text-5xl text-[#1a1a1a] leading-[1.1] tracking-[0.06em] mb-2 inline-block text-3d-shadow">
+                UAE's Premier
               </span>
               <span 
                 ref={subtitleRef}
-                className="hero-title-line magnetic-text block font-serif italic text-4xl sm:text-5xl lg:text-6xl text-[#555] leading-[1.05] inline-block text-3d-shadow"
+                className="hero-title-line magnetic-text block font-serif italic text-3xl sm:text-5xl lg:text-6xl text-[#555] leading-[1.05] inline-block text-3d-shadow"
                 style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect()
@@ -298,13 +288,31 @@ function Hero() {
                 }}
                 onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
               >
-                We Set Standards
+                Building Materials Supplier.
               </span>
             </h1>
 
-            <p className="hero-subtitle text-[#444] text-lg max-w-md leading-relaxed mb-10">
-              Premium building materials in UAE for over 2 decades. Partnered with top global brands for every project need.
+            <p className="hero-subtitle text-[#444] text-sm lg:text-lg max-w-md leading-relaxed mb-5 lg:mb-8">
+              Over 20 years supplying UAE's construction and fit-out industry with premium materials — from sanitary ware and tiles to cement, steel, and plywood.
             </p>
+
+            {/* Trust badges */}
+            <div className="flex items-center gap-5 mb-7 lg:mb-10">
+              <div className="flex flex-col">
+                <span className="font-quicksand text-[#1a1a1a] text-xl font-semibold leading-none">20+</span>
+                <span className="text-[#999] text-[10px] tracking-[0.08em] uppercase mt-0.5">Years</span>
+              </div>
+              <div className="w-px h-8 bg-black/10" />
+              <div className="flex flex-col">
+                <span className="font-quicksand text-[#1a1a1a] text-xl font-semibold leading-none">31+</span>
+                <span className="text-[#999] text-[10px] tracking-[0.08em] uppercase mt-0.5">Brands</span>
+              </div>
+              <div className="w-px h-8 bg-black/10" />
+              <div className="flex flex-col">
+                <span className="font-quicksand text-[#1a1a1a] text-xl font-semibold leading-none">500+</span>
+                <span className="text-[#999] text-[10px] tracking-[0.08em] uppercase mt-0.5">Products</span>
+              </div>
+            </div>
 
             <div className="hero-cta flex items-center gap-4">
               <a href="#products" className="magnetic-btn group flex items-center gap-3 bg-[#1a1a1a] text-white px-7 py-3.5 rounded-full text-sm font-medium hover:bg-[#A58B62] transition-all duration-300">
@@ -312,16 +320,16 @@ function Hero() {
                 <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </a>
               <a href="#contactus" className="magnetic-btn text-[#666] text-sm font-medium hover:text-[#1a1a1a] transition-colors flex items-center gap-1.5">
-                Contact Us
+                Get a Quote
                 <ChevronDown size={14} />
               </a>
             </div>
           </div>
 
-          <div className="relative hidden lg:flex items-center justify-center">
-            <div className="relative w-96 h-96 bg-[#f0ece4] rounded-3xl border border-black/10 shadow-xl shadow-black/10 flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#A58B62]/10 via-transparent to-transparent" />
-              <Building2 size={120} className="text-[#A58B62] relative" strokeWidth={1} />
+          <div className="relative hidden lg:flex items-center justify-center self-center mt-16">
+            <div className="relative w-full max-w-[480px] aspect-square rounded-2xl overflow-hidden shadow-2xl shadow-black/20 border border-black/[0.07]">
+              <img src="/sghs.png" alt="Standard Group Showroom" className="w-full h-full object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             </div>
           </div>
         </div>
@@ -489,14 +497,14 @@ function OurPhilosophy() {
   ]
 
   return (
-    <section className="relative bg-[#F9F6F0] py-20 lg:py-28">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+    <section className="relative bg-[#F9F6F0] py-12 lg:py-28">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16">
 
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 lg:mb-14 gap-4">
           <div>
             <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Essence</p>
-            <h2 className="text-4xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1]">
+            <h2 className="text-3xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1]">
               <span className="block font-major tracking-[0.01em]">Our Philosophy</span>
               <span className="block font-serif italic text-[#555]">of Building.</span>
             </h2>
@@ -509,7 +517,7 @@ function OurPhilosophy() {
         {/* Three tall cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-2xl overflow-hidden shadow-2xl shadow-black/10">
           {cards.map((card, i) => (
-            <div key={i} className={`${card.bg} relative flex flex-col justify-between p-8 lg:p-10 min-h-[480px]`}>
+            <div key={i} className={`${card.bg} relative flex flex-col justify-between p-6 lg:p-10 min-h-[280px] md:min-h-[480px]`}>
               {/* Icon top */}
               <div className={`${card.subColor} mb-auto`}>
                 {card.icon}
@@ -518,8 +526,8 @@ function OurPhilosophy() {
               {/* Bottom content */}
               <div className="mt-16">
                 {card.accent
-                  ? <h3 className="text-3xl lg:text-4xl font-light text-[#1a1a1a] mb-4 font-serif italic">{card.tag}</h3>
-                  : <h3 className={`text-3xl lg:text-4xl font-light ${card.textColor} mb-4`}>{card.tag}</h3>
+                  ? <h3 className="text-2xl lg:text-4xl font-light text-[#1a1a1a] mb-3 font-serif italic">{card.tag}</h3>
+                  : <h3 className={`text-2xl lg:text-4xl font-light ${card.textColor} mb-3`}>{card.tag}</h3>
                 }
                 <p className={`text-sm leading-relaxed ${card.accent ? 'text-[#A58B62] font-medium' : card.subColor}`}>
                   {card.text}
@@ -574,18 +582,18 @@ function ServicesGrid() {
       {/* Dark overlay so wood texture is subtle */}
       <div className="absolute inset-0 bg-black/55" />
 
-      <div className="relative max-w-[1400px] mx-auto px-8 lg:px-16">
+      <div className="relative max-w-[1400px] mx-auto px-5 lg:px-16">
         {/* Section label */}
         <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-10">How We Work</p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {items.map((item, i) =>
             item === null ? (
               /* Centre CTA card — shows background through */
               <a
                 key="cta"
                 href="#contactus"
-                className="group relative flex flex-col items-center justify-center min-h-[280px] rounded-none bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-[#A58B62]/30 transition-all duration-500 cursor-pointer"
+                className="group relative flex flex-col items-center justify-center min-h-[160px] sm:min-h-[280px] rounded-none bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-[#A58B62]/30 transition-all duration-500 cursor-pointer"
               >
                 <ArrowUpRight size={28} className="text-white mb-3 group-hover:scale-110 transition-transform duration-300" />
                 <span className="text-white text-lg font-light tracking-wide">Get started</span>
@@ -593,7 +601,7 @@ function ServicesGrid() {
             ) : (
               <div
                 key={i}
-                className="relative flex flex-col justify-between min-h-[280px] bg-[#0f0f0f]/90 p-6 lg:p-7 hover:bg-[#1a1a1a] transition-colors duration-300 group"
+                className="relative flex flex-col justify-between min-h-[160px] sm:min-h-[280px] bg-[#0f0f0f]/90 p-5 lg:p-7 hover:bg-[#1a1a1a] transition-colors duration-300 group"
               >
                 <span className="font-serif italic text-white/20 text-4xl font-light leading-none">{item.num}</span>
                 <div>
@@ -614,7 +622,7 @@ function ServicesGrid() {
 /* ─── CINEMATIC BANNER ─── */
 function CinematicBanner() {
   return (
-    <section className="relative w-full h-[520px] lg:h-[580px] overflow-hidden">
+    <section className="relative w-full h-[420px] sm:h-[520px] lg:h-[580px] overflow-hidden">
       {/* Background image */}
       <img
         src="https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=1800&q=80"
@@ -625,15 +633,15 @@ function CinematicBanner() {
       <div className="absolute inset-0 bg-black/20" />
 
       {/* Right panel — frosted dark box */}
-      <div className="absolute right-0 top-0 bottom-0 w-full md:w-[48%] lg:w-[42%] bg-[#1a1a1a]/80 backdrop-blur-sm flex flex-col justify-center px-10 lg:px-14 py-12">
+      <div className="absolute right-0 bottom-0 w-full h-[75%] md:h-full md:w-[48%] lg:w-[42%] bg-[#1a1a1a]/85 backdrop-blur-sm flex flex-col justify-center px-6 md:px-10 lg:px-14 py-8 lg:py-12">
         <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-5">
           Hosted by Standard Group
         </p>
-        <h2 className="text-white text-3xl lg:text-4xl font-light leading-[1.2] mb-6">
+        <h2 className="text-white text-xl md:text-3xl lg:text-4xl font-light leading-[1.2] mb-4 lg:mb-6">
           Building Dreams,<br />
           <span className="font-serif italic">One Project at a Time.</span>
         </h2>
-        <p className="text-white/65 text-sm leading-relaxed mb-10 max-w-sm">
+        <p className="text-white/65 text-xs md:text-sm leading-relaxed mb-6 lg:mb-10 max-w-sm">
           From foundations to finishes, Standard Group supplies the UAE's finest residential and commercial projects with premium materials, trusted brands, and expert support — every step of the build.
         </p>
         <a
@@ -685,8 +693,8 @@ function Products() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="products" className="relative py-24 lg:py-32 bg-white">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+    <section ref={sectionRef} id="products" className="relative py-14 lg:py-32 bg-white">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16">
         <div className="mb-14">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Products</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1] text-3d-shadow">
@@ -701,7 +709,7 @@ function Products() {
         {/* Products Grid */}
         <div className="prod-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {products.map((product) => (
-            <a key={product.id} href={product.link} className="prod-card group relative h-[380px] cursor-pointer perspective-1000">
+            <a key={product.id} href={product.link} className="prod-card group relative h-[320px] sm:h-[380px] cursor-pointer perspective-1000">
               <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d group-hover:rotate-y-180">
                 <div className="absolute inset-0 bg-white border border-black/[0.04] rounded-2xl overflow-hidden backface-hidden shadow-lg shadow-black/10">
                   <div className="relative h-48 flex items-center justify-center bg-gradient-to-b from-[#fafafa] to-white overflow-hidden">
@@ -790,8 +798,8 @@ function Solutions() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="solutions" className="relative py-24 lg:py-32 bg-[#1e293b]">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+    <section ref={sectionRef} id="solutions" className="relative py-14 lg:py-32 bg-[#1e293b]">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16">
         <div className="mb-14">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Solutions</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white font-light leading-[1.1] text-3d-shadow">
@@ -854,8 +862,8 @@ function WhyStandardGroup() {
   ]
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-white">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+    <section ref={sectionRef} className="relative py-14 lg:py-32 bg-white">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16">
         <div className="mb-14 text-center">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Why Choose Us</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1] text-3d-shadow">
@@ -903,8 +911,8 @@ function CTASection() {
   }, [])
 
   return (
-    <section id="contactus" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#1e293b]">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 text-center">
+    <section id="contactus" ref={sectionRef} className="relative py-14 lg:py-32 bg-[#1e293b]">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16 text-center">
         <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-4">Get In Touch</p>
         <h2 className="text-3xl sm:text-4xl lg:text-6xl text-white font-light leading-[1.1] mb-4" style={{ textShadow: '1px 1px 0 rgba(0,0,0,0.3), 2px 2px 0 rgba(0,0,0,0.2), 3px 3px 0 rgba(0,0,0,0.1), 4px 4px 8px rgba(0,0,0,0.4)' }}>
           <span ref={headerLine1Ref} className="block font-major tracking-[0.02em]">Ready to Start?</span>
@@ -954,7 +962,7 @@ function PageFooter() {
   return (
     <footer className="bg-[#1a1a1a] text-white">
       {/* ── MAIN FOOTER ── */}
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-16 py-10 lg:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
         {/* Col 1 — Brand */}
         <div>
@@ -1051,7 +1059,7 @@ function PageFooter() {
 
       {/* ── BOTTOM BAR ── */}
       <div className="border-t border-white/[0.06]">
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-[1400px] mx-auto px-5 lg:px-16 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[#555] text-[11px]">© {new Date().getFullYear()} Standard Group LLC. All rights reserved.</p>
           <p className="text-[#444] text-[10px] tracking-[0.25em] uppercase font-semibold">We Set Standards</p>
           <p className="text-[#555] text-[11px]">Dubai, United Arab Emirates</p>
