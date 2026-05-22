@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Archivo+Black&family=Metamorphous&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,6 +35,9 @@
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  .font-metamorphous {
+    font-family: 'Metamorphous', cursive;
   }
   .font-archivo {
     font-family: 'Archivo Black', sans-serif;

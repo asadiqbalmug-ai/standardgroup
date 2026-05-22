@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-import { CountUp } from 'countup.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -58,193 +57,63 @@ const Img = ({src, alt='', className='', style={}}) => <img src={src} alt={alt} 
    ████  CLUSTER A — DARK  ████████████████████████████████
    ═══════════════════════════════════════════════════════════ */
 
-/* ── 1. HERO — POLISHED ── */
+/* ── 1. HERO ── */
 function Hero() {
-  const sec = useRef(null), h1 = useRef(null), sub = useRef(null), cta = useRef(null), label = useRef(null)
-  const floatRef = useRef(null)
+  const sec = useRef(null), h1 = useRef(null), sub = useRef(null), cta = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Multi-layer parallax: background moves slower than foreground elements
-      gsap.to('.hero-img',{yPercent:15,scale:1.15,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
-      gsap.to('.hero-overlay',{opacity:0.95,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
-
-      // Floating accent orbs drift
-      gsap.to('.float-orb',{y:-30,x:20,duration:8,ease:'sine.inOut',yoyo:true,repeat:-1,stagger:{amount:4,from:'random'}})
-
-      // Label reveal first
-      gsap.fromTo(label.current,{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:1,delay:0.3,ease:'power3.out'})
-
-      // Word-by-word reveal for h1 (cleaner than char-by-char at this size)
-      const el = h1.current; if(!el) return
-      const words = el.textContent.split(' ')
-      el.innerHTML = words.map(w => `<span class='hw' style='display:inline-block;opacity:0;transform:translateY(60px) rotateX(-40deg)'>${w}</span>`).join(' ')
-      const tl = gsap.timeline({delay:0.6})
-      tl.to('.hw',{opacity:1,y:0,rotateX:0,duration:0.8,stagger:0.08,ease:'power3.out',transformOrigin:'center bottom'})
-        .fromTo(sub.current,{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1,ease:'power3.out'},'-=0.4')
-        .fromTo(cta.current,{opacity:0,y:20,scale:0.95},{opacity:1,y:0,scale:1,duration:0.7,ease:'back.out(1.7)'},'-=0.5')
-
-      // Depth number parallax
-      gsap.to('.depth-mark',{yPercent:-40,ease:'none',scrollTrigger:{trigger:sec.current,start:'top top',end:'bottom top',scrub:true}})
+      gsap.to('.hero-img', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: sec.current, start: 'top top', end: 'bottom top', scrub: true } })
+      const tl = gsap.timeline({ delay: 0.4 })
+      tl.fromTo(h1.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+        .fromTo(sub.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.6')
+        .fromTo(cta.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
     }, sec)
     return () => ctx.revert()
-  },[])
+  }, [])
 
   return (
-    <section ref={sec} className="relative h-screen flex items-end overflow-hidden" style={{background:C.dark}}>
-      {/* Grain texture overlay */}
-      <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}} />
+    <section ref={sec} className="relative h-screen flex items-center overflow-hidden" style={{ background: C.dark }}>
+      {/* Background */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #0c0c0b 0%, #1a1a18 50%, #0c0c0b 100%)' }} />
 
-      {/* Background with vignette */}
-      <div className="absolute inset-0">
-        <img src="/pics/bathroominterior.jpg" alt="" className="hero-img w-full h-full object-cover" style={{transform:'scale(1.15)'}} />
-        <div className="hero-overlay absolute inset-0" style={{background:'linear-gradient(to top, rgba(12,12,11,0.95) 0%, rgba(12,12,11,0.6) 35%, rgba(12,12,11,0.2) 65%, rgba(12,12,11,0.4) 100%)'}} />
-        {/* Vignette corners */}
-        <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(12,12,11,0.3) 100%)'}} />
-      </div>
+      {/* Content - centered vertically with big bottom margin to clear ticker */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 pt-20 mb-28">
+        {/* Headline - Metamorphous */}
+        <h1 ref={h1} className="font-metamorphous text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[1.15] mb-6 max-w-5xl" style={{ opacity: 0 }}>
+          Building the UAE,<br className="hidden sm:block" /> One Material at a Time.
+        </h1>
 
-      {/* Floating accent orbs */}
-      <div ref={floatRef} className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="float-orb absolute w-64 h-64 rounded-full blur-[100px] opacity-20" style={{background:C.accentL,left:'10%',top:'20%'}} />
-        <div className="float-orb absolute w-48 h-48 rounded-full blur-[80px] opacity-10" style={{background:'#14B8A6',right:'20%',top:'40%'}} />
-        <div className="float-orb absolute w-32 h-32 rounded-full blur-[60px] opacity-15" style={{background:C.accent,left:'60%',bottom:'30%'}} />
-      </div>
-
-      {/* Depth mark */}
-      <div className="depth-mark absolute right-[5%] top-1/2 -translate-y-1/2 font-major text-[22vw] leading-none pointer-events-none select-none" style={{color:C.accentL,opacity:0.04}}>SG</div>
-
-      {/* Vertical accent line */}
-      <div className="absolute left-6 md:left-10 top-0 bottom-0 w-px hidden lg:block" style={{background:'linear-gradient(to bottom, transparent, rgba(20,184,166,0.3) 20%, rgba(20,184,166,0.3) 80%, transparent)'}} />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pb-20 md:pb-28 w-full">
-        {/* Label with accent bar */}
-        <div ref={label} className="flex items-center gap-4 mb-8" style={{opacity:0}}>
-          <div className="w-12 h-[2px]" style={{background:C.accentL}} />
-          <p className="font-major text-sm md:text-base lg:text-lg tracking-[0.12em] uppercase" style={{color:C.accentL}}>standard group</p>
-        </div>
-
-        {/* Main headline with perspective container */}
-        <div className="mb-8" style={{perspective:'1200px'}}>
-          <h1 ref={h1} className="font-serif italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white leading-[1.05] max-w-5xl">
-            Building the UAE, One Material at a Time.
-          </h1>
-        </div>
-
-        {/* Subtitle with max readability */}
-        <p ref={sub} className="font-onest text-white/60 text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed mb-12" style={{opacity:0,textShadow:'0 2px 20px rgba(0,0,0,0.3)'}}>
-          Two decades of excellence. <span style={{color:C.accentL}}>31+ global brands.</span> 500+ premium products. From foundations to finishing — we supply the materials that build the UAE.
+        {/* Subtitle */}
+        <p ref={sub} className="font-onest text-white/50 text-base md:text-lg max-w-2xl leading-relaxed mb-8" style={{ opacity: 0 }}>
+          Two decades of excellence. <span style={{ color: C.accentL }}>31+ global brands.</span> 500+ premium products. From foundations to finishing — we supply what builds the UAE.
         </p>
 
-        {/* CTA with improved spacing */}
-        <div ref={cta} className="flex flex-wrap items-center gap-5" style={{opacity:0}}>
+        {/* CTAs */}
+        <div ref={cta} className="flex flex-wrap items-center gap-4" style={{ opacity: 0 }}>
           <MagBtn href="#categories">Explore Products</MagBtn>
           <MagBtn href="#contact" ghost>Get a Quote →</MagBtn>
-          {/* Trust badges */}
-          <div className="hidden md:flex items-center gap-4 ml-6 pl-6 border-l border-white/10">
-            <div className="text-center">
-              <div className="font-major text-lg" style={{color:C.accentL}}>20+</div>
-              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Years</div>
-            </div>
-            <div className="text-center">
-              <div className="font-major text-lg" style={{color:C.accentL}}>31+</div>
-              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Brands</div>
-            </div>
-            <div className="text-center">
-              <div className="font-major text-lg" style={{color:C.accentL}}>500+</div>
-              <div className="font-onest text-[10px] text-white/30 uppercase tracking-wider">Products</div>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Bottom ticker with improved styling */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-white/5 backdrop-blur-sm" style={{background:'rgba(15,118,110,0.08)'}}>
-        <div className="ticker-wrap py-4">
+      {/* Ticker - serif italic to match logo */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-white/10" style={{ background: 'rgba(15,118,110,0.12)' }}>
+        <div className="ticker-wrap py-3.5">
           <div className="ticker-track flex whitespace-nowrap">
-            {[...Array(4)].map((_,i)=>(
-              <span key={i} className="font-major text-sm md:text-base tracking-[0.08em] text-white/30 uppercase mx-12 flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 20+ Years
-                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 31+ Brands
-                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> 500+ Products
-                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> Trusted Across UAE
-                <span className="w-1.5 h-1.5 rounded-full" style={{background:C.accentL}} /> We Set Standards
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="font-serif italic text-sm md:text-base tracking-wide text-white/60 px-10">
+                20+ Years · 31+ Brands · 500+ Products · Trusted Across UAE · We Set Standards ·
               </span>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Scroll hint */}
-      <div className="absolute right-8 bottom-24 hidden lg:flex flex-col items-center gap-2 animate-bounce-slow">
-        <span className="font-major text-[10px] uppercase tracking-widest text-white/20 rotate-90 origin-center translate-x-6">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
-      </div>
     </section>
   )
 }
-
-/* ── 2. STATS ── */
-function Stats() {
-  const sec = useRef(null), refs = useRef([])
-  const data = [
-    {end:20,s:'+',l:'Years of Excellence',sub:'Trusted since 2004'},
-    {end:31,s:'+',l:'Global Brand Partners',sub:'From Italy to Japan'},
-    {end:500,s:'+',l:'Premium Products',sub:'Every category covered'},
-    {end:7,s:'',l:'Emirates Served',sub:'UAE-wide delivery'},
-  ]
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      refs.current.forEach((el,i) => {
-        if(!el) return; let done=false
-        ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:()=>{ if(done)return;done=true;new CountUp(el.querySelector('.sn'),data[i].end,{duration:2.5,suffix:data[i].s}).start() }})
-        gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:0.9,delay:i*0.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}})
-      })
-    },sec)
-    return ()=>ctx.revert()
-  },[])
-  return (
-    <section ref={sec} className="relative py-24 md:py-32" style={{background:C.slate}}>
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
-        {data.map((s,i) => (
-          <div key={i} ref={el=>refs.current[i]=el} className="text-center" style={{opacity:0}}>
-            <div className="sn font-major text-5xl md:text-6xl lg:text-7xl font-bold mb-2" style={{color:C.accentL}}>0</div>
-            <div className="font-poppins text-white text-sm font-bold mb-1">{s.l}</div>
-            <div className="font-onest text-white/25 text-xs">{s.sub}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-/* ── 3. MATERIAL TEXTURES MARQUEE (fast auto-scroll, not pinned) ── */
-function TextureMarquee() {
-  const row1 = ['/pics/tiles12.jpg','/pics/whitesand.jpg','/pics/crackedgravel.jpg','/pics/tiles9.jpg','/pics/tiles13.jpg','/pics/brownsand.jpg']
-  const row2 = ['/pics/tiles1.jpg','/pics/interlock3.jpg','/pics/whiterocks.jpg','/pics/tiles8.jpg','/pics/tiles14.jpg','/pics/tiles7.jpg']
-  return (
-    <section className="relative py-16 overflow-hidden" style={{background:C.dark}}>
-      <div className="text-center mb-10">
-        <h2 className="font-major text-2xl md:text-3xl lg:text-4xl uppercase tracking-[0.04em]" style={{color:C.accentL}}>material textures</h2>
-        <p className="font-onest text-white/25 text-sm mt-2">The raw beauty of what we supply</p>
-      </div>
-      {[row1,row2].map((row,ri)=>(
-        <div key={ri} className="overflow-hidden mb-3">
-          <div className={`flex gap-3 ${ri===0?'tex-track-l':'tex-track-r'}`}>
-            {[...row,...row,...row,...row].map((src,i)=>(
-              <div key={i} className="flex-shrink-0 w-[280px] h-[180px] md:w-[360px] md:h-[220px] rounded-xl overflow-hidden group">
-                <Img src={src} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </section>
-  )
-}
-
 
 /* ═══════════════════════════════════════════════════════════
-   ████  CLUSTER B — LIGHT  ███████████████████████████████
+   ████  CLUSTER B — LIGHT  ████████████████████████████████
    ═══════════════════════════════════════════════════════════ */
 
 /* ── 4. SPLIT — Luxury bathroom + brand promise ── */
@@ -259,11 +128,7 @@ function Split() {
   },[])
   return (
     <section ref={sec} style={{background:C.cream}}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <div className="relative h-[60vh] lg:h-auto overflow-hidden">
-          <Img src="/pics/bathroominterior2.jpg" className="split-img absolute inset-0 w-full h-full object-cover" />
-        </div>
-        <div className="flex items-center py-20 lg:py-0">
+      <div className="min-h-screen flex items-center py-20 lg:py-0">
           <div className="max-w-lg mx-auto px-8 lg:px-16">
             <div ref={el=>lines.current[0]=el} style={{opacity:0}}>
               <span className="font-major text-lg md:text-xl uppercase tracking-[0.06em] block mb-6" style={{color:C.accent}}>our promise</span>
@@ -285,7 +150,6 @@ function Split() {
             </div>
           </div>
         </div>
-      </div>
     </section>
   )
 }
@@ -332,10 +196,10 @@ function Philosophy() {
 function Process() {
   const sec = useRef(null), steps = useRef([]), lineRef = useRef(null)
   const data = [
-    {n:'01',t:'Request a Quote',d:'Share your requirements — our team responds within 24 hours.',img:'/pics/bathroominterior4.jpg'},
-    {n:'02',t:'Explore 500+ Products',d:'Browse our curated catalogue. Compare specs, finishes, and bulk pricing.',img:'/pics/tiles7.jpg'},
-    {n:'03',t:'Confirm & Schedule',d:'Flexible payment terms. We handle logistics so you focus on building.',img:'/pics/scaffold.jpg'},
-    {n:'04',t:'Quality Delivered',d:'International standards guaranteed. On-time delivery to any site in the UAE.',img:'/pics/interlock5.jpg'},
+    {n:'01',t:'Request a Quote',d:'Share your requirements — our team responds within 24 hours.'},
+    {n:'02',t:'Explore 500+ Products',d:'Browse our curated catalogue. Compare specs, finishes, and bulk pricing.'},
+    {n:'03',t:'Confirm & Schedule',d:'Flexible payment terms. We handle logistics so you focus on building.'},
+    {n:'04',t:'Quality Delivered',d:'International standards guaranteed. On-time delivery to any site in the UAE.'},
   ]
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -359,14 +223,9 @@ function Process() {
                 <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg z-10" style={{background:`linear-gradient(135deg,${C.accent},${C.accentD})`}}>
                   <span className="font-major text-white text-lg md:text-xl">{s.n}</span>
                 </div>
-                <div className="flex-1 flex flex-col md:flex-row gap-5 items-start">
-                  <div className={`flex-1 ${i%2!==0?'md:text-right':''}`}>
-                    <h3 className="font-poppins text-xl md:text-2xl font-bold mb-2" style={{color:C.dark}}>{s.t}</h3>
-                    <p className="font-onest text-[#777] text-[15px] leading-relaxed max-w-sm">{s.d}</p>
-                  </div>
-                  <div className="w-full md:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
-                    <Img src={s.img} className="w-full h-full object-cover" />
-                  </div>
+                <div className="flex-1">
+                  <h3 className="font-poppins text-xl md:text-2xl font-bold mb-2" style={{color:C.dark}}>{s.t}</h3>
+                  <p className="font-onest text-[#777] text-[15px] leading-relaxed max-w-md">{s.d}</p>
                 </div>
               </div>
             ))}
@@ -386,23 +245,23 @@ function Process() {
 function Products() {
   const sec = useRef(null)
   const cats = [
-    {name:'Water Heaters',       href:'/milano-water-heaters',   img:'/pics/waterheater.JPG',     desc:'Milano electric water heaters — Italian engineering.'},
-    {name:'Water Closets',       href:'/water-closets',          img:'/pics/toilet.JPG',          desc:'European-designed toilets for comfort & hygiene.'},
-    {name:'Wash Basins',         href:'/wash-basins',            img:'/pics/washbasin.jpg',       desc:'Countertop, wall-hung & pedestal basins.'},
-    {name:'Wall Hung WC',        href:'/wall-hung',              img:'/pics/toilet1.JPG',         desc:'Space-saving wall-hung with concealed cisterns.'},
-    {name:'Tiles & Interlock',   href:'/tiles-roof-interlock',   img:'/pics/tiles7.jpg',          desc:'Floor, wall, roof tiles & interlocking pavers.'},
-    {name:'Sanitary Ware',       href:'/sanitary-ware',          img:'/pics/sanitaryware.png',    desc:'Complete sanitary solutions & accessories.'},
-    {name:'Blocks & Sands',      href:'/blocks-sands',           img:'/pics/cinderblock.jpg',     desc:'Hollow blocks, solid blocks & washed sand.'},
-    {name:'Cement',              href:'/cement',                 img:'/pics/brownsand.jpg',       desc:'OPC, SRC & specialty cements.'},
-    {name:'Steel',               href:'/steel',                  img:'/pics/rebar.jpg',           desc:'TMT rebars, channels, angles & sections.'},
-    {name:'Film Faced Plywood',  href:'/film-faced-plywood',     img:'/pics/scaffold.jpg',        desc:'Marine plywood & shuttering boards.'},
-    {name:'Waterproofing',       href:'/water-proofing',         img:'/pics/tiles14.jpg',         desc:'Liquid membranes & crystalline solutions.'},
-    {name:'Gypsum Board',        href:'/gypsum-board',           img:'/pics/whiterocks.jpg',      desc:'Gypsum boards & acoustic ceiling systems.'},
-    {name:'Paints & Tools',      href:'/paints-tools',           img:'/pics/tiles8.jpg',          desc:'Interior & exterior paints & accessories.'},
-    {name:'General Tools',       href:'/general-tools-plumbing', img:'/pics/interlock1.jpg',      desc:'Plumbing tools, cutters & hardware.'},
-    {name:'Plumbing Systems',    href:'/plumbing-sanitary',      img:'/pics/sink.jpg',            desc:'PPR, PVC, GI pipes, fittings & pumps.'},
-    {name:'Plumbing Hardware',   href:'/plumbing-sanitary-2',    img:'/pics/sink1.jpg',           desc:'Mixers, showers, drains & installation.'},
-    {name:'Electric & Lights',   href:'/electric-lights',        img:'/pics/bathroominterior1.jpg',desc:'LED panels, switches, MCBs & wiring.'},
+    {name:'Water Heaters',       href:'/milano-water-heaters',   desc:'Milano electric water heaters — Italian engineering.'},
+    {name:'Water Closets',       href:'/water-closets',          desc:'European-designed toilets for comfort & hygiene.'},
+    {name:'Wash Basins',         href:'/wash-basins',            desc:'Countertop, wall-hung & pedestal basins.'},
+    {name:'Wall Hung WC',        href:'/wall-hung',              desc:'Space-saving wall-hung with concealed cisterns.'},
+    {name:'Tiles & Interlock',   href:'/tiles-roof-interlock',   desc:'Floor, wall, roof tiles & interlocking pavers.'},
+    {name:'Sanitary Ware',       href:'/sanitary-ware',          desc:'Complete sanitary solutions & accessories.'},
+    {name:'Blocks & Sands',      href:'/blocks-sands',           desc:'Hollow blocks, solid blocks & washed sand.'},
+    {name:'Cement',              href:'/cement',                 desc:'OPC, SRC & specialty cements.'},
+    {name:'Steel',               href:'/steel',                  desc:'TMT rebars, channels, angles & sections.'},
+    {name:'Film Faced Plywood',  href:'/film-faced-plywood',     desc:'Marine plywood & shuttering boards.'},
+    {name:'Waterproofing',       href:'/water-proofing',         desc:'Liquid membranes & crystalline solutions.'},
+    {name:'Gypsum Board',        href:'/gypsum-board',           desc:'Gypsum boards & acoustic ceiling systems.'},
+    {name:'Paints & Tools',      href:'/paints-tools',           desc:'Interior & exterior paints & accessories.'},
+    {name:'General Tools',       href:'/general-tools-plumbing', desc:'Plumbing tools, cutters & hardware.'},
+    {name:'Plumbing Systems',    href:'/plumbing-sanitary',      desc:'PPR, PVC, GI pipes, fittings & pumps.'},
+    {name:'Plumbing Hardware',   href:'/plumbing-sanitary-2',    desc:'Mixers, showers, drains & installation.'},
+    {name:'Electric & Lights',   href:'/electric-lights',        desc:'LED panels, switches, MCBs & wiring.'},
   ]
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -423,34 +282,15 @@ function Products() {
           <p className="font-onest text-white/30 text-[15px] max-w-md leading-relaxed">From raw aggregates to luxury bathroom fittings — every material, one supplier.</p>
         </div>
 
-        {/* Top 4 hero cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          {cats.slice(0,4).map((c,i) => (
-            <Link key={i} to={c.href} className="pcard group relative rounded-2xl overflow-hidden aspect-[16/10] block">
-              <Img src={c.img} alt={c.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
-                <span className="font-major text-base md:text-lg uppercase block mb-2" style={{color:C.accentL}}>{String(i+1).padStart(2,'0')}</span>
-                <h3 className="font-poppins text-white text-xl md:text-2xl font-bold mb-1">{c.name}</h3>
-                <p className="font-onest text-white/40 text-sm max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">{c.desc}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {cats.map((c,i) => (
+            <Link key={i} to={c.href} className="pcard group relative rounded-xl border border-white/10 p-6 block hover:border-[#14B8A6]/50 hover:bg-white/5 transition-all duration-300">
+              <div className="flex items-start justify-between mb-4">
+                <span className="font-major text-sm uppercase" style={{color:C.accentL}}>{String(i+1).padStart(2,'0')}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/20 group-hover:text-[#14B8A6] transition-colors"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
-              <div className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-45" style={{background:C.accent}}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Rest in compact grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-          {cats.slice(4).map((c,i) => (
-            <Link key={i} to={c.href} className="pcard group relative rounded-xl overflow-hidden aspect-[3/4] block">
-              <Img src={c.img} alt={c.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <span className="font-major text-sm md:text-base uppercase block mb-1" style={{color:C.accentL}}>{String(i+5).padStart(2,'0')}</span>
-                <h3 className="font-poppins text-white text-xs md:text-sm font-bold leading-tight">{c.name}</h3>
-              </div>
+              <h3 className="font-poppins text-white text-lg font-bold mb-2">{c.name}</h3>
+              <p className="font-onest text-white/30 text-sm leading-relaxed">{c.desc}</p>
             </Link>
           ))}
         </div>
@@ -482,100 +322,9 @@ function Brands() {
   )
 }
 
-/* ── 9. CONSTRUCTION ART GALLERY ── */
-function ConstructionArt() {
-  const sec = useRef(null)
-  const items = [
-    {src:'/pics/scaffold.jpg',     label:'Steel Scaffolding'},
-    {src:'/pics/rebar2.jpg',       label:'TMT Rebar'},
-    {src:'/pics/cinderblocks.jpg', label:'Hollow Blocks'},
-    {src:'/pics/interlock5.jpg',   label:'Interlocking Pavers'},
-    {src:'/pics/cinderblocks1.jpg',label:'Masonry Blocks'},
-    {src:'/pics/interlock2.jpg',   label:'Paver Patterns'},
-  ]
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray('.ca-item').forEach(el => {
-        gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:0.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}})
-      })
-    },sec)
-    return ()=>ctx.revert()
-  },[])
-  return (
-    <section ref={sec} className="relative py-28" style={{background:C.dark}}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6">
-          <div>
-            <h2 className="font-major text-2xl md:text-3xl lg:text-4xl uppercase tracking-[0.04em] mb-3" style={{color:C.accentL}}>raw materials</h2>
-            <p className="font-serif italic text-3xl md:text-4xl text-white">The Art of Construction</p>
-          </div>
-          <p className="font-onest text-white/25 text-[15px] max-w-sm leading-relaxed">Steel, blocks, interlock, sand — the raw ingredients of every great structure.</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((item,i) => (
-            <div key={i} className="ca-item group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3]" style={{opacity:0}}>
-              <Img src={item.src} alt={item.label} className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-110" />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-all duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                <span className="font-poppins text-white text-sm font-bold">{item.label}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-
 /* ═══════════════════════════════════════════════════════════
    ████  CLUSTER D — LIGHT  ███████████████████████████████
    ═══════════════════════════════════════════════════════════ */
-
-/* ── 10. SHOWROOM GALLERY ── */
-function Showroom() {
-  const sec = useRef(null)
-  const imgs = [
-    {src:'/pics/bathroominterior.jpg', label:'Modern Blue Suite'},
-    {src:'/pics/bathroominterior1.jpg',label:'Marble Elegance'},
-    {src:'/pics/bathroominterior2.jpg',label:'Warm Minimalist'},
-    {src:'/pics/bathroominterior4.jpg',label:'Industrial Chic'},
-    {src:'/pics/bathroominterior5.jpg',label:'Contemporary'},
-    {src:'/pics/bathroominterior7.jpg',label:'Fixtures Collection'},
-  ]
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray('.sr-img').forEach(el => {
-        gsap.fromTo(el,{opacity:0,y:60,rotateZ:1},{opacity:1,y:0,rotateZ:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}})
-      })
-    },sec)
-    return ()=>ctx.revert()
-  },[])
-  return (
-    <section ref={sec} className="relative py-28 md:py-36" style={{background:C.cream}}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6">
-          <div>
-            <h2 className="font-major text-2xl md:text-3xl lg:text-4xl uppercase tracking-[0.04em] mb-3" style={{color:C.accent}}>showroom</h2>
-            <p className="font-serif italic text-3xl md:text-4xl lg:text-5xl" style={{color:C.dark}}>Spaces We've Helped Create.</p>
-          </div>
-          <p className="font-onest text-[#666] text-[15px] max-w-md leading-relaxed">Our materials live in the most prestigious bathrooms, kitchens, and interiors across the UAE.</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {imgs.map((im,i) => (
-            <div key={i} className="sr-img group relative rounded-2xl overflow-hidden cursor-pointer" style={{opacity:0,aspectRatio:i%2===0?'4/3':'3/4'}}>
-              <Img src={im.src} alt={im.label} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                <span className="font-poppins text-white text-sm font-bold">{im.label}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 /* ── 11. BIG STATEMENT ── */
 function BigStatement() {
@@ -748,19 +497,17 @@ function Nav() {
   return (
     <header ref={ref} className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled?'shadow-lg':''}`} style={{background:scrolled?'rgba(12,12,11,0.96)':'transparent',backdropFilter:scrolled?'blur(16px)':'none',opacity:0}}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full border flex items-center justify-center" style={{borderColor:C.accent+'88'}}>
-            <span className="font-serif italic text-base font-bold" style={{color:C.accentL}}>S</span>
-          </div>
-          <div className="hidden sm:flex flex-col leading-none">
-            <span className="font-poppins text-white text-[11px] tracking-[0.12em] uppercase font-bold">Standard Group</span>
-            <span className="font-major text-[9px] uppercase" style={{color:C.accentL}}>we set standards</span>
+        <Link to="/" className="flex items-center gap-3">
+          <img src="/sglogocion.png" alt="" className="w-10 h-10 object-contain" />
+          <div className="hidden sm:flex flex-col leading-tight">
+            <span className="font-poppins text-white text-xs tracking-[0.12em] uppercase font-bold">Standard Group</span>
+            <span className="font-serif italic text-xs text-white/70">We Set Standards</span>
           </div>
         </Link>
         <nav className="hidden lg:flex items-center gap-6">
-          <a href="#categories" className="font-poppins text-white/50 text-[11px] tracking-[0.1em] uppercase font-medium hover:text-[#14B8A6] transition-colors">Products</a>
-          <a href="#contact" className="font-poppins text-white/50 text-[11px] tracking-[0.1em] uppercase font-medium hover:text-[#14B8A6] transition-colors">Contact</a>
-          <a href="#contact" className="ml-2 inline-flex items-center px-5 py-2 text-white text-[10px] tracking-[0.1em] uppercase font-poppins font-bold rounded-sm" style={{background:C.accent}}>Get a Quote</a>
+          <a href="#categories" className="font-poppins text-white/50 text-xs tracking-[0.1em] uppercase font-medium hover:text-[#14B8A6] transition-colors">Products</a>
+          <a href="#contact" className="font-poppins text-white/50 text-xs tracking-[0.1em] uppercase font-medium hover:text-[#14B8A6] transition-colors">Contact</a>
+          <a href="#contact" className="ml-2 inline-flex items-center px-5 py-2.5 text-white text-xs tracking-[0.1em] uppercase font-poppins font-bold rounded-sm" style={{background:C.accent}}>Get a Quote</a>
         </nav>
         <button onClick={()=>setOpen(!open)} className="lg:hidden text-white">
           {open ? <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -798,8 +545,6 @@ export default function CinematicHome() {
 
       {/* ████ CLUSTER A — DARK ████ */}
       <Hero />
-      <Stats />
-      <TextureMarquee />
 
       {/* ████ CLUSTER B — LIGHT ████ */}
       <Split />
@@ -809,10 +554,8 @@ export default function CinematicHome() {
       {/* ████ CLUSTER C — DARK ████ */}
       <Products />
       <Brands />
-      <ConstructionArt />
 
       {/* ████ CLUSTER D — LIGHT ████ */}
-      <Showroom />
       <BigStatement />
       <Trust />
 
