@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useLocation, Outlet, Link } from 'react-router-dom'
-import { Phone, Mail, MapPin, Search, X, ChevronRight } from 'lucide-react'
+import { useLocation, Outlet, Link, useNavigate } from 'react-router-dom'
+import { Phone, Mail, MapPin, Search, X, ChevronRight, Home, Grid, MessageCircle } from 'lucide-react'
 
 const NAV_CATS = [
   { label: 'Water Heaters',    href: '/milano-water-heaters' },
@@ -24,12 +24,20 @@ const NAV_CATS = [
 /* ── Navbar ── */
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    navigate(`/products${search ? `?q=${encodeURIComponent(search)}` : ''}`)
+    setMenuOpen(false)
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-gray-200 shadow-sm">
-      {/* Top bar */}
-      <div className="bg-[#0F766E] text-white text-xs py-1.5 px-4 hidden md:block">
+      {/* Top bar — desktop only */}
+      <div className="bg-[#0F766E] text-white text-[11px] py-1.5 px-4 hidden md:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <span className="font-onest">🇦🇪 Abu Dhabi, UAE — National &amp; International Fulfillment</span>
           <div className="flex items-center gap-5">
@@ -44,29 +52,34 @@ function Navbar() {
       </div>
 
       {/* Main header row */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-4 h-14">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 h-13 sm:h-14">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-            <img src="/sglogocion.png" alt="Standard Group" className="w-8 h-8 object-contain" />
-            <div className="hidden sm:block leading-tight">
-              <span className="font-montserrat font-bold text-[#0c0c0b] text-xs block">Standard Group</span>
-              <span className="font-montserrat text-[#0F766E] text-[9px] font-semibold">Building Materials, UAE</span>
+          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
+            <img src="/sglogocion.png" alt="Standard Group" className="w-7 h-7 sm:w-8 sm:h-8 object-contain" />
+            <div className="leading-tight">
+              <span className="font-montserrat font-bold text-[#0c0c0b] text-[11px] sm:text-xs block">Standard Group</span>
+              <span className="font-montserrat text-[#0F766E] text-[8px] sm:text-[9px] font-semibold hidden sm:block">Building Materials, UAE</span>
             </div>
           </Link>
 
-          {/* Center search */}
-          <div className="flex-1 max-w-lg mx-auto hidden md:flex items-center border border-gray-300 rounded overflow-hidden h-9">
+          {/* Center search — desktop */}
+          <form onSubmit={handleSearch} className="flex-1 max-w-lg mx-auto hidden md:flex items-center border border-gray-300 rounded overflow-hidden h-9">
             <Search size={13} className="ml-3 text-gray-400 flex-shrink-0" />
-            <input type="text" placeholder="Search tiles, cement, steel, gypsum..."
-              className="flex-1 px-3 py-1.5 text-sm outline-none font-onest" />
-            <Link to="/products"
-              className="bg-[#0F766E] px-4 h-full text-white font-montserrat font-bold text-xs flex items-center hover:bg-[#0D6B64] transition-colors">
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search tiles, cement, steel, gypsum..."
+              className="flex-1 px-3 py-1.5 text-sm outline-none font-onest"
+            />
+            <button type="submit"
+              className="bg-[#0F766E] px-4 h-full text-white font-montserrat font-bold text-xs hover:bg-[#0D6B64] transition-colors">
               Search
-            </Link>
-          </div>
+            </button>
+          </form>
 
-          {/* Right nav */}
+          {/* Right nav — desktop */}
           <nav className="hidden lg:flex items-center gap-4 flex-shrink-0 ml-auto">
             <Link to="/products" className={`font-poppins text-xs hover:text-[#0F766E] transition-colors ${pathname === '/products' ? 'text-[#0F766E] font-bold' : 'text-[#555]'}`}>Products</Link>
             <Link to="/about"    className={`font-poppins text-xs hover:text-[#0F766E] transition-colors ${pathname === '/about'    ? 'text-[#0F766E] font-bold' : 'text-[#555]'}`}>About</Link>
@@ -77,15 +90,22 @@ function Navbar() {
             </a>
           </nav>
 
-          <button className="lg:hidden ml-auto p-1.5 text-[#444]" onClick={() => setMenuOpen(v => !v)}>
-            {menuOpen
-              ? <X size={20} />
-              : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-            }
-          </button>
+          {/* Mobile right — search icon + hamburger */}
+          <div className="lg:hidden ml-auto flex items-center gap-2">
+            <a href="https://wa.me/971504654613" target="_blank" rel="noreferrer"
+              className="flex items-center gap-1 bg-[#0F766E] text-white px-2.5 py-1.5 rounded text-[11px] font-montserrat font-bold">
+              <MessageCircle size={13} /> Enquire
+            </a>
+            <button className="p-1.5 text-[#444] touch-manipulation" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">
+              {menuOpen
+                ? <X size={22} />
+                : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+              }
+            </button>
+          </div>
         </div>
 
-        {/* Category nav row */}
+        {/* Category nav row — desktop only */}
         <div className="hidden lg:flex items-center border-t border-gray-100 overflow-x-auto scrollbar-hide">
           {NAV_CATS.map((cat, i) => (
             <Link key={i} to={cat.href}
@@ -95,31 +115,73 @@ function Navbar() {
               {cat.label}
             </Link>
           ))}
-          <Link to="/products" className="whitespace-nowrap px-3 py-2 text-[11px] font-poppins text-[#0F766E] font-bold hover:bg-gray-50 border-b-2 border-transparent">
+          <Link to="/products" className="whitespace-nowrap px-3 py-2 text-[11px] font-poppins text-[#0F766E] font-bold hover:bg-gray-50 border-b-2 border-transparent ml-auto">
             All →
           </Link>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile full-screen menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200 px-4 py-4 max-h-[75vh] overflow-y-auto">
-          <div className="grid grid-cols-2 gap-1 mb-4">
-            {NAV_CATS.map((cat, i) => (
-              <Link key={i} to={cat.href} onClick={() => setMenuOpen(false)}
-                className="font-onest text-xs text-[#555] py-2 px-2 hover:text-[#0F766E] hover:bg-gray-50 rounded transition-colors">
-                {cat.label}
+        <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-50 overflow-y-auto pb-20">
+          {/* Mobile search */}
+          <form onSubmit={handleSearch} className="flex items-center border-b border-gray-200 px-4 py-3 gap-2 bg-gray-50">
+            <Search size={16} className="text-gray-400 flex-shrink-0" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search products..."
+              className="flex-1 text-sm outline-none bg-transparent font-onest"
+            />
+            <button type="submit" className="bg-[#0F766E] text-white px-3 py-1.5 rounded text-xs font-montserrat font-bold">
+              Go
+            </button>
+          </form>
+
+          {/* Quick links */}
+          <div className="flex border-b border-gray-100">
+            {[['Home','/',<Home size={15}/>],['Products','/products',<Grid size={15}/>],['Contact','/contact',<Phone size={15}/>]].map(([l,h,icon]) => (
+              <Link key={l} to={h} onClick={() => setMenuOpen(false)}
+                className="flex-1 flex flex-col items-center gap-1 py-3 text-[#555] hover:text-[#0F766E] hover:bg-gray-50 transition-colors">
+                {icon}
+                <span className="font-poppins text-[10px]">{l}</span>
               </Link>
             ))}
           </div>
-          <div className="border-t border-gray-200 pt-3 flex flex-col gap-2">
-            <Link to="/products" onClick={() => setMenuOpen(false)} className="font-poppins text-sm text-[#444] py-1">Products</Link>
-            <Link to="/about"    onClick={() => setMenuOpen(false)} className="font-poppins text-sm text-[#444] py-1">About</Link>
-            <Link to="/contact"  onClick={() => setMenuOpen(false)} className="font-poppins text-sm text-[#444] py-1">Contact</Link>
+
+          {/* Categories grid */}
+          <div className="px-4 pt-4 pb-2">
+            <p className="font-montserrat font-bold text-[10px] uppercase tracking-widest text-gray-400 mb-3">All Categories</p>
+            <div className="grid grid-cols-2 gap-1">
+              {NAV_CATS.map((cat, i) => (
+                <Link key={i} to={cat.href} onClick={() => setMenuOpen(false)}
+                  className={`font-onest text-sm py-3 px-3 rounded-lg transition-colors flex items-center gap-2 ${
+                    pathname === cat.href
+                      ? 'bg-[#0F766E] text-white font-semibold'
+                      : 'text-[#444] hover:bg-gray-100 hover:text-[#0F766E]'
+                  }`}>
+                  <ChevronRight size={12} className="flex-shrink-0" />
+                  {cat.label}
+                </Link>
+              ))}
+            </div>
           </div>
-          <a href="tel:+971555599508" className="mt-3 flex items-center gap-2 text-[#0F766E] font-montserrat font-bold text-sm">
-            <Phone size={14} /> +971 55 559 9508
-          </a>
+
+          {/* Contact strip */}
+          <div className="mx-4 mt-4 bg-[#0F766E] rounded-xl p-4">
+            <p className="font-montserrat font-bold text-white text-sm mb-3">Get a Quote</p>
+            <div className="flex flex-col gap-2">
+              <a href="https://wa.me/971504654613" target="_blank" rel="noreferrer"
+                className="flex items-center gap-2 bg-white text-[#0F766E] px-4 py-2.5 rounded-lg font-montserrat font-bold text-sm">
+                <MessageCircle size={16} /> WhatsApp Us
+              </a>
+              <a href="tel:+971555599508"
+                className="flex items-center gap-2 border border-white/40 text-white px-4 py-2.5 rounded-lg font-montserrat font-bold text-sm">
+                <Phone size={16} /> Call: +971 55 559 9508
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </header>
@@ -222,7 +284,8 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <div className="pt-[6.5rem] md:pt-[7.5rem]">
+      {/* pt: mobile=52px header only | md=top-bar(28px)+header(56px) | lg=+category-row(36px) */}
+      <div className="pt-[52px] md:pt-[84px] lg:pt-[120px]">
         <Outlet />
       </div>
       <Footer />

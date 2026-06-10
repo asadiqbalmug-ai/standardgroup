@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import App from './App.jsx'
 import B2BHome from './pages/B2BHome.jsx'
 import Layout from './components/Layout.jsx'
@@ -34,6 +34,18 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<B2BHome />} />
         {/* Old homepage as fallback */}
         <Route path="/classic" element={<App />} />
+
+        {/* URL alias redirects */}
+        <Route path="/electric-water-heaters"    element={<Navigate to="/milano-water-heaters" replace />} />
+        <Route path="/water-heaters"             element={<Navigate to="/milano-water-heaters" replace />} />
+        <Route path="/waterproofing"             element={<Navigate to="/water-proofing" replace />} />
+        <Route path="/tiles"                     element={<Navigate to="/tiles-roof-interlock" replace />} />
+        <Route path="/plywood"                   element={<Navigate to="/film-faced-plywood" replace />} />
+        <Route path="/blocks"                    element={<Navigate to="/blocks-sands" replace />} />
+        <Route path="/lights"                    element={<Navigate to="/electric-lights" replace />} />
+        <Route path="/gypsum"                    element={<Navigate to="/gypsum-board" replace />} />
+        <Route path="/paints"                    element={<Navigate to="/paints-tools" replace />} />
+        <Route path="/plumbing"                  element={<Navigate to="/plumbing-sanitary" replace />} />
 
         {/* All product pages share Layout (Navbar + Footer) */}
         <Route element={<Layout />}>

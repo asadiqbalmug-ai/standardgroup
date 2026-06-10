@@ -109,6 +109,28 @@
   }
 }
 
+/* ── GSAP fallback: ensure animated elements are visible by default ──
+   GSAP sets opacity:0 as the fromTo start value; if ScrollTrigger never
+   fires (page load position, layout shift, etc.) elements stay invisible.
+   This ensures they are always visible as a CSS baseline.               */
+.product-card,
+.hero-title-line,
+.hero-subtitle,
+.hero-cta,
+.spec-card,
+.feature-card,
+.brand-card,
+.comparison-row,
+.section-fade {
+  opacity: 1 !important;
+}
+
+/* ── Mobile base: prevent horizontal overflow ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -124,5 +146,37 @@ html.lenis, html.lenis body {
 @media (min-width: 1024px) {
   .cinematic-cursor * {
     cursor: none !important;
+  }
+}
+
+/* ── Mobile product page overrides ── */
+@media (max-width: 767px) {
+  /* Reduce massive section padding on mobile */
+  section.py-24,
+  section.py-28,
+  section.py-32 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  section.lg\:py-32 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  /* Reduce large horizontal padding on mobile */
+  .max-w-\[1400px\].px-8,
+  .max-w-\[1400px\].lg\:px-16 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  /* Hero section: don't use min-h-screen on mobile */
+  section.min-h-screen {
+    min-height: 60vh !important;
+  }
+  /* 3D flip cards: disable on mobile (performance) */
+  .perspective-1000 {
+    perspective: none !important;
+  }
+  .product-card.group:hover .transform-style-preserve-3d {
+    transform: none !important;
   }
 }
