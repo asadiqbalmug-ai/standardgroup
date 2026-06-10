@@ -24,3 +24,13 @@ Thumbs.db
 *.njsproj
 *.sln
 
+# Large media files (>100MB — use Cloudinary/external hosting instead)
+public/*.mp4
+public/*.mov
+public/*.avi
+
+# Benchmark screenshots (not needed in repo)
+public/alkhashabuae.com_.png
+public/www.mihgroup.ae_.png
+public/casamilanoitaly.com_.png
+
