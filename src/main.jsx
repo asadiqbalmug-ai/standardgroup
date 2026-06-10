@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
-import CinematicHome from './CinematicHome.jsx'
+import B2BHome from './pages/B2BHome.jsx'
 import Layout from './components/Layout.jsx'
 import MilanoWaterHeaters from './pages/MilanoWaterHeaters.jsx'
 import WaterClosets from './pages/WaterClosets.jsx'
@@ -21,14 +21,17 @@ import GeneralToolsPlumbing from './pages/GeneralToolsPlumbing.jsx'
 import PlumbingSanitary from './pages/PlumbingSanitary.jsx'
 import PlumbingSanitary2 from './pages/PlumbingSanitary2.jsx'
 import ElectricLights from './pages/ElectricLights.jsx'
+import ProductsPage from './pages/ProductsPage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* Cinematic Homepage */}
-        <Route path="/" element={<CinematicHome />} />
+        {/* B2B Homepage - Simple, Shopify-style design */}
+        <Route path="/" element={<B2BHome />} />
         {/* Old homepage as fallback */}
         <Route path="/classic" element={<App />} />
 
@@ -51,6 +54,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/plumbing-sanitary"       element={<PlumbingSanitary />} />
           <Route path="/plumbing-sanitary-2"     element={<PlumbingSanitary2 />} />
           <Route path="/electric-lights"         element={<ElectricLights />} />
+          <Route path="/products"                element={<ProductsPage />} />
+          <Route path="/contact"                 element={<ContactPage />} />
+          <Route path="/about"                   element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

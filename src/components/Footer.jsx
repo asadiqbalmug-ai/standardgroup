@@ -45,8 +45,8 @@ export default function Footer() {
             Contact
           </h4>
           <div className="flex flex-col gap-3">
-            <a href="tel:+971XXXXXXXX" className="flex items-center gap-2 text-zinc-600 hover:text-[var(--mahenti-accent)] transition-colors text-xs">
-              <Phone size={12} className="text-[var(--mahenti-accent)]/50" /> +971 XXXX XXXX
+            <a href="tel:+971555599508" className="flex items-center gap-2 text-zinc-600 hover:text-[var(--mahenti-accent)] transition-colors text-xs">
+              <Phone size={12} className="text-[var(--mahenti-accent)]/50" /> +971 555599508
             </a>
             <a href="mailto:info@standardgroup.ae" className="flex items-center gap-2 text-zinc-600 hover:text-[var(--mahenti-accent)] transition-colors text-xs">
               <Mail size={12} className="text-[var(--mahenti-accent)]/50" /> info@standardgroup.ae

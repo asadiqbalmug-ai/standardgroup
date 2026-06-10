@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Archivo+Black&family=Metamorphous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Archivo+Black&family=Metamorphous&family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -103,6 +103,9 @@
   }
   .rotate-y-180 {
     transform: rotateY(180deg);
+  }
+  .text-shadow-glow {
+    text-shadow: 0 0 8px rgba(20,184,166,0.35), 0 0 16px rgba(20,184,166,0.2);
   }
 }
 

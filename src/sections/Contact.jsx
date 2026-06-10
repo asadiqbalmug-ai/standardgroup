@@ -6,11 +6,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const contactItems = [
-  { icon: Phone, label: 'Phone', value: '+971 XXXX XXXX', href: 'tel:+971XXXXXXXX' },
-  { icon: MessageCircle, label: 'WhatsApp', value: '+971 XXXX XXXX', href: 'https://wa.me/971XXXXXXXX' },
+  { icon: Phone, label: 'Phone', value: '+971 555599508', href: 'tel:+971555599508' },
+  { icon: MessageCircle, label: 'WhatsApp', value: '+971 504654613', href: 'https://wa.me/971504654613' },
   { icon: Mail, label: 'Email', value: 'info@standardgroup.ae', href: 'mailto:info@standardgroup.ae' },
   { icon: Globe, label: 'Website', value: 'www.standardgroup.ae', href: 'https://www.standardgroup.ae' },
-  { icon: MapPin, label: 'Location', value: 'UAE', href: '#' },
+  { icon: MapPin, label: 'Location', value: 'Baniyas West, Abu Dhabi-U.A.E.', href: '#' },
 ]
 
 export default function Contact() {
@@ -85,7 +85,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <label className="text-zinc-500 text-[11px] font-bold uppercase tracking-widest mb-2 block">Phone</label>
-                  <input type="tel" placeholder="+971 XXXX XXXX" className={inputClass} />
+                  <input type="tel" placeholder="+971 555599508" className={inputClass} />
                 </div>
               </div>
               <div>

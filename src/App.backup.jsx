@@ -453,7 +453,7 @@ function ImageSequenceReveal() {
       <div ref={textRef} className="end-text absolute inset-0 flex flex-col items-center justify-center text-center px-8 pointer-events-none" style={{ opacity: 0, transform: 'translateY(60px)' }}>
         <p className="text-white/60 text-[11px] tracking-[0.3em] uppercase font-semibold mb-4">Experience Luxury</p>
         <h2 className="text-4xl sm:text-5xl lg:text-6xl text-white font-normal leading-tight mb-6">
-          <span className="font-major tracking-[0.05em]">Crafted</span> <span className="font-serif-italic font-semibold">Excellence.</span>
+          <span className="font-montserrat tracking-[0.05em]">Crafted</span> <span className="font-serif-italic font-semibold">Excellence.</span>
         </h2>
         <p className="text-white/80 text-base max-w-md mb-8 font-medium">
           Premium building materials, hardware, plumbing & sanitary ware, electrical accessories, and safety equipment for every project need.
@@ -520,7 +520,7 @@ function OurPhilosophy() {
           <div>
             <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Essence</p>
             <h2 className="text-3xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1]">
-              <span className="block font-major tracking-[0.01em]">Our Philosophy</span>
+              <span className="block font-montserrat tracking-[0.01em]">Our Philosophy</span>
               <span className="block font-serif italic text-[#555]">of Building.</span>
             </h2>
           </div>
@@ -713,7 +713,7 @@ function Products() {
         <div className="mb-14">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Products</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1] text-3d-shadow">
-            <span ref={headerLine1Ref} className="block font-major tracking-[0.02em]">Premium</span>
+            <span ref={headerLine1Ref} className="block font-montserrat tracking-[0.02em]">Premium</span>
             <span className="magnetic-text block font-serif italic text-[#555]">Building Materials</span>
           </h2>
           <p className="text-[#666] text-base max-w-lg leading-relaxed mt-4">
@@ -818,7 +818,7 @@ function Solutions() {
         <div className="mb-14">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Our Solutions</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white font-light leading-[1.1] text-3d-shadow">
-            <span ref={headerLine1Ref} className="block font-major tracking-[0.02em]">Smart Materials.</span>
+            <span ref={headerLine1Ref} className="block font-montserrat tracking-[0.02em]">Smart Materials.</span>
             <span className="magnetic-text block font-serif italic text-[#94a3b8]">Stronger Results.</span>
           </h2>
           <p className="text-[#94a3b8] text-base max-w-lg leading-relaxed mt-4">
@@ -882,7 +882,7 @@ function WhyStandardGroup() {
         <div className="mb-14 text-center">
           <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-3">Why Choose Us</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] font-light leading-[1.1] text-3d-shadow">
-            <span ref={headerLine1Ref} className="block font-major tracking-[0.02em]">Standard Group</span>
+            <span ref={headerLine1Ref} className="block font-montserrat tracking-[0.02em]">Standard Group</span>
             <span className="magnetic-text block font-serif italic text-[#555]">Your Trusted Partner</span>
           </h2>
           <p className="text-[#666] text-base mt-3 max-w-md mx-auto">Your trusted partner for premium building materials in the UAE</p>
@@ -930,7 +930,7 @@ function CTASection() {
       <div className="max-w-[1400px] mx-auto px-5 lg:px-16 text-center">
         <p className="text-[#A58B62] text-[11px] tracking-[0.3em] uppercase font-medium mb-4">Get In Touch</p>
         <h2 className="text-3xl sm:text-4xl lg:text-6xl text-white font-light leading-[1.1] mb-4" style={{ textShadow: '1px 1px 0 rgba(0,0,0,0.3), 2px 2px 0 rgba(0,0,0,0.2), 3px 3px 0 rgba(0,0,0,0.1), 4px 4px 8px rgba(0,0,0,0.4)' }}>
-          <span ref={headerLine1Ref} className="block font-major tracking-[0.02em]">Ready to Start?</span>
+          <span ref={headerLine1Ref} className="block font-montserrat tracking-[0.02em]">Ready to Start?</span>
           <span className="magnetic-text block font-serif italic text-[#94a3b8]">Build With Us</span>
         </h2>
         <p className="text-[#94a3b8] text-base max-w-lg mx-auto leading-relaxed mb-10">
@@ -938,7 +938,7 @@ function CTASection() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="mailto:sales@standardgroup.ae" className="magnetic-btn group flex items-center gap-3 bg-[#A58B62] text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-[#8B7355] transition-all duration-300 shadow-lg shadow-[#A58B62]/20">
+          <a href="mailto:info@standardgroup.ae" className="magnetic-btn group flex items-center gap-3 bg-[#A58B62] text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-[#8B7355] transition-all duration-300 shadow-lg shadow-[#A58B62]/20">
             Request Quote
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
@@ -1043,11 +1043,11 @@ function PageFooter() {
                 <p className="text-[11px]">+971 4 222 0000</p>
               </div>
             </a>
-            <a href="mailto:sales@standardgroup.ae" className="flex items-start gap-3 text-[#888] hover:text-white transition-colors group">
+            <a href="mailto:info@standardgroup.ae" className="flex items-start gap-3 text-[#888] hover:text-white transition-colors group">
               <Mail size={13} className="text-[#A58B62] mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-[10px] text-[#555] uppercase tracking-wider mb-0.5">Email</p>
-                <p className="text-[11px]">sales@standardgroup.ae</p>
+                <p className="text-[11px]">info@standardgroup.ae</p>
               </div>
             </a>
             <div className="flex items-start gap-3 text-[#888]">
