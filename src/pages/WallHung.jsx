@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Sparkles, Layers, CheckCircle2, ChevronDown, Droplets, Ruler, Wind, Settings } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -681,17 +682,10 @@ function CTASection() {
 ───────────────────────────────────────── */
 export default function WallHung() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-amber-700/20 selection:text-[#1a1a1a]">
-      {/* Navigation */}
-
-      {/* Page Sections */}
-      <HeroSection />
+    <ProductPageShell title="Wall Hung WC" subtitle="Sanitary Ware" description="Modern wall-hung toilets in white and matte black. Square and round bowl options." heroImg="/pics/2wc.JPG" currentPath="/wall-hung">
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

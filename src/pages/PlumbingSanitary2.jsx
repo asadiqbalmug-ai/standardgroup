@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Droplets, Zap, Settings, Package, Gauge, Wind, Wrench } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -794,15 +795,11 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function PlumbingSanitary2() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-blue-900/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Plumbing & Sanitary (Extended)" subtitle="Plumbing" description="Water filters, kitchen sinks, waste traps, flexible pipes, hose pipes and additional plumbing fittings." heroImg="/pics/1brownsand.JPG" brands={['Wefatherm','Atlas','Prakash']} currentPath="/plumbing-sanitary-2">
 
-      <HeroSection />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

@@ -25,7 +25,7 @@ Thumbs.db
 *.sln
 
 # Large media files (>100MB — use Cloudinary/external hosting instead)
-public/*.mp4
+# public/standardgrouphero.mp4 is allowed (32MB compressed)
 public/*.mov
 public/*.avi
 

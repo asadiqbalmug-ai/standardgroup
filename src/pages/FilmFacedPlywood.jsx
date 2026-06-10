@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Flame, Wind, Package, Maximize2 } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -687,15 +688,11 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function FilmFacedPlywood() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-amber-900/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Film Faced Plywood" subtitle="Formwork & Timber" description="Diamond Prestige, Marinee and PVC-coated film faced plywood for formwork. Commercial plywood in various thicknesses." heroImg="/pics/1bricks.JPG" currentPath="/film-faced-plywood">
 
-      <HeroSection />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

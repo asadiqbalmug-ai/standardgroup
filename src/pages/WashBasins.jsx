@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Droplets, Shield, Sparkles, Ruler, CheckCircle2, ChevronDown, Wind, Layers } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -640,17 +641,16 @@ function CTASection() {
 /* ─── MAIN PAGE COMPONENT ─── */
 export default function WashBasins() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-teal-600/20 selection:text-[#1a1a1a]">
-      {/* Navigation */}
-
-      {/* Sections */}
-      <HeroSection />
+    <ProductPageShell
+      title="Wash Basins"
+      subtitle="Sanitary Ware"
+      description="Elegant wash basins — pedestal, counter top, and wall-hung — in white and beige ceramic."
+      heroImg="/pics/1sink.JPG"
+      currentPath="/wash-basins"
+    >
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

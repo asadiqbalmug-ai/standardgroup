@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, CheckCircle2, ChevronDown, Zap, Sun, Wind, Package, Settings, Star } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -797,15 +798,11 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function ElectricLights() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-amber-800/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Electric Lights & Bulbs" subtitle="Lighting" description="LED spotlights, bulbs, strip lights, flood lights, panel lights, wall lamps and solar lighting solutions." heroImg="/pics/1interlock.JPG" currentPath="/electric-lights">
 
-      <HeroSection />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

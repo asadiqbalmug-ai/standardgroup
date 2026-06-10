@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Wrench, Droplets, Package, Settings, Wind, Hammer } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -835,17 +836,13 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function GeneralToolsPlumbing() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-teal-800/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="General Tools & Plumbing" subtitle="Tools & Plumbing" description="Aluminium ladders, shade nets, silicon guns, brushes, PPR welding machines and plumbing accessories." heroImg="/pics/3interior.JPG" currentPath="/general-tools-plumbing">
 
-      <HeroSection />
       <BrandsStrip />
       <GeneralToolsSection />
       <PlumbingSection />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

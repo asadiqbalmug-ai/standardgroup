@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, Droplets, Thermometer, Zap, Shield, ChevronDown, ArrowLeft } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -650,20 +651,19 @@ function CTASection() {
 
 /* ─── FOOTER ─── */
 
-/* ─── MAIN PAGE COMPONENT ─── */
 export default function MilanoWaterHeaters() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-[#2563eb]/20 selection:text-[#1a1a1a]">
-      {/* Navigation */}
-
-      {/* Sections */}
-      <HeroSection />
+    <ProductPageShell
+      title="Milano Electric Water Heaters"
+      subtitle="Water Heaters"
+      description="Premium electric storage water heaters for residential and commercial use. Available 15L–80L, horizontal and vertical orientations."
+      heroImg="/pics/1interior.JPG"
+      brands={['Milano']}
+      currentPath="/milano-water-heaters"
+    >
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

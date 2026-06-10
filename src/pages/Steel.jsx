@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Zap, Weight, Grid, Settings } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -918,18 +919,14 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function Steel() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-slate-700/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Steel & Rebar" subtitle="Structural Steel" description="Rebar 8mm–40mm, MS pipes, tubes and welded wire mesh. Certified by Union Iron & Steel, Gulf Steel Industries and Emirates Steel." heroImg="/pics/1rebar.JPG" brands={['Union Iron & Steel','Gulf Steel Industries','Emirates Steel']} currentPath="/steel">
 
-      <HeroSection />
       <BrandsStrip />
       <RebarSection />
       <PipeSection />
       <MeshSection />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

@@ -156,10 +156,16 @@ export default function B2BHome() {
 
       {/* ── 1. HERO BANNER ── */}
       <section className="relative bg-[#0c0c0b] overflow-hidden">
-        {/* Background image with overlay */}
+        {/* Background video with overlay */}
         <div className="absolute inset-0">
-          <img src="/pics/1rebar.JPG" alt="" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0b] via-[#0c0c0b]/80 to-transparent" />
+          <video
+            autoPlay muted loop playsInline
+            className="w-full h-full object-cover opacity-40"
+            poster="/pics/1rebar.JPG"
+          >
+            <source src="/standardgrouphero.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0b] via-[#0c0c0b]/75 to-[#0c0c0b]/40" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">

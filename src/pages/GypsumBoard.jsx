@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Maximize2, Package, Settings, Wind } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -813,16 +814,12 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function GypsumBoard() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-slate-700/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Gypsum Board & Accessories" subtitle="Dry Lining" description="Standard, moisture-resistant and fire-resistant Knauf gypsum boards. Ceiling tiles, metal studs, tracks and all accessories." heroImg="/pics/1interior.JPG" brands={['Knauf','UniCEM']} currentPath="/gypsum-board">
 
-      <HeroSection />
       <BrandsStrip />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

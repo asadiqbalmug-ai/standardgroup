@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Flame, Weight, Boxes, Mountain } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -729,17 +730,11 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function Cement() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-red-800/20 selection:text-[#1a1a1a]">
-      {/* Navigation */}
-
-      <HeroSection />
+    <ProductPageShell title="Cement" subtitle="Construction Materials" description="OPC, PLC, White Cement and SRC from RAKCC, Abu Dhabi Cement and UltraTech. 50kg bags, bulk orders available." heroImg="/pics/1whiterocks.JPG" brands={['RAKCC','Abu Dhabi Cement','UltraTech']} currentPath="/cement">
       <BrandsStrip />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

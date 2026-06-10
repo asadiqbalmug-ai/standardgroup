@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Droplets, Wind, Flame, Package } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -776,16 +777,12 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function WaterProofing() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-blue-900/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Waterproofing" subtitle="Waterproofing Systems" description="Bituminous membranes, self-adhesive membranes, liquid bitumen and crystalline systems by Awazel, Polybit, Saudicoat and DWI Dermabit." heroImg="/pics/1crackedgravel.JPG" brands={['Awazel','Polybit','Saudicoat','DWI Dermabit']} currentPath="/water-proofing">
 
-      <HeroSection />
       <BrandsStrip />
       <ProductShowcase />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }

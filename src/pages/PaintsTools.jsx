@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight, ArrowLeft, Shield, Layers, Ruler, CheckCircle2, ChevronDown, Paintbrush, Wrench, Zap, Package, Settings, Hammer } from 'lucide-react'
+import ProductPageShell from '../components/ProductPageShell'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -973,18 +974,14 @@ function CTASection() {
 ══════════════════════════════════════ */
 export default function PaintsTools() {
   return (
-    <div className="bg-[#F9F6F0] min-h-screen selection:bg-red-800/20 selection:text-[#1a1a1a]">
+    <ProductPageShell title="Paints & Tools" subtitle="Finishes & Tools" description="Interior and exterior emulsion paints, primers, enamel, texture coats by National Paints, Asian Paints, Jotun and Terraco. Plus hand tools and accessories." heroImg="/pics/2interior.JPG" brands={['National Paints','Asian Paints','Jotun','Terraco']} currentPath="/paints-tools">
 
-      <HeroSection />
       <BrandsStrip />
       <PaintsSection />
       <AccessoriesSection />
       <ToolsSection />
       <SpecsSection />
       <FeaturesSection />
-      <ComparisonSection />
-      <WhyStandardGroup />
-      <CTASection />
-    </div>
+    </ProductPageShell>
   )
 }
