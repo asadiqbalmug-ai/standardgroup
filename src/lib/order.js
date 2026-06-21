@@ -27,28 +27,25 @@ export async function submitOrder({ items, customer }) {
 
   if (hasSupabase) {
     try {
-      const { data: order, error } = await supabase.from('orders').insert({
-        customer_name: customer.name || null,
-        customer_phone: customer.phone || null,
-        customer_email: customer.email || null,
-        customer_company: customer.company || null,
-        notes: customer.notes || null,
-        channel: 'whatsapp',
-        subtotal: hasPrices ? subtotal : null,
-        total: hasPrices ? subtotal : null,
-        currency: 'AED',
-      }).select('id, order_number').single()
-      if (!error && order) {
-        orderNumber = order.order_number
-        const rows = items.map((it) => ({
-          order_id: order.id,
+      // place_order is a SECURITY DEFINER RPC: anon can atomically create the
+      // order + items and get the order number, without any SELECT on orders.
+      const { data, error } = await supabase.rpc('place_order', {
+        p_customer: {
+          name: customer.name || null,
+          phone: customer.phone || null,
+          email: customer.email || null,
+          company: customer.company || null,
+          notes: customer.notes || null,
+        },
+        p_items: items.map((it) => ({
           product_id: typeof it.id === 'string' && it.id.startsWith('static:') ? null : it.id,
-          name: it.name, model: it.model,
-          unit_price: it.price ?? null, quantity: it.qty,
-          line_total: it.price != null ? it.price * it.qty : null,
-        }))
-        await supabase.from('order_items').insert(rows)
-      }
+          name: it.name,
+          model: it.model,
+          unit_price: it.price ?? null,
+          quantity: it.qty,
+        })),
+      })
+      if (!error && data) orderNumber = data
     } catch { /* fall through to WhatsApp-only */ }
   }
 
