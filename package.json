@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run build:admin",
+    "build:admin": "npm --prefix admin install --legacy-peer-deps && npm --prefix admin run build",
     "preview": "vite preview"
   },
   "dependencies": {

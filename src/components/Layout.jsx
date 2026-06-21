@@ -1,32 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, Outlet, Link, useNavigate } from 'react-router-dom'
 import { Phone, Mail, MapPin, Search, X, ChevronRight, Home, Grid, MessageCircle } from 'lucide-react'
-
-const NAV_CATS = [
-  { label: 'Water Heaters',    href: '/milano-water-heaters' },
-  { label: 'Water Closets',    href: '/water-closets' },
-  { label: 'Wash Basins',      href: '/wash-basins' },
-  { label: 'Wall Hung WC',     href: '/wall-hung' },
-  { label: 'Tiles & Interlock',href: '/tiles-roof-interlock' },
-  { label: 'Sanitary Ware',    href: '/sanitary-ware' },
-  { label: 'Blocks & Sands',   href: '/blocks-sands' },
-  { label: 'Cement',           href: '/cement' },
-  { label: 'Steel',            href: '/steel' },
-  { label: 'Plywood',          href: '/film-faced-plywood' },
-  { label: 'Waterproofing',    href: '/water-proofing' },
-  { label: 'Gypsum Board',     href: '/gypsum-board' },
-  { label: 'Paints & Tools',   href: '/paints-tools' },
-  { label: 'General Tools',    href: '/general-tools-plumbing' },
-  { label: 'Plumbing',         href: '/plumbing-sanitary' },
-  { label: 'Electric Lights',  href: '/electric-lights' },
-]
+import CategoryNav from './CategoryNav'
+import { fetchCatalog } from '../lib/catalog'
 
 /* ── Navbar ── */
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const [cats, setCats] = useState([])
   const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => { fetchCatalog().then(({ categories }) => setCats(categories)) }, [])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -105,20 +91,8 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Category nav row — desktop only */}
-        <div className="hidden lg:flex items-center border-t border-gray-100 overflow-x-auto scrollbar-hide">
-          {NAV_CATS.map((cat, i) => (
-            <Link key={i} to={cat.href}
-              className={`whitespace-nowrap px-3 py-2 text-[11px] font-poppins hover:text-[#0F766E] hover:bg-gray-50 transition-colors border-b-2 ${
-                pathname === cat.href ? 'text-[#0F766E] border-[#0F766E] font-bold' : 'text-[#555] border-transparent'
-              }`}>
-              {cat.label}
-            </Link>
-          ))}
-          <Link to="/products" className="whitespace-nowrap px-3 py-2 text-[11px] font-poppins text-[#0F766E] font-bold hover:bg-gray-50 border-b-2 border-transparent ml-auto">
-            All →
-          </Link>
-        </div>
+        {/* Category nav row — desktop only, backend-driven + trimmed */}
+        <CategoryNav />
       </div>
 
       {/* Mobile full-screen menu */}
@@ -154,15 +128,11 @@ function Navbar() {
           <div className="px-4 pt-4 pb-2">
             <p className="font-montserrat font-bold text-[10px] uppercase tracking-widest text-gray-400 mb-3">All Categories</p>
             <div className="grid grid-cols-2 gap-1">
-              {NAV_CATS.map((cat, i) => (
-                <Link key={i} to={cat.href} onClick={() => setMenuOpen(false)}
-                  className={`font-onest text-sm py-3 px-3 rounded-lg transition-colors flex items-center gap-2 ${
-                    pathname === cat.href
-                      ? 'bg-[#0F766E] text-white font-semibold'
-                      : 'text-[#444] hover:bg-gray-100 hover:text-[#0F766E]'
-                  }`}>
-                  <ChevronRight size={12} className="flex-shrink-0" />
-                  {cat.label}
+              {cats.map((cat) => (
+                <Link key={cat.slug} to={`/products?cat=${cat.slug}`} onClick={() => setMenuOpen(false)}
+                  className="font-onest text-sm py-3 px-3 rounded-lg transition-colors flex items-center gap-2 text-[#444] hover:bg-gray-100 hover:text-[#0F766E]">
+                  <span className="flex-shrink-0">{cat.icon || <ChevronRight size={12} />}</span>
+                  <span className="text-xs leading-tight">{cat.name}</span>
                 </Link>
               ))}
             </div>

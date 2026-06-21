@@ -1,0 +1,5 @@
+# Minimal Supabase CLI config. project_id is set at deploy time via --project-ref.
+project_id = "standardgroup"
+
+[functions.create-staff]
+verify_jwt = true

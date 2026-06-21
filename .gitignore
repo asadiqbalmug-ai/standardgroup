@@ -13,6 +13,12 @@ build/
 # Vite cache
 .vite/
 
+# Devin/agent + local tooling artifacts
+.devin/
+.agents/
+test-report.md
+supabase/.temp/
+
 # OS
 .DS_Store
 Thumbs.db
