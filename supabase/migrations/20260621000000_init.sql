@@ -356,3 +356,60 @@ create policy "product images staff update" on storage.objects
 create policy "product images staff delete" on storage.objects
   for delete to authenticated
   using (bucket_id = 'product-images' and public.has_permission(auth.uid(),'products'));
+
+-- ============================================================================
+-- place_order(): storefront checkout. SECURITY DEFINER so anonymous shoppers
+-- can atomically create an order + items and get the order number back, without
+-- being granted any SELECT on orders (RLS stays tight — staff still gate reads).
+-- ============================================================================
+create or replace function public.place_order(p_customer jsonb, p_items jsonb)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_order_id     uuid;
+  v_order_number text;
+  v_subtotal     numeric(12,2);
+  v_has_price    boolean;
+begin
+  if p_items is null or jsonb_array_length(p_items) = 0 then
+    raise exception 'order has no items';
+  end if;
+
+  select coalesce(sum((i->>'unit_price')::numeric * coalesce((i->>'quantity')::int,1)), 0),
+         bool_or((i->>'unit_price') is not null)
+    into v_subtotal, v_has_price
+    from jsonb_array_elements(p_items) i;
+
+  insert into public.orders
+    (customer_name, customer_phone, customer_email, customer_company, notes,
+     channel, status, currency, subtotal, total)
+  values
+    (nullif(p_customer->>'name',''), nullif(p_customer->>'phone',''),
+     nullif(p_customer->>'email',''), nullif(p_customer->>'company',''),
+     nullif(p_customer->>'notes',''),
+     'whatsapp', 'new', 'AED',
+     case when v_has_price then v_subtotal end,
+     case when v_has_price then v_subtotal end)
+  returning id, order_number into v_order_id, v_order_number;
+
+  insert into public.order_items
+    (order_id, product_id, name, model, unit_price, quantity, line_total)
+  select v_order_id,
+         case when (i->>'product_id') ~ '^[0-9a-fA-F-]{36}$' then (i->>'product_id')::uuid end,
+         coalesce(nullif(i->>'name',''), 'Item'),
+         i->>'model',
+         (i->>'unit_price')::numeric,
+         coalesce((i->>'quantity')::int, 1),
+         case when (i->>'unit_price') is not null
+              then (i->>'unit_price')::numeric * coalesce((i->>'quantity')::int,1) end
+    from jsonb_array_elements(p_items) i;
+
+  return v_order_number;
+end;
+$$;
+
+revoke all on function public.place_order(jsonb, jsonb) from public;
+grant execute on function public.place_order(jsonb, jsonb) to anon, authenticated;
