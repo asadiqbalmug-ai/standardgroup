@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
-  LayoutDashboard, Package, FolderTree, ShoppingCart, Users, Settings as Cog,
+  LayoutDashboard, Package, FolderTree, Handshake, ShoppingCart, Users, Settings as Cog,
   LogOut, Menu, X,
 } from 'lucide-react'
 import { useAuth } from '../lib/auth.jsx'
@@ -10,6 +10,7 @@ const NAV = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, section: null, end: true },
   { to: '/products', label: 'Products', icon: Package, section: 'products' },
   { to: '/categories', label: 'Categories', icon: FolderTree, section: 'categories' },
+  { to: '/partners', label: 'Partners', icon: Handshake, section: 'partners' },
   { to: '/orders', label: 'Orders', icon: ShoppingCart, section: 'orders' },
   { to: '/staff', label: 'Staff', icon: Users, section: 'staff', adminOnly: true },
   { to: '/settings', label: 'Settings', icon: Cog, section: 'settings' },

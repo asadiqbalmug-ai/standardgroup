@@ -4,7 +4,7 @@ import { supabase } from './supabase'
 const AuthCtx = createContext(null)
 
 // Sections gated by per-user permission flags. Admin implicitly has all.
-export const SECTIONS = ['products', 'categories', 'orders', 'staff', 'settings']
+export const SECTIONS = ['products', 'categories', 'partners', 'orders', 'staff', 'settings']
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)

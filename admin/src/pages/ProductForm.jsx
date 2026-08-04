@@ -8,8 +8,8 @@ const slugify = (s) => (s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-'
 
 const emptyProduct = {
   name: '', model: '', sku: '', brand: '', description: '', short_specs: '',
-  price: '', currency: 'AED', unit: '', stock: '', category_id: '',
-  is_active: true, is_featured: false, sort_order: 0,
+  price: '', currency: 'AED', unit: '', stock: '', category_id: '', partner_id: '',
+  is_active: true, is_featured: false, is_bestseller: false, sort_order: 0,
 }
 
 export default function ProductForm() {
@@ -20,6 +20,7 @@ export default function ProductForm() {
 
   const [form, setForm] = useState(emptyProduct)
   const [cats, setCats] = useState([])
+  const [partners, setPartners] = useState([])
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(!isNew)
   const [saving, setSaving] = useState(false)
@@ -28,6 +29,7 @@ export default function ProductForm() {
 
   useEffect(() => {
     supabase.from('categories').select('id,name,slug').order('name').then(({ data }) => setCats(data ?? []))
+    supabase.from('partners').select('id,name').order('name').then(({ data }) => setPartners(data ?? []))
   }, [])
 
   const loadImages = async (pid) => {
@@ -59,8 +61,10 @@ export default function ProductForm() {
     unit: form.unit || null,
     stock: form.stock === '' ? null : Number(form.stock),
     category_id: form.category_id || null,
+    partner_id: form.partner_id || null,
     is_active: !!form.is_active,
     is_featured: !!form.is_featured,
+    is_bestseller: !!form.is_bestseller,
     sort_order: Number(form.sort_order) || 0,
   })
 
@@ -149,6 +153,12 @@ export default function ProductForm() {
               <input className="input" value={form.model || ''} onChange={(e) => setForm({ ...form, model: e.target.value })} /></div>
             <div><label className="label">Brand</label>
               <input className="input" value={form.brand || ''} onChange={(e) => setForm({ ...form, brand: e.target.value })} /></div>
+            <div><label className="label">Partner</label>
+              <select className="input" value={form.partner_id || ''} onChange={(e) => setForm({ ...form, partner_id: e.target.value })}>
+                <option value="">— none —</option>
+                {partners.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+              </select>
+            </div>
             <div><label className="label">SKU</label>
               <input className="input" value={form.sku || ''} onChange={(e) => setForm({ ...form, sku: e.target.value })} /></div>
           </div>
@@ -169,6 +179,7 @@ export default function ProductForm() {
           <div className="flex gap-6">
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} /> Active (visible on site)</label>
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.is_featured} onChange={(e) => setForm({ ...form, is_featured: e.target.checked })} /> Featured</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.is_bestseller} onChange={(e) => setForm({ ...form, is_bestseller: e.target.checked })} /> Best seller</label>
           </div>
           <div className="flex justify-end gap-2 pt-2">
             <Link to="/products" className="btn-ghost">Cancel</Link>

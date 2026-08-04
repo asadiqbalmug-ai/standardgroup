@@ -1,36 +1,17 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Search, ChevronRight, Phone, MessageCircle, X, SlidersHorizontal, Package, Plus } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
+import { Search, ChevronRight, Phone, MessageCircle, X, SlidersHorizontal } from 'lucide-react'
 import { fetchCatalog } from '../lib/catalog'
-import { useCart } from '../context/cart'
-
-/* ── Route map: data slug → page path (fallback to /slug) ── */
-const ROUTE = {
-  'electric-water-heaters': '/milano-water-heaters',
-  'water-closet':           '/water-closets',
-  'wash-basin':             '/wash-basins',
-  'wall-hung':              '/wall-hung',
-  'tiles':                  '/tiles-roof-interlock',
-  'sanitary-ware':          '/sanitary-ware',
-  'blocks-aggregates':      '/blocks-sands',
-  'cement':                 '/cement',
-  'tile-glue-grout':        '/tiles-roof-interlock',
-  'steel':                  '/steel',
-  'plywood':                '/film-faced-plywood',
-  'waterproofing':          '/water-proofing',
-  'gypsum-board':           '/gypsum-board',
-  'paints':                 '/paints-tools',
-  'general-tools':          '/general-tools-plumbing',
-  'plumbing-sanitary':      '/plumbing-sanitary',
-  'electric-lights':        '/electric-lights',
-}
-const routeFor = (slug) => ROUTE[slug] || `/${slug}`
+import ProductCard from '../components/ProductCard'
+import { accentForKey } from '../config/colors'
 
 export default function ProductsPage() {
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [search, setSearch] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeCategory = searchParams.get('cat') || 'all'
+  const setActiveCategory = (cat) => setSearchParams(cat && cat !== 'all' ? { cat } : {})
+  const [search, setSearch] = useState(searchParams.get('q') || '')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
@@ -194,55 +175,22 @@ function SidebarContent({ categories, activeCategory, setActiveCategory }) {
 
 /* ── Category section ── */
 function CategorySection({ cat }) {
-  const route = routeFor(cat.slug)
+  const a = accentForKey(cat.slug)
   return (
     <section>
-      <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{cat.icon}</span>
-          <div>
-            <h2 className="font-montserrat font-bold text-base text-[#0c0c0b]">{cat.name}</h2>
-            <p className="font-onest text-xs text-gray-500">{cat.products.length} products</p>
-          </div>
+      <div className="flex items-center gap-3 mb-4 pb-3 border-b-2" style={{ borderColor: a.solid }}>
+        <span className="text-2xl">{cat.icon}</span>
+        <div>
+          <h2 className="font-montserrat font-bold text-base text-[#0c0c0b]">{cat.name}</h2>
+          <p className="font-onest text-xs text-gray-500">{cat.products.length} products</p>
         </div>
-        <Link to={route} className="inline-flex items-center gap-1 text-[#0F766E] font-montserrat font-bold text-xs hover:gap-2 transition-all">
-          View Category <ChevronRight size={13} />
-        </Link>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {cat.products.map(product => <ProductCard key={product.id} product={product} />)}
+        {cat.products.map(product => <ProductCard key={product.id} product={product} accent={a} />)}
       </div>
     </section>
   )
 }
 
-/* ── Product card with image placeholder + add to cart ── */
-function ProductCard({ product }) {
-  const { addItem } = useCart()
-  return (
-    <div className="group bg-gray-50 border border-gray-200 rounded overflow-hidden hover:border-[#0F766E] hover:bg-white hover:shadow-md transition-all duration-200 flex flex-col">
-      <div className="aspect-square bg-gray-100 relative overflow-hidden">
-        {product.image ? (
-          <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        ) : (
-          <div className="w-full h-full grid place-items-center text-gray-300">
-            <Package size={32} />
-          </div>
-        )}
-      </div>
-      <div className="p-3 flex flex-col flex-1">
-        <div className="font-montserrat font-bold text-xs text-[#0c0c0b] mb-1 leading-tight line-clamp-2">{product.name}</div>
-        {product.model && <div className="font-onest text-[10px] text-gray-400 mb-1">Model #{product.model}</div>}
-        {product.shortSpecs && <div className="font-onest text-[10px] text-gray-500 leading-snug line-clamp-2">{product.shortSpecs}</div>}
-        <div className="mt-2 font-montserrat font-bold text-xs text-[#0F766E]">
-          {product.price != null ? `AED ${product.price}` : 'Price on request'}
-        </div>
-        <button onClick={() => addItem(product, 1)}
-          className="mt-2.5 inline-flex items-center justify-center gap-1 bg-[#0F766E] text-white font-montserrat font-bold text-[11px] py-2 rounded hover:bg-[#0D6B64] transition-colors">
-          <Plus size={12} /> Add to Cart
-        </button>
-      </div>
-    </div>
-  )
-}
+

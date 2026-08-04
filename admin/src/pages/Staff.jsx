@@ -5,8 +5,8 @@ import { useAuth } from '../lib/auth.jsx'
 import { SECTIONS } from '../lib/auth.jsx'
 
 const PERM_LABELS = {
-  products: 'Products', categories: 'Categories', orders: 'Orders',
-  staff: 'Staff', settings: 'Settings',
+  products: 'Products', categories: 'Categories', partners: 'Partners',
+  orders: 'Orders', staff: 'Staff', settings: 'Settings',
 }
 const blankNew = { email: '', password: '', full_name: '', role: 'staff', permissions: {} }
 

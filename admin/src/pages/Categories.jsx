@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase'
 const slugify = (s) =>
   s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
-const empty = { name: '', slug: '', description: '', icon: '', sort_order: 0, is_active: true }
+const empty = { name: '', slug: '', description: '', icon: '', sort_order: 0, is_active: true, is_featured: false }
 
 export default function Categories() {
   const [rows, setRows] = useState([])
@@ -35,6 +35,7 @@ export default function Categories() {
       icon: form.icon || null,
       sort_order: Number(form.sort_order) || 0,
       is_active: !!form.is_active,
+      is_featured: !!form.is_featured,
     }
     const res = editing?.id
       ? await supabase.from('categories').update(payload).eq('id', editing.id)
@@ -65,7 +66,7 @@ export default function Categories() {
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-gray-500 uppercase text-xs">
-              <tr><th className="px-4 py-3">Name</th><th className="px-4 py-3">Slug</th><th className="px-4 py-3">Order</th><th className="px-4 py-3">Active</th><th className="px-4 py-3"></th></tr>
+              <tr><th className="px-4 py-3">Name</th><th className="px-4 py-3">Slug</th><th className="px-4 py-3">Order</th><th className="px-4 py-3">In nav</th><th className="px-4 py-3">Active</th><th className="px-4 py-3"></th></tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {rows.map((r) => (
@@ -73,6 +74,7 @@ export default function Categories() {
                   <td className="px-4 py-3 font-medium">{r.icon} {r.name}</td>
                   <td className="px-4 py-3 text-gray-500">{r.slug}</td>
                   <td className="px-4 py-3">{r.sort_order}</td>
+                  <td className="px-4 py-3">{r.is_featured ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-3">{r.is_active ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-3 text-right">
                     <button className="p-1.5 text-gray-500 hover:text-brand" onClick={() => openEdit(r)}><Pencil size={16} /></button>
@@ -108,6 +110,9 @@ export default function Categories() {
               </div>
               <label className="flex items-center gap-2 mt-6 text-sm">
                 <input type="checkbox" checked={!!form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} /> Active
+              </label>
+              <label className="flex items-center gap-2 mt-6 text-sm" title="Show in the storefront top navigation">
+                <input type="checkbox" checked={!!form.is_featured} onChange={(e) => setForm({ ...form, is_featured: e.target.checked })} /> In nav
               </label>
             </div>
             <div className="flex justify-end gap-2">

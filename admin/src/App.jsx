@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard.jsx'
 import Products from './pages/Products.jsx'
 import ProductForm from './pages/ProductForm.jsx'
 import Categories from './pages/Categories.jsx'
+import Partners from './pages/Partners.jsx'
+import PartnerForm from './pages/PartnerForm.jsx'
 import Orders from './pages/Orders.jsx'
 import Staff from './pages/Staff.jsx'
 import Settings from './pages/Settings.jsx'
@@ -37,6 +39,9 @@ export default function App() {
         <Route path="products/new" element={<RequirePerm section="products"><ProductForm /></RequirePerm>} />
         <Route path="products/:id" element={<RequirePerm section="products"><ProductForm /></RequirePerm>} />
         <Route path="categories" element={<RequirePerm section="categories"><Categories /></RequirePerm>} />
+        <Route path="partners" element={<RequirePerm section="partners"><Partners /></RequirePerm>} />
+        <Route path="partners/new" element={<RequirePerm section="partners"><PartnerForm /></RequirePerm>} />
+        <Route path="partners/:id" element={<RequirePerm section="partners"><PartnerForm /></RequirePerm>} />
         <Route path="orders" element={<RequirePerm section="orders"><Orders /></RequirePerm>} />
         <Route path="staff" element={<RequirePerm section="staff" adminOnly><Staff /></RequirePerm>} />
         <Route path="settings" element={<RequirePerm section="settings"><Settings /></RequirePerm>} />
