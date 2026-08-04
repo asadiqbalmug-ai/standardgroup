@@ -24,11 +24,14 @@ import ElectricLights from './pages/ElectricLights.jsx'
 import ProductsPage from './pages/ProductsPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
+import { CartProvider } from './context/cart.jsx'
+import CartWidget from './components/CartWidget.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <CartProvider>
       <Routes>
         {/* B2B Homepage - Simple, Shopify-style design */}
         <Route path="/" element={<B2BHome />} />
@@ -71,6 +74,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/about"                   element={<AboutPage />} />
         </Route>
       </Routes>
+      <CartWidget />
+      </CartProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )
