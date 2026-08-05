@@ -1,0 +1,42 @@
+export const PREDEFINED_BRANDS = [
+  "Ariston",
+  "Asmaco",
+  "Awazel",
+  "Bildco",
+  "Bosch",
+  "Bucomac",
+  "Dubai Polymer",
+  "Ducab",
+  "Everhot",
+  "Fosroc",
+  "GCEM",
+  "GSI"
+];
+
+export const PREDEFINED_CATEGORIES = [
+  "Bitumen & Chemicals",
+  "Cables & Wires",
+  "Cement Board",
+  "Fittings",
+  "Glues & Adhesives",
+  "Gypsum Board",
+  "Gypsum Powder",
+  "Insulation",
+  "Main Building Materials",
+  "Cement",
+  "Concrete Blocks",
+  "Reinforcement Steel",
+  "Manhole Covers",
+  "Paints",
+  "Plastering",
+  "Power Tools",
+  "Safety",
+  "Sand",
+  "Sealants",
+  "Tools & Hardware",
+  "Water Heaters",
+  "Water Tanks",
+  "Waterproofing",
+  "Wooden Products",
+  "Other"
+];

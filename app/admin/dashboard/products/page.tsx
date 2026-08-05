@@ -5,15 +5,18 @@ import { SubmitProductButton, DeleteButton } from "@/components/AdminSubmitButto
 import Link from "next/link";
 import ProductSearch from "@/components/ProductSearch";
 import EditProductModal from "@/components/EditProductModal";
+import BrandSelect from "@/components/BrandSelect";
 
 export default async function ProductsManager({
   searchParams,
 }: {
-  searchParams?: Promise<{ tab?: string; q?: string }>;
+  searchParams?: Promise<{ tab?: string; q?: string; category?: string; brand?: string }>;
 }) {
   const resolvedParams = await searchParams;
-  const activeTab = resolvedParams?.tab || 'upload';
+  const activeTab = resolvedParams?.tab || 'all';
   const query = (resolvedParams?.q || '').toLowerCase();
+  const category = resolvedParams?.category || '';
+  const brand = resolvedParams?.brand || '';
 
   const supabase = await createClient();
   
@@ -23,16 +26,36 @@ export default async function ProductsManager({
     .select("*")
     .order("created_at", { ascending: false });
 
-  // Filter products based on search query
+  // Filter products based on search query, category, and brand
   const filteredProducts = products?.filter((p) => {
-    if (!query) return true;
-    return (
-      (p.name && p.name.toLowerCase().includes(query)) ||
-      (p.sku && p.sku.toLowerCase().includes(query)) ||
-      (p.brand && p.brand.toLowerCase().includes(query)) ||
-      (p.category && p.category.toLowerCase().includes(query))
-    );
+    let matches = true;
+
+    if (query) {
+      matches = matches && !!(
+        (p.name && p.name.toLowerCase().includes(query)) ||
+        (p.sku && p.sku.toLowerCase().includes(query)) ||
+        (p.brand && p.brand.toLowerCase().includes(query)) ||
+        (p.category && p.category.toLowerCase().includes(query))
+      );
+    }
+
+    if (category) {
+      matches = matches && p.category === category;
+    }
+
+    if (brand) {
+      matches = matches && p.brand === brand;
+    }
+
+    return matches;
   }) || [];
+
+  const formatPrice = (price: string | number) => {
+    if (!price) return "0.00 AED";
+    const num = parseFloat(price.toString().replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) return price.toString();
+    return num.toFixed(2) + " AED";
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -40,7 +63,13 @@ export default async function ProductsManager({
       <p className="text-gray-500 mb-8">Upload new products, update details, or remove them from your catalog.</p>
 
       {/* Tabs */}
-      <div className="flex items-center gap-6 border-b border-gray-200 mb-8">
+      <div className="flex flex-wrap items-center gap-6 border-b border-gray-200 mb-8">
+        <Link 
+          href="?tab=all" 
+          className={`pb-3 font-bold transition-colors ${activeTab === 'all' ? 'border-b-2 border-[#091522] text-[#091522]' : 'text-gray-400 hover:text-gray-700 border-b-2 border-transparent'}`}
+        >
+          All Products
+        </Link>
         <Link 
           href="?tab=upload" 
           className={`pb-3 font-bold transition-colors ${activeTab === 'upload' ? 'border-b-2 border-[#091522] text-[#091522]' : 'text-gray-400 hover:text-gray-700 border-b-2 border-transparent'}`}
@@ -74,7 +103,7 @@ export default async function ProductsManager({
             </div>
             <div>
               <label className="block text-xs font-bold text-gray-700 mb-1">Brand</label>
-              <input type="text" name="brand" className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" placeholder="e.g. Jotun" />
+              <BrandSelect />
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div>
@@ -145,7 +174,7 @@ export default async function ProductsManager({
         </div>
       )}
 
-      {(activeTab === 'update' || activeTab === 'delete') && (
+      {(activeTab === 'all' || activeTab === 'update' || activeTab === 'delete') && (
         <div>
           <ProductSearch />
           
@@ -193,7 +222,7 @@ export default async function ProductsManager({
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-extrabold text-[#091522]">{product.price}</div>
+                        <div className="text-sm font-extrabold text-[#091522]">{formatPrice(product.price)}</div>
                         <div className="text-xs font-medium text-gray-500 mt-1">{product.sku}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right flex justify-end items-center h-full gap-2">

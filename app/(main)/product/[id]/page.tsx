@@ -1,84 +1,86 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
-import { CheckCircle, Package, XCircle } from "lucide-react";
-import AddToCartButton from "./AddToCartButton";
+import { ChevronRight, Home } from "lucide-react";
+import ProductActionBox from "./ProductActionBox";
 import ProductGallery from "@/components/ProductGallery";
+import Link from "next/link";
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
   const supabase = await createClient();
 
   const { data: product } = await supabase
     .from("products")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", resolvedParams.id)
     .single();
 
   if (!product) {
     notFound();
   }
 
+  const formatPrice = (price: string | number) => {
+    if (!price) return "0.00 AED";
+    const num = parseFloat(price.toString().replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) return price.toString();
+    return num.toFixed(2) + " AED";
+  };
+
   return (
-    <main className="w-full bg-[#f8f9fa] min-h-screen py-12 md:py-20">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-12">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            
-            {/* Image Gallery */}
-            <div className="p-4 md:p-8 md:border-r border-gray-100">
-              <ProductGallery 
-                primaryImage={product.image_url} 
-                additionalImages={product.additional_images} 
-                productName={product.name} 
-              />
+    <main className="w-full bg-white min-h-screen pt-4 pb-12 md:pb-20">
+      <div className="max-w-[1300px] mx-auto px-4 md:px-8">
+        
+        {/* Breadcrumb */}
+        <div className="flex flex-wrap items-center gap-1 text-[11px] font-extrabold text-[#091522] mb-8 uppercase tracking-tight">
+          <Link href="/" className="hover:text-yellow-500 flex items-center"><Home className="w-3.5 h-3.5 mr-1" /> Products</Link>
+          <ChevronRight className="w-3.5 h-3.5 mx-0.5" />
+          <Link href={`/categories?category=${encodeURIComponent(product.category)}`} className="hover:text-yellow-500">{product.category}</Link>
+          <ChevronRight className="w-3.5 h-3.5 mx-0.5" />
+          <span className="text-gray-500">{product.name}</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+          
+          {/* Image Gallery (Left Side) */}
+          <div className="lg:col-span-5">
+            <ProductGallery 
+              primaryImage={product.image_url} 
+              additionalImages={product.additional_images} 
+              productName={product.name} 
+            />
+          </div>
+
+          {/* Product Details (Right Side) */}
+          <div className="lg:col-span-7 flex flex-col pt-2">
+            <h1 className="text-[17px] font-extrabold text-[#091522] mb-4">
+              {product.name}
+            </h1>
+
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-[26px] font-extrabold text-[#091522] tracking-tight">
+                {formatPrice(product.price)}
+              </span>
+              <span className="bg-[#091522] text-[#f6c000] text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                ( VAT EXL. )
+              </span>
             </div>
 
-            {/* Product Details */}
-            <div className="p-8 md:p-12 flex flex-col justify-center">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">
-                <span>{product.category}</span>
-                <span>•</span>
-                <span>SKU: {product.sku}</span>
-                {product.brand && (
-                  <>
-                    <span>•</span>
-                    <span className="text-[#091522]">{product.brand}</span>
-                  </>
-                )}
-              </div>
-              
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[#091522] mb-6 leading-tight">
-                {product.name}
-              </h1>
+            <ProductActionBox product={product} />
 
-              <div className="text-4xl font-extrabold text-[#f6c000] mb-6">
-                {product.price}
-                <span className="text-sm font-bold text-gray-400 ml-2">(EXCL. VAT)</span>
-              </div>
+          </div>
+        </div>
 
-              {product.description && (
-                <div className="text-gray-600 mb-8 whitespace-pre-wrap text-sm leading-relaxed border-t border-gray-100 pt-6">
-                  {product.description}
-                </div>
-              )}
-
-              <div className="space-y-4 mb-10 border-t border-gray-100 pt-6">
-                <div className="flex items-center gap-3 text-sm font-bold text-gray-700">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  Available for Inquiry
-                </div>
-                
-                <div className="flex items-center gap-3 text-sm font-bold text-gray-700">
-                  <Package className="w-5 h-5 text-blue-500" />
-                  Bulk Quantities Available
-                </div>
-              </div>
-
-              <div className="pt-8 border-t border-gray-100">
-                <AddToCartButton product={product} />
+        {/* Description Section */}
+        {product.description && (
+          <div className="mt-16 pt-10">
+            <div className="prose max-w-none text-[#091522]">
+              <div className="whitespace-pre-wrap text-sm leading-loose font-bold">
+                {product.description}
               </div>
             </div>
           </div>
-        </div>
+        )}
+
       </div>
     </main>
   );

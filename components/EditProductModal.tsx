@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, Edit2 } from "lucide-react";
 import { updateProduct } from "@/app/admin/dashboard/products/actions";
 import { useFormStatus } from "react-dom";
+import BrandSelect from "@/components/BrandSelect";
 
 function UpdateButton() {
   const { pending } = useFormStatus();
@@ -54,7 +55,7 @@ export default function EditProductModal({ product }: { product: any }) {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">Brand</label>
-                  <input type="text" name="brand" defaultValue={product.brand} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" />
+                  <BrandSelect defaultValue={product.brand} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>

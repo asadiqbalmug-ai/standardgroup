@@ -2,6 +2,9 @@ import { ChevronRight, Filter } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import ProductCard from "@/components/ProductCard";
+import { PREDEFINED_BRANDS } from "@/utils/constants";
+import CategorySort from "@/components/CategorySort";
+import PriceFilter from "@/components/PriceFilter";
 
 const categories = [
   { name: "Bitumen & Chemicals", count: 35 },
@@ -39,7 +42,7 @@ export const dynamic = 'force-dynamic';
 export default async function CategoriesPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ category?: string; brand?: string }>;
+  searchParams?: Promise<{ category?: string; brand?: string; min?: string; max?: string; sort?: string }>;
 }) {
   const resolvedParams = await searchParams;
   const supabase = await createClient();
@@ -57,7 +60,7 @@ export default async function CategoriesPage({
 
   // Compute brand counts
   const brandCounts = validProducts.reduce((acc, product) => {
-    if (product.brand) {
+    if (product.brand && PREDEFINED_BRANDS.includes(product.brand)) {
       acc[product.brand] = (acc[product.brand] || 0) + 1;
     }
     return acc;
@@ -69,6 +72,9 @@ export default async function CategoriesPage({
 
   const selectedCategory = resolvedParams?.category;
   const selectedBrand = resolvedParams?.brand;
+  const sort = resolvedParams?.sort || "featured";
+  const minPrice = resolvedParams?.min ? parseFloat(resolvedParams.min) : null;
+  const maxPrice = resolvedParams?.max ? parseFloat(resolvedParams.max) : null;
   
   let filteredProducts = validProducts;
   if (selectedCategory) {
@@ -76,6 +82,35 @@ export default async function CategoriesPage({
   }
   if (selectedBrand) {
     filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand);
+  }
+
+  if (minPrice !== null || maxPrice !== null) {
+    filteredProducts = filteredProducts.filter(p => {
+      if (!p.price) return false;
+      const priceNum = parseFloat(p.price.toString().replace(/[^0-9.]/g, ''));
+      if (isNaN(priceNum)) return false;
+      
+      if (minPrice !== null && priceNum < minPrice) return false;
+      if (maxPrice !== null && priceNum > maxPrice) return false;
+      return true;
+    });
+  }
+
+  filteredProducts = [...filteredProducts];
+  if (sort === "price_asc") {
+    filteredProducts.sort((a, b) => {
+      const pA = parseFloat((a.price || "").toString().replace(/[^0-9.]/g, '')) || 0;
+      const pB = parseFloat((b.price || "").toString().replace(/[^0-9.]/g, '')) || 0;
+      return pA - pB;
+    });
+  } else if (sort === "price_desc") {
+    filteredProducts.sort((a, b) => {
+      const pA = parseFloat((a.price || "").toString().replace(/[^0-9.]/g, '')) || 0;
+      const pB = parseFloat((b.price || "").toString().replace(/[^0-9.]/g, '')) || 0;
+      return pB - pA;
+    });
+  } else if (sort === "newest") {
+    filteredProducts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
   // Build categories array for sidebar
@@ -161,12 +196,7 @@ export default async function CategoriesPage({
               <span className="text-sm font-bold text-gray-600">Showing {filteredProducts.length} products</span>
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <span className="text-sm text-gray-500 shrink-0">Sort by:</span>
-                <select className="bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md px-3 py-2 outline-none focus:border-yellow-500 w-full sm:w-auto">
-                  <option>Featured</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Best Selling</option>
-                </select>
+                <CategorySort />
               </div>
             </div>
 
@@ -191,23 +221,7 @@ export default async function CategoriesPage({
               </div>
 
               {/* Price Filter */}
-              <div>
-                <h4 className="font-bold text-[#091522] mb-4 text-sm uppercase tracking-wide">Price Range</h4>
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex-1 relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-bold">AED</span>
-                    <input type="number" placeholder="Min" className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-yellow-500" />
-                  </div>
-                  <span className="text-gray-400 font-bold">-</span>
-                  <div className="flex-1 relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-bold">AED</span>
-                    <input type="number" placeholder="Max" className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-yellow-500" />
-                  </div>
-                </div>
-                <button className="w-full mt-4 bg-[#091522] hover:bg-yellow-500 hover:text-black text-white font-bold py-2 rounded-md transition-colors text-xs uppercase tracking-wider">
-                  Apply Filter
-                </button>
-              </div>
+              <PriceFilter />
             </div>
 
             {/* 2. Product Categories */}

@@ -35,7 +35,12 @@ export default function ProductCard({ product }: { product: any }) {
         </Link>
         
         <div className="mt-3 text-[#1a365d] font-extrabold text-base md:text-lg">
-          {product.price}
+          {(() => {
+            if (!product.price) return "0.00 AED";
+            const num = parseFloat(product.price.toString().replace(/[^0-9.]/g, ''));
+            if (isNaN(num)) return product.price.toString();
+            return num.toFixed(2) + " AED";
+          })()}
         </div>
         
         <div className="mt-1.5 inline-block">

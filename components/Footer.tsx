@@ -61,7 +61,7 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="font-bold text-[15px] uppercase tracking-wider text-yellow-400">Authorized Brands</h3>
               <p className="text-xs text-gray-400 leading-relaxed">
-                RAKCC • Emirates Steel • MAPEI • Knauf • Jotun • Asian Paints • Terraco • Wefatherm • Awazel • Polybit • Milano • GROHE • Jaquar + 18 more
+                Ariston • Asmaco • Awazel • Bildco • Bosch • Bucomac • Dubai Polymer • Ducab • Everhot • Fosroc • GCEM • GSI
               </p>
             </div>
           </div>
