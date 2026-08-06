@@ -36,7 +36,7 @@ export default async function Home() {
 
       {/* Section 3 - Brands */}
       <BrandCarousel />
-      <ProductSection title="Best Sellers" products={(products || []).slice(0, 5)} />
+      <ProductSection title="Best Sellers" products={(products || []).slice(0, 10)} />
 
       {/* Section 4 - Client Reviews */}
       <Testimonials />

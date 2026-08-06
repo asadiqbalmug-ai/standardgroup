@@ -10,17 +10,44 @@ export default function Navbar() {
   return (
     <div className="bg-[#091522] border-b border-[#1a2d40] py-4 px-4 md:px-8 w-full flex items-center justify-between gap-4">
       {/* Logo Section */}
-      <Link href="/" className="flex items-center gap-3 shrink-0">
-        <img src="/logos/logo.png" alt="Standard Group Logo" className="h-10 w-auto" />
-        <div className="flex flex-col">
-          <span className="text-base font-bold leading-tight text-white tracking-tight">
-            Standard Group
-          </span>
-          <span className="text-xs font-normal text-yellow-400">
-            Building Materials, UAE
-          </span>
+      <div className="relative group shrink-0 z-50">
+        <Link href="/" className="flex items-center gap-3 py-1 cursor-pointer">
+          <img src="/logos/logo.png" alt="Standard Group Logo" className="h-10 w-auto" />
+          <div className="flex flex-col">
+            <span className="text-base font-bold leading-tight text-white tracking-tight">
+              Standard Group
+            </span>
+            <span className="text-xs font-normal text-yellow-400">
+              Building Materials, UAE
+            </span>
+          </div>
+        </Link>
+
+        {/* Dropdown Menu */}
+        <div className="absolute top-[100%] left-0 pt-3 opacity-0 translate-y-4 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 ease-out">
+          <div className="w-72 bg-[#091522] border border-[#1a2d40] shadow-2xl rounded-md overflow-hidden flex flex-col">
+            {[1, 2, 3].map((_, i) => (
+              <Link 
+                key={i} 
+                href="/" 
+                className={`flex items-center gap-3 p-4 hover:bg-[#112338] hover:-translate-y-1 transition-all duration-300 ${i !== 2 ? 'border-b border-[#1a2d40]' : ''}`}
+              >
+                <div className="bg-[#112338] p-1.5 rounded-sm">
+                  <img src="/logos/logo.png" alt="Standard Group Logo" className="h-6 w-auto" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-extrabold leading-tight text-white tracking-tight">
+                    Standard Group
+                  </span>
+                  <span className="text-[11px] font-bold text-yellow-400">
+                    Building Materials, UAE
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </Link>
+      </div>
 
       {/* Search Section */}
       <div className="hidden lg:flex flex-1 max-w-2xl mx-8">
