@@ -26,7 +26,7 @@ export default function ProductSection({ title, showViewAll = false, id, product
         {showViewAll && (
           <div className="mt-10 md:mt-12 flex justify-center">
             <Link 
-              href="/products"
+              href="/categories"
               className="inline-flex items-center justify-center bg-transparent border-2 border-[#091522] text-[#091522] hover:bg-[#091522] hover:text-white font-bold py-3 px-10 rounded-full transition-colors duration-300 gap-2 uppercase tracking-wide text-sm"
             >
               View All Products
