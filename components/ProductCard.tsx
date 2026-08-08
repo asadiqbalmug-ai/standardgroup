@@ -4,19 +4,21 @@ import { ShoppingCart, Search } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
-export default function ProductCard({ product }: { product: any }) {
+export default function ProductCard({ product, className = "" }: { product: any, className?: string }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="bg-white border border-gray-100 p-3 md:p-4 flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-shadow duration-300 relative">
+    <div className={`bg-white border border-gray-100 p-3 md:p-4 flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-shadow duration-300 relative ${className}`}>
       {/* Image Area */}
       <div className="relative w-full h-[140px] md:h-[180px] bg-[#f8f9fa] mb-4 flex items-center justify-center overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src={product.image_url} 
-          alt={product.name}
-          className="w-full h-full object-contain mix-blend-multiply p-4 group-hover:scale-105 transition-transform duration-500"
-        />
+        <Link href={`/product/${product.id}`} className="w-full h-full flex items-center justify-center cursor-pointer">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={product.image_url} 
+            alt={product.name}
+            className="w-full h-full object-contain mix-blend-multiply p-4 group-hover:scale-105 transition-transform duration-500"
+          />
+        </Link>
         
         {/* Hover Search Icon */}
         <Link href={`/product/${product.id}`}>

@@ -17,8 +17,8 @@ export default function ProductSection({ title, showViewAll = false, id, product
 
         {/* Grid Container */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products.map((product, index) => (
+            <ProductCard key={product.id} product={product} className={index >= 6 ? "hidden md:flex" : ""} />
           ))}
         </div>
 

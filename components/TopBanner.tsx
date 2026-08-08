@@ -4,7 +4,7 @@ export default function TopBanner() {
   return (
     <div className="bg-[#091522] text-white text-[13px] font-medium py-2 px-4 md:px-8 w-full flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
       {/* Left Section */}
-      <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+      <div className="hidden md:flex flex-wrap items-center justify-center gap-4 md:gap-8">
         <div className="flex items-center gap-2">
           <Truck className="w-4 h-4 text-yellow-400" />
           <span>Delivering in Abu Dhabi</span>
