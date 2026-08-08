@@ -74,13 +74,13 @@ export default function CartPage() {
               
               <div className="flex flex-col divide-y divide-gray-100">
                 {items.map((item) => (
-                  <div key={item.id} className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                  <div key={item.id} className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-center relative">
                     
                     {/* Product Info */}
                     <div className="col-span-1 md:col-span-5 flex items-center gap-4">
                       <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2 mix-blend-multiply" />
+                        <img src={item.image_url} alt={item.name} className="w-full h-full object-contain p-2 mix-blend-multiply" />
                       </div>
                       <div className="flex flex-col">
                         <Link href={`/product/${item.id}`} className="font-bold text-[#091522] hover:text-yellow-500 transition-colors text-sm md:text-base leading-tight mb-1">

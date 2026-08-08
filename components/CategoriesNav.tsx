@@ -22,7 +22,7 @@ export default function CategoriesNav() {
         ))}
       </div>
 
-      <Link href="/categories" className="flex items-center gap-2 font-bold text-sm text-white hover:text-yellow-400 transition-colors bg-[#1a2d40] px-4 py-2 rounded-md shrink-0">
+      <Link href="/categories" className="flex items-center gap-2 font-bold text-sm text-white hover:text-yellow-400 active:bg-yellow-500 active:text-[#091522] active:scale-95 transition-all bg-[#1a2d40] px-4 py-2 rounded-md shrink-0">
         <Menu className="w-4 h-4" />
         View All Categories
       </Link>

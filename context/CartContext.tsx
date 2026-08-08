@@ -8,7 +8,7 @@ export type CartItem = {
   id: number;
   name: string;
   price: string; // Stored as a string like "19.50 AED"
-  image: string;
+  image_url: string;
   quantity: number;
 };
 
@@ -110,7 +110,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             <div className="flex gap-3 items-center">
               <div className="w-12 h-12 bg-white rounded-md p-1 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={notification.product.image} alt={notification.product.name} className="w-full h-full object-contain mix-blend-multiply" />
+                <img src={notification.product.image_url} alt={notification.product.name} className="w-full h-full object-contain mix-blend-multiply" />
               </div>
               <div className="flex flex-col">
                 <span className="text-white font-bold text-[13px] leading-snug line-clamp-2">{notification.product.name}</span>

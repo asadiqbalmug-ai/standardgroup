@@ -5,6 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import { PREDEFINED_BRANDS } from "@/utils/constants";
 import CategorySort from "@/components/CategorySort";
 import PriceFilter from "@/components/PriceFilter";
+import ScrollToGrid from "@/components/ScrollToGrid";
+import { Suspense } from "react";
 
 const categories = [
   { name: "Bitumen & Chemicals", count: 35 },
@@ -200,8 +202,13 @@ export default async function CategoriesPage({
               </div>
             </div>
 
+            {/* Auto-scroll helper for mobile */}
+            <Suspense fallback={null}>
+              <ScrollToGrid />
+            </Suspense>
+
             {/* Grid Container */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
+            <div id="product-grid" className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

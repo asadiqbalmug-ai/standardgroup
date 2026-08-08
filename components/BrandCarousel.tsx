@@ -61,20 +61,20 @@ export default function BrandCarousel() {
           {/* Scrollable Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4"
+            className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4 pt-2 px-1 -mx-1"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {brands.map((brand, idx) => (
               <Link 
                 key={idx}
                 href={`/categories?brand=${encodeURIComponent(brand.name)}`}
-                className="snap-start shrink-0 w-[200px] md:w-[240px] h-[120px] bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-center hover:border-[#091522] transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer"
+                className="snap-start shrink-0 w-[200px] md:w-[240px] h-[120px] bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-center hover:border-[#091522] transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer overflow-hidden relative"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={brand.logo} 
                   alt={brand.name}
-                  className={`max-w-full max-h-[80px] object-contain ${brand.customClass || ''}`}
+                  className={`max-w-full max-h-[80px] object-contain mix-blend-multiply ${brand.customClass || ''}`}
                 />
               </Link>
             ))}
