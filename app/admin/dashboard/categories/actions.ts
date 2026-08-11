@@ -101,3 +101,55 @@ export async function toggleTopCategory(id: string, currentState: boolean) {
   revalidatePath("/admin/dashboard/categories");
   revalidatePath("/");
 }
+
+export async function updateCategory(formData: FormData) {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const imageFile = formData.get("image") as File;
+
+  let imageUrl = undefined;
+
+  if (imageFile && imageFile.size > 0) {
+    const fileExt = imageFile.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    
+    const { error: uploadError } = await supabase.storage
+      .from('category_images')
+      .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
+
+    if (uploadError) {
+      console.error("Error uploading category image:", uploadError);
+      throw new Error("Failed to upload category image");
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('category_images')
+      .getPublicUrl(fileName);
+
+    imageUrl = publicUrl;
+  }
+
+  const updates: any = { name };
+  if (imageUrl !== undefined) {
+    updates.image_url = imageUrl;
+  }
+
+  const { error } = await supabase
+    .from("categories")
+    .update(updates)
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error updating category:", error);
+    throw new Error("Failed to update category");
+  }
+
+  revalidatePath("/admin/dashboard/categories");
+  revalidatePath("/admin/dashboard/products");
+  revalidatePath("/");
+}

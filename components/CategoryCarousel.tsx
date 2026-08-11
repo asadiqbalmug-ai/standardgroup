@@ -1,5 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import Link from "next/link";
-import { ChevronRight, ShieldCheck, PackageSearch, RotateCcw, Truck } from "lucide-react";
+import { ChevronRight, ChevronLeft, ShieldCheck, PackageSearch, RotateCcw, Truck } from "lucide-react";
 
 export default function CategoryCarousel({ 
   categoryCounts = {}, 
@@ -8,6 +11,20 @@ export default function CategoryCarousel({
   categoryCounts?: Record<string, number>, 
   categories?: any[] 
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="w-full bg-white pt-20 pb-12">
       <div className="max-w-[1400px] mx-auto px-4 md:px-12">
@@ -29,34 +46,60 @@ export default function CategoryCarousel({
           </Link>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-5">
-          {categories.map((category, idx) => (
-            <Link 
-              key={category.id || idx}
-              href={`/categories?category=${encodeURIComponent(category.name)}`}
-              className="bg-white border border-gray-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] rounded-2xl p-6 flex flex-col items-center justify-center group hover:border-gray-200 transition-all cursor-pointer aspect-square"
-            >
-              {/* Image Area */}
-              <div className="w-full flex-1 mb-4 flex items-center justify-center relative transition-transform duration-300 group-hover:-translate-y-1">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                {category.image_url ? (
-                  <img 
-                    src={category.image_url} 
-                    alt={category.name}
-                    className="max-h-[100px] w-auto object-contain mix-blend-multiply"
-                  />
-                ) : (
-                  <span className="text-gray-400 font-bold text-3xl opacity-20">{category.name.substring(0, 2).toUpperCase()}</span>
-                )}
-              </div>
+        {/* Categories Carousel */}
+        <div className="relative group mt-6">
+          {/* Left Arrow */}
+          <button 
+            onClick={scrollLeft}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
 
-              {/* Text */}
-              <span className="font-bold text-[#091522] text-[14px] text-center leading-tight group-hover:text-red-600 transition-colors">
-                {category.name}
-              </span>
-            </Link>
-          ))}
+          {/* Right Arrow */}
+          <button 
+            onClick={scrollRight}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          <div className="w-full">
+            <div 
+              ref={scrollRef}
+              className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 md:gap-5 pb-6"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {categories.map((category, idx) => (
+                <Link 
+                  key={category.id || idx}
+                  href={`/categories?category=${encodeURIComponent(category.name)}`}
+                  className="snap-start shrink-0 w-[160px] md:w-[190px] h-[190px] bg-white border border-gray-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] rounded-2xl p-6 flex flex-col items-center justify-center group hover:border-gray-200 transition-all cursor-pointer"
+                >
+                  {/* Image Area */}
+                  <div className="w-full flex-1 mb-4 flex items-center justify-center relative transition-transform duration-300 group-hover:-translate-y-1">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {category.image_url ? (
+                      <img 
+                        src={category.image_url} 
+                        alt={category.name}
+                        className="max-h-[110px] w-auto object-contain mix-blend-multiply"
+                      />
+                    ) : (
+                      <span className="text-gray-400 font-bold text-3xl opacity-20">{category.name.substring(0, 2).toUpperCase()}</span>
+                    )}
+                  </div>
+
+                  {/* Text */}
+                  <span className="font-bold text-[#091522] text-[14px] text-center leading-tight group-hover:text-red-600 transition-colors">
+                    {category.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Dark Stats Banner */}

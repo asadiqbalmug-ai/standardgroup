@@ -65,16 +65,16 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
             <Link 
               href="/categories" 
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-colors w-full sm:w-auto rounded-sm text-sm tracking-wide shadow-md"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:-translate-y-0.5 w-full sm:w-auto rounded-sm text-sm tracking-wide shadow-md group"
             >
               BROWSE ALL PRODUCTS
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link 
               href="/contact" 
-              className="bg-white hover:bg-gray-50 border border-gray-200 text-[#091522] font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-colors w-full sm:w-auto uppercase tracking-wide text-sm rounded-sm shadow-sm"
+              className="bg-white hover:bg-gray-50 border border-gray-200 text-[#091522] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-all duration-300 w-full sm:w-auto uppercase tracking-wide text-sm rounded-sm shadow-sm group"
             >
-              <FileText className="w-4 h-4 text-gray-500" />
+              <FileText className="w-4 h-4 text-gray-500 group-hover:text-gray-700 transition-colors" />
               Request Price List
             </Link>
           </div>

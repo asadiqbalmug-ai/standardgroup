@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { addCategory, deleteCategory, toggleTopCategory } from "./actions";
 import { Plus, Image as ImageIcon } from "lucide-react";
 import { SubmitCategoryButton, DeleteButton, ToggleTopCategoryButton } from "@/components/AdminSubmitButtons";
+import EditCategoryModal from "@/components/EditCategoryModal";
 
 export default async function CategoriesManager() {
   const supabase = await createClient();
@@ -86,12 +87,15 @@ export default async function CategoriesManager() {
                         </form>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <form action={async () => {
-                          'use server'
-                          await deleteCategory(category.id)
-                        }}>
-                          <DeleteButton />
-                        </form>
+                        <div className="flex items-center justify-end">
+                          <EditCategoryModal category={category} />
+                          <form action={async () => {
+                            'use server'
+                            await deleteCategory(category.id)
+                          }}>
+                            <DeleteButton />
+                          </form>
+                        </div>
                       </td>
                     </tr>
                   ))}

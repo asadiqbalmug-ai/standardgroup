@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { addBrand, deleteBrand } from "./actions";
 import { Plus, Image as ImageIcon } from "lucide-react";
 import { SubmitBrandButton, DeleteButton } from "@/components/AdminSubmitButtons";
+import EditBrandModal from "@/components/EditBrandModal";
 
 export default async function BrandsManager() {
   const supabase = await createClient();
@@ -77,12 +78,15 @@ export default async function BrandsManager() {
                         <span className="text-sm font-bold text-[#111]">{brand.name}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <form action={async () => {
-                          'use server'
-                          await deleteBrand(brand.id)
-                        }}>
-                          <DeleteButton />
-                        </form>
+                        <div className="flex items-center justify-end">
+                          <EditBrandModal brand={brand} />
+                          <form action={async () => {
+                            'use server'
+                            await deleteBrand(brand.id)
+                          }}>
+                            <DeleteButton />
+                          </form>
+                        </div>
                       </td>
                     </tr>
                   ))}

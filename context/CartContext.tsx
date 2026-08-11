@@ -101,30 +101,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }`}
       >
         {notification.product && (
-          <div className="bg-[#091522] border border-[#1a2d40] shadow-2xl rounded-lg p-4 pr-10 flex flex-col gap-3 relative w-[320px]">
+          <div className="bg-white border border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] rounded-xl p-5 pr-10 flex flex-col gap-3 relative w-[340px]">
             <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0" />
-              <span className="text-red-600 font-bold text-sm">Added to your cart</span>
+              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+              </div>
+              <span className="text-[#091522] font-extrabold text-[15px] tracking-tight">Added to cart!</span>
             </div>
             
-            <div className="flex gap-3 items-center">
-              <div className="w-12 h-12 bg-white rounded-md p-1 shrink-0">
+            <div className="flex gap-4 items-center bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+              <div className="w-12 h-12 bg-white rounded flex items-center justify-center shrink-0 shadow-sm border border-gray-100 p-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={notification.product.image_url} alt={notification.product.name} className="w-full h-full object-contain mix-blend-multiply" />
               </div>
               <div className="flex flex-col">
-                <span className="text-white font-bold text-[13px] leading-snug line-clamp-2">{notification.product.name}</span>
-                <span className="text-gray-400 text-xs mt-1 font-mono">{notification.product.price}</span>
+                <span className="text-[#1e293b] font-bold text-[13px] leading-snug line-clamp-2">{notification.product.name}</span>
+                <span className="text-gray-500 text-xs mt-1 font-bold">{notification.product.price}</span>
               </div>
             </div>
 
-            <Link href="/cart" onClick={() => setNotification(prev => ({ ...prev, visible: false }))} className="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded text-center transition-colors">
+            <Link href="/cart" onClick={() => setNotification(prev => ({ ...prev, visible: false }))} className="mt-2 w-full bg-[#b94a3a] hover:bg-red-700 text-white text-xs font-bold py-3 rounded-lg text-center transition-colors uppercase tracking-wider">
               View Cart & Checkout
             </Link>
 
             <button 
               onClick={() => setNotification(prev => ({ ...prev, visible: false }))}
-              className="absolute right-3 top-3 text-gray-400 hover:text-white transition-colors"
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-700 transition-colors bg-gray-50 hover:bg-gray-100 rounded-full p-1"
             >
               <X className="w-4 h-4" />
             </button>

@@ -1,7 +1,24 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Footer() {
+export default async function Footer() {
+  const supabase = await createClient();
+  
+  // Fetch Top 6 Categories
+  const { data: dbCategories } = await supabase
+    .from("categories")
+    .select("name")
+    .order("name", { ascending: true })
+    .limit(6);
+  const categories = dbCategories || [];
+
+  // Fetch Brands
+  const { data: dbBrands } = await supabase
+    .from("brands")
+    .select("name")
+    .order("name", { ascending: true });
+  const brands = dbBrands || [];
   return (
     <footer className="bg-[#1b1b1b] text-white pt-16 pb-8 border-t border-white/10 rounded-t-[32px] md:rounded-t-[48px] mt-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -37,12 +54,11 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <h3 className="font-bold text-[12px] uppercase tracking-widest text-[#bf5e42]">Categories</h3>
             <div className="flex flex-col gap-3 text-[13px] text-gray-300 font-medium">
-              <Link href={`/categories?category=${encodeURIComponent("Main Building Materials")}`} className="hover:text-white transition-colors">Main Building Materials</Link>
-              <Link href={`/categories?category=${encodeURIComponent("Cables & Wires")}`} className="hover:text-white transition-colors">Cables & Wires</Link>
-              <Link href={`/categories?category=${encodeURIComponent("Glues & Adhesives")}`} className="hover:text-white transition-colors">Glues & Adhesives</Link>
-              <Link href={`/categories?category=${encodeURIComponent("Paints")}`} className="hover:text-white transition-colors">Paints</Link>
-              <Link href={`/categories?category=${encodeURIComponent("Gypsum Board")}`} className="hover:text-white transition-colors">Gypsum Board</Link>
-              <Link href={`/categories?category=${encodeURIComponent("Tools & Hardware")}`} className="hover:text-white transition-colors">Tools & Hardware</Link>
+              {categories.map((cat, i) => (
+                <Link key={i} href={`/categories?category=${encodeURIComponent(cat.name)}`} className="hover:text-white transition-colors truncate">
+                  {cat.name}
+                </Link>
+              ))}
               <Link href="/categories" className="hover:text-[#bf5e42] transition-colors flex items-center gap-1 mt-2 text-white font-bold">View All &rarr;</Link>
             </div>
           </div>
@@ -61,7 +77,9 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="font-bold text-[12px] uppercase tracking-widest text-[#bf5e42]">Authorized Brands</h3>
               <p className="text-[11px] text-gray-400 leading-relaxed font-medium uppercase tracking-wide">
-                Ariston • Asmaco • Awazel • Bildco • Bosch • Bucomac • Dubai Polymer • Ducab • Everhot • Fosroc • GCEM • GSI
+                {brands.length > 0 
+                  ? brands.map(b => b.name).join(" • ") 
+                  : "Ariston • Asmaco • Awazel • Bildco • Bosch • Bucomac • Dubai Polymer • Ducab"}
               </p>
             </div>
           </div>

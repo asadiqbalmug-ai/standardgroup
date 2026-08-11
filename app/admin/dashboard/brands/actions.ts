@@ -91,3 +91,57 @@ export async function deleteBrand(id: string) {
   revalidatePath("/admin/dashboard/products");
   revalidatePath("/");
 }
+
+export async function updateBrand(formData: FormData) {
+  const supabase = await createClient();
+
+  // Protect the route
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const imageFile = formData.get("logo") as File;
+
+  let logoUrl = undefined;
+
+  if (imageFile && imageFile.size > 0) {
+    const fileExt = imageFile.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    
+    const { error: uploadError } = await supabase.storage
+      .from('brand_logos')
+      .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
+
+    if (uploadError) {
+      console.error("Error uploading brand logo:", uploadError);
+      throw new Error("Failed to upload brand logo");
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('brand_logos')
+      .getPublicUrl(fileName);
+
+    logoUrl = publicUrl;
+  }
+
+  // Update object
+  const updates: any = { name };
+  if (logoUrl !== undefined) {
+    updates.logo_url = logoUrl;
+  }
+
+  const { error } = await supabase
+    .from("brands")
+    .update(updates)
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error updating brand:", error);
+    throw new Error("Failed to update brand");
+  }
+
+  revalidatePath("/admin/dashboard/brands");
+  revalidatePath("/admin/dashboard/products");
+  revalidatePath("/");
+}

@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ categories = [] }: { categories?: any[] }) {
   const { cartCount } = useCart();
   const router = useRouter();
 
@@ -105,20 +105,60 @@ export default function Navbar() {
         </div>
 
         {/* Center: Navigation Links */}
-        <div className="hidden lg:flex items-center gap-8 text-[15px] font-semibold text-[#091522]">
-          <Link href="/categories" className="flex items-center gap-1 hover:text-red-700 transition-colors">
-            Shop <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
-          </Link>
-          <Link href="/categories" className="flex items-center gap-1 hover:text-red-700 transition-colors">
+        <div className="hidden lg:flex items-center gap-8 text-[15px] font-semibold text-[#091522] h-full">
+          {/* Products Dropdown */}
+          <div className="relative group flex items-center h-full">
+            <Link href="/categories" className="flex items-center gap-1 hover:text-red-700 transition-colors py-4">
+              Products <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
+            </Link>
+            
+            {/* Mega Dropdown Menu */}
+            <div className="absolute top-[100%] left-1/2 -translate-x-1/2 pt-4 opacity-0 translate-y-4 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 ease-out z-50">
+              <div className="w-[500px] bg-white border border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] rounded-xl overflow-hidden flex flex-col max-h-[75vh]">
+                
+                {/* Header Area */}
+                <div className="bg-white px-8 pt-8 pb-4 flex items-center justify-between">
+                  <span className="font-extrabold text-[#091522] text-[17px] tracking-tight">Our Categories</span>
+                  <Link href="/categories" className="text-[13px] font-bold text-[#b94a3a] hover:text-red-700 transition-colors uppercase tracking-widest flex items-center gap-1.5 group/link">
+                    View All
+                    <span className="transform group-hover/link:translate-x-1 transition-transform">&rarr;</span>
+                  </Link>
+                </div>
+
+                {/* Separator */}
+                <div className="px-8">
+                  <div className="w-full h-px bg-gray-100"></div>
+                </div>
+
+                {/* Categories Grid (2 Columns) */}
+                <div className="overflow-y-auto custom-scrollbar px-8 py-6 pb-8">
+                  <div className="grid grid-cols-2 gap-y-6 gap-x-12">
+                    {categories.map((cat, i) => (
+                      <Link 
+                        key={i}
+                        href={`/categories?category=${encodeURIComponent(cat.name)}`}
+                        className="flex items-center gap-3 text-[15px] font-bold text-[#1e293b] hover:text-[#091522] transition-colors group/item"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover/item:bg-[#b94a3a] transition-colors shrink-0"></div>
+                        <span className="truncate">{cat.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <Link href="/categories" className="hover:text-red-700 transition-colors py-4">
             Categories
           </Link>
-          <Link href="/brands" className="hover:text-red-700 transition-colors">
+          <Link href="/brands" className="hover:text-red-700 transition-colors py-4">
             Brands
           </Link>
-          <Link href="/about" className="hover:text-red-700 transition-colors">
+          <Link href="/about" className="hover:text-red-700 transition-colors py-4">
             About Us
           </Link>
-          <Link href="/contact" className="hover:text-red-700 transition-colors">
+          <Link href="/contact" className="hover:text-red-700 transition-colors py-4">
             Contact
           </Link>
         </div>
