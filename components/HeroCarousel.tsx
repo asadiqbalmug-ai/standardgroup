@@ -22,7 +22,7 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
   }, [slides.length]);
 
   return (
-    <section className="relative w-full bg-[#f5f0e6] flex flex-col justify-center overflow-hidden min-h-[750px] pt-[140px] pb-20">
+    <section className="relative w-full bg-[#f5f0e6] flex flex-col justify-center overflow-hidden min-h-[600px] pt-[100px] pb-12">
       {/* Background Images Carousel */}
       {slides.map((slide, index) => (
         <div
