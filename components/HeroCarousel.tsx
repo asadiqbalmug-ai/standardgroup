@@ -22,7 +22,7 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
   }, [slides.length]);
 
   return (
-    <section className="relative w-full bg-[#f5f0e6] flex flex-col justify-center overflow-hidden min-h-[600px] pt-[100px] pb-12">
+    <section className="relative w-full bg-[#f5f0e6] flex flex-col justify-center overflow-hidden min-h-[750px] md:min-h-[600px] pt-[100px] pb-12">
       {/* Background Images Carousel */}
       {slides.map((slide, index) => (
         <div
@@ -41,6 +41,9 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
         </div>
       ))}
 
+      {/* Gradient Overlay for Text Legibility */}
+      <div className="absolute inset-0 z-20 bg-[#f5f0e6]/85 sm:bg-[#f5f0e6]/70 md:bg-transparent md:bg-gradient-to-r md:from-[#f5f0e6]/95 md:via-[#f5f0e6]/70 md:to-transparent pointer-events-none" />
+
       {/* Main Content */}
       <div className="relative z-30 w-full max-w-[1400px] mx-auto px-4 md:px-12 flex flex-col h-full justify-center">
         <div className="max-w-[650px] flex flex-col items-start gap-5">
@@ -51,13 +54,13 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
           </span>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-6xl lg:text-[68px] font-extrabold text-[#091522] leading-[1.05] tracking-tight">
+          <h1 className="text-[40px] sm:text-5xl md:text-6xl lg:text-[68px] font-extrabold text-[#091522] leading-[1.1] tracking-tight mt-1">
             Everything Your <br/>Project Needs — <br/>
             <span className="text-red-600">In One Place.</span>
           </h1>
 
           {/* Description */}
-          <p className="text-gray-600 text-[15px] md:text-[17px] font-medium max-w-[500px] leading-relaxed mt-2">
+          <p className="text-[#091522] md:text-gray-600 text-[15px] md:text-[17px] font-bold md:font-medium max-w-[500px] leading-relaxed mt-2">
             Cement, Steel, Tiles, Sanitary Ware, Waterproofing, Gypsum, Paints, Plumbing & more. Trusted by contractors and builders across UAE.
           </p>
 

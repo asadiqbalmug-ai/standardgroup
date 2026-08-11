@@ -2,6 +2,7 @@ import { LayoutDashboard, Package, MessageSquareQuote, Image as ImageIcon, LogOu
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import MobileAdminNav from "@/components/MobileAdminNav";
 
 export default async function AdminLayout({
   children,
@@ -21,7 +22,7 @@ export default async function AdminLayout({
     { name: "Categories", href: "/admin/dashboard/categories", icon: Grid },
     { name: "Brands", href: "/admin/dashboard/brands", icon: Tags },
     { name: "Testimonials", href: "/admin/dashboard/testimonials", icon: MessageSquareQuote },
-    { name: "Hero Images", href: "/admin/dashboard/hero", icon: ImageIcon },
+    // { name: "Hero Images", href: "/admin/dashboard/hero", icon: ImageIcon },
     { name: "Homepage Video", href: "/admin/dashboard/video", icon: Video },
   ];
 
@@ -67,22 +68,12 @@ export default async function AdminLayout({
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Mobile Header (Only visible on small screens) */}
-        <header className="md:hidden bg-[#1b1b1b] text-white h-16 flex items-center justify-between px-4 sticky top-0 z-20">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-[#bf5e42]" />
-            <span className="font-extrabold text-lg">Admin</span>
-          </div>
-          <form action={async () => {
-            'use server'
-            const sb = await createClient()
-            await sb.auth.signOut()
-            redirect('/admin/login')
-          }}>
-            <button className="text-[#bf5e42] p-2 hover:bg-white/5 rounded-full transition-colors">
-              <LogOut className="w-5 h-5" />
-            </button>
-          </form>
-        </header>
+        <MobileAdminNav onSignOut={async () => {
+          'use server'
+          const sb = await createClient()
+          await sb.auth.signOut()
+          redirect('/admin/login')
+        }} />
 
         {/* Top Bar Desktop */}
         <header className="hidden md:flex bg-white border-b border-gray-100 h-16 items-center justify-between px-8 sticky top-0 z-10 shrink-0 shadow-sm">

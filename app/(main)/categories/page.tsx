@@ -5,6 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import { PREDEFINED_BRANDS } from "@/utils/constants";
 import CategorySort from "@/components/CategorySort";
 import PriceFilter from "@/components/PriceFilter";
+import FilterLink from "@/components/FilterLink";
+import ProductGridScroll from "@/components/ProductGridScroll";
 import { Suspense } from "react";
 
 export const dynamic = 'force-dynamic';
@@ -117,6 +119,9 @@ export default async function CategoriesPage({
 
   return (
     <main className="w-full min-h-screen bg-white py-12 px-4 md:px-8 lg:px-12">
+      <Suspense fallback={null}>
+        <ProductGridScroll />
+      </Suspense>
       <div className="max-w-[1400px] mx-auto">
         
         {/* Header */}
@@ -182,23 +187,23 @@ export default async function CategoriesPage({
               <h2 className="text-2xl font-extrabold text-[#091522] mb-4 pb-4 border-b border-gray-100">Product Categories</h2>
               <ul className="flex flex-col text-[14px]">
                 <li className="flex flex-col">
-                  <Link href="/categories" className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
+                  <FilterLink href="/categories" className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
                     <div className="flex items-center gap-3">
                       <div className={`w-1.5 h-1.5 rounded-full transition-colors ${!selectedCategory ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
                       <span className={`font-bold transition-colors ${!selectedCategory ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>All Categories</span>
                     </div>
                     <span className="text-gray-400 font-bold">({validProducts.length})</span>
-                  </Link>
+                  </FilterLink>
                 </li>
                 {dynamicCategories.map((cat, idx) => (
                   <li key={idx} className="flex flex-col">
-                    <Link href={`/categories?category=${encodeURIComponent(cat.name)}`} className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
+                    <FilterLink href={`/categories?category=${encodeURIComponent(cat.name)}`} className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
                       <div className="flex items-center gap-3">
                         <div className={`w-1.5 h-1.5 rounded-full transition-colors ${selectedCategory === cat.name ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
                         <span className={`font-bold transition-colors ${selectedCategory === cat.name ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>{cat.name}</span>
                       </div>
                       <span className="text-gray-400 font-bold">({cat.count})</span>
-                    </Link>
+                    </FilterLink>
                   </li>
                 ))}
               </ul>
@@ -210,7 +215,7 @@ export default async function CategoriesPage({
               <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                 
                 {/* All Brands Option */}
-                <Link href={selectedCategory ? `/categories?category=${encodeURIComponent(selectedCategory)}` : '/categories'} className="flex items-center justify-between cursor-pointer group">
+                <FilterLink href={selectedCategory ? `/categories?category=${encodeURIComponent(selectedCategory)}` : '/categories'} className="flex items-center justify-between cursor-pointer group">
                   <div className="flex items-center gap-3">
                     <div className="relative flex items-center justify-center w-5 h-5 rounded border border-gray-300 bg-white group-hover:border-red-700 transition-colors">
                       <div className={`w-3 h-3 bg-red-600 rounded-sm transition-transform ${!selectedBrand ? 'scale-100' : 'scale-0 group-hover:scale-50'}`}></div>
@@ -218,7 +223,7 @@ export default async function CategoriesPage({
                     <span className={`text-sm font-bold transition-colors ${!selectedBrand ? 'text-[#091522]' : 'text-gray-700 group-hover:text-[#091522]'}`}>All Brands</span>
                   </div>
                   <span className="text-xs font-bold text-gray-400 group-hover:text-red-700 transition-colors">{validProducts.length}</span>
-                </Link>
+                </FilterLink>
 
                 {dynamicBrands.map((brand, idx) => {
                   const isSelected = selectedBrand === brand.name;
@@ -227,7 +232,7 @@ export default async function CategoriesPage({
                     : `/categories?brand=${encodeURIComponent(brand.name)}${selectedCategory ? `&category=${encodeURIComponent(selectedCategory)}` : ''}`;
                     
                   return (
-                    <Link key={idx} href={href} className="flex items-center justify-between cursor-pointer group">
+                    <FilterLink key={idx} href={href} className="flex items-center justify-between cursor-pointer group">
                       <div className="flex items-center gap-3">
                         <div className="relative flex items-center justify-center w-5 h-5 rounded border border-gray-300 bg-white group-hover:border-red-700 transition-colors">
                           <div className={`w-3 h-3 bg-red-600 rounded-sm transition-transform ${isSelected ? 'scale-100' : 'scale-0 group-hover:scale-50'}`}></div>
@@ -235,7 +240,7 @@ export default async function CategoriesPage({
                         <span className={`text-sm font-bold transition-colors ${isSelected ? 'text-[#091522]' : 'text-gray-700 group-hover:text-[#091522]'}`}>{brand.name}</span>
                       </div>
                       <span className="text-xs font-bold text-gray-400 group-hover:text-red-700 transition-colors">{brand.count}</span>
-                    </Link>
+                    </FilterLink>
                   );
                 })}
               </div>

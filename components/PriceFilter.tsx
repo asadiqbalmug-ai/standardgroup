@@ -19,7 +19,7 @@ export default function PriceFilter() {
     if (maxPrice) params.set("max", maxPrice);
     else params.delete("max");
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (

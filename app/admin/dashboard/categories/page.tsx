@@ -46,8 +46,8 @@ export default async function CategoriesManager() {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
+              <table className="w-full text-left border-collapse block md:table">
+                <thead className="hidden md:table-header-group">
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider">Image</th>
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider">Category Name</th>
@@ -55,7 +55,7 @@ export default async function CategoriesManager() {
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="block md:table-row-group">
                   {(!categories || categories.length === 0) && (
                     <tr>
                       <td colSpan={4} className="px-6 py-12 text-center text-gray-500 text-sm font-medium">
@@ -64,8 +64,9 @@ export default async function CategoriesManager() {
                     </tr>
                   )}
                   {categories?.map((category) => (
-                    <tr key={category.id} className="hover:bg-gray-50 transition-colors group">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={category.id} className="block md:table-row hover:bg-gray-50 transition-colors group bg-white border border-gray-100 md:border-b md:border-t-0 md:border-l-0 md:border-r-0 rounded-xl md:rounded-none mb-4 md:mb-0 p-4 md:p-0 shadow-sm md:shadow-none">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap flex items-center justify-between border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase">Image</span>
                         <div className="w-12 h-12 rounded bg-white border border-gray-200 flex items-center justify-center overflow-hidden p-1 shadow-sm">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           {category.image_url ? (
@@ -75,10 +76,12 @@ export default async function CategoriesManager() {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap flex items-center justify-between border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase">Category Name</span>
                         <span className="text-sm font-bold text-[#111]">{category.name}</span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap flex items-center justify-between border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase">Homepage Status</span>
                         <form action={async () => {
                           'use server'
                           await toggleTopCategory(category.id, category.is_top_category)
@@ -86,7 +89,7 @@ export default async function CategoriesManager() {
                           <ToggleTopCategoryButton isTopCategory={category.is_top_category} />
                         </form>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap mt-2 md:mt-0 pt-4 md:pt-4">
                         <div className="flex items-center justify-end">
                           <EditCategoryModal category={category} />
                           <form action={async () => {

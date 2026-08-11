@@ -168,8 +168,8 @@ export default async function ProductsManager({
           
           <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
+              <table className="w-full text-left border-collapse block md:table">
+                <thead className="hidden md:table-header-group">
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider">Image</th>
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider">Details</th>
@@ -177,7 +177,7 @@ export default async function ProductsManager({
                     <th className="px-6 py-4 text-xs font-extrabold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="block md:table-row-group">
                   {(!filteredProducts || filteredProducts.length === 0) && (
                     <tr>
                       <td colSpan={4} className="px-6 py-12 text-center text-gray-500 text-sm font-medium">
@@ -186,8 +186,9 @@ export default async function ProductsManager({
                     </tr>
                   )}
                   {filteredProducts?.map((product) => (
-                    <tr key={product.id} className="hover:bg-gray-50 transition-colors group">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={product.id} className="block md:table-row hover:bg-gray-50 transition-colors group bg-white border border-gray-100 md:border-b md:border-t-0 md:border-l-0 md:border-r-0 rounded-xl md:rounded-none mb-4 md:mb-0 p-4 md:p-0 shadow-sm md:shadow-none">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap flex items-center justify-between border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase">Image</span>
                         <div className="w-12 h-12 rounded bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           {product.image_url ? (
@@ -197,7 +198,8 @@ export default async function ProductsManager({
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 flex flex-col md:block border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase mb-2">Details</span>
                         <div className="text-sm font-bold text-[#111] truncate max-w-[250px]">{product.name}</div>
                         <div className="text-xs font-medium text-gray-500 flex items-center gap-2 mt-1">
                           <span>{product.category}</span>
@@ -209,22 +211,27 @@ export default async function ProductsManager({
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-extrabold text-[#111]">{formatPrice(product.price)}</div>
-                        <div className="text-xs font-medium text-gray-500 mt-1">{product.sku}</div>
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap flex items-center justify-between border-b border-gray-50 md:border-none">
+                        <span className="md:hidden text-xs text-gray-400 font-bold uppercase">Price / SKU</span>
+                        <div className="text-right md:text-left">
+                          <div className="text-sm font-extrabold text-[#111]">{formatPrice(product.price)}</div>
+                          <div className="text-xs font-medium text-gray-500 mt-1">{product.sku}</div>
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right flex justify-end items-center h-full gap-2">
-                        {activeTab === 'update' && (
-                          <EditProductModal product={product} brands={dynamicBrands} categories={dynamicCategories} />
-                        )}
-                        {activeTab === 'delete' && (
-                          <form action={async () => {
-                            'use server'
-                            await deleteProduct(product.id)
-                          }}>
-                            <DeleteButton />
-                          </form>
-                        )}
+                      <td className="block md:table-cell px-0 md:px-6 py-3 md:py-4 md:whitespace-nowrap mt-2 md:mt-0 pt-4 md:pt-4">
+                        <div className="flex justify-end items-center h-full gap-2">
+                          {activeTab === 'update' && (
+                            <EditProductModal product={product} brands={dynamicBrands} categories={dynamicCategories} />
+                          )}
+                          {activeTab === 'delete' && (
+                            <form action={async () => {
+                              'use server'
+                              await deleteProduct(product.id)
+                            }}>
+                              <DeleteButton />
+                            </form>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}

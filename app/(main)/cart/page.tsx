@@ -12,6 +12,7 @@ export default function CartPage() {
   // Prevent hydration mismatch since we use localStorage
   useEffect(() => {
     setMounted(true);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   if (!mounted) return null;

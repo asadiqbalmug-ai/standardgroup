@@ -42,33 +42,32 @@ export default function ProductCard({ product, className = "" }: { product: any,
           </h3>
         </Link>
         
-        {/* Bottom Row: Price & Cart Button */}
-        <div className="flex items-end justify-between mt-auto">
-          <div className="flex items-baseline gap-1">
-            <span className="text-[#091522] font-extrabold text-[15px]">
-              {(() => {
-                if (!product.price) return "AED 0.00";
-                const num = parseFloat(product.price.toString().replace(/[^0-9.]/g, ''));
-                if (isNaN(num)) return `AED ${product.price.toString()}`;
-                return `AED ${num.toFixed(2)}`;
-              })()}
-            </span>
-            <span className="text-gray-400 text-[10px] font-bold">
-              / Unit
-            </span>
+          <div className="flex items-center justify-between mt-auto gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-0 sm:gap-1 min-w-0">
+              <span className="text-[#091522] font-extrabold text-[14px] sm:text-[15px] truncate max-w-full">
+                {(() => {
+                  if (!product.price) return "AED 0.00";
+                  const num = parseFloat(product.price.toString().replace(/[^0-9.]/g, ''));
+                  if (isNaN(num)) return `AED ${product.price.toString()}`;
+                  return `AED ${num.toFixed(2)}`;
+                })()}
+              </span>
+              <span className="text-gray-400 text-[10px] font-bold shrink-0">
+                / Unit
+              </span>
+            </div>
+            
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                addToCart(product);
+              }}
+              className="w-8 h-8 sm:w-9 sm:h-9 bg-[#b5322b] hover:bg-red-800 text-white rounded-sm flex items-center justify-center transition-colors shrink-0 shadow-sm"
+              aria-label="Add to cart"
+            >
+              <ShoppingCart className="w-[14px] h-[14px] sm:w-4 sm:h-4 stroke-[2.5]" />
+            </button>
           </div>
-          
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              addToCart(product);
-            }}
-            className="w-8 h-8 bg-[#b5322b] hover:bg-red-800 text-white rounded-sm flex items-center justify-center transition-colors shrink-0 shadow-sm"
-            aria-label="Add to cart"
-          >
-            <ShoppingCart className="w-[14px] h-[14px] stroke-[2.5]" />
-          </button>
-        </div>
       </div>
     </div>
   );
