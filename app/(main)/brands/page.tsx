@@ -9,7 +9,7 @@ import { Suspense } from "react";
 
 export const dynamic = 'force-dynamic';
 
-export default async function CategoriesPage({
+export default async function BrandsPage({
   searchParams,
 }: {
   searchParams?: Promise<{ q?: string; category?: string; brand?: string; min?: string; max?: string; sort?: string }>;
@@ -126,12 +126,12 @@ export default async function CategoriesPage({
             <ChevronRight className="w-4 h-4" />
             {(selectedCategory || selectedBrand) ? (
               <>
-                <Link href="/categories" className="hover:text-red-700 transition-colors">Categories</Link>
+                <Link href="/brands" className="hover:text-red-700 transition-colors">Brands</Link>
                 <ChevronRight className="w-4 h-4" />
                 <span className="text-[#091522] font-bold">{selectedCategory || selectedBrand}</span>
               </>
             ) : (
-              <span className="text-[#091522] font-bold">Categories</span>
+              <span className="text-[#091522] font-bold">Brands</span>
             )}
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-[#091522]">
@@ -177,40 +177,13 @@ export default async function CategoriesPage({
               <PriceFilter />
             </div>
 
-            {/* 2. Product Categories */}
-            <div className="bg-white">
-              <h2 className="text-2xl font-extrabold text-[#091522] mb-4 pb-4 border-b border-gray-100">Product Categories</h2>
-              <ul className="flex flex-col text-[14px]">
-                <li className="flex flex-col">
-                  <Link href="/categories" className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-1.5 h-1.5 rounded-full transition-colors ${!selectedCategory ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
-                      <span className={`font-bold transition-colors ${!selectedCategory ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>All Categories</span>
-                    </div>
-                    <span className="text-gray-400 font-bold">({validProducts.length})</span>
-                  </Link>
-                </li>
-                {dynamicCategories.map((cat, idx) => (
-                  <li key={idx} className="flex flex-col">
-                    <Link href={`/categories?category=${encodeURIComponent(cat.name)}`} className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-1.5 h-1.5 rounded-full transition-colors ${selectedCategory === cat.name ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
-                        <span className={`font-bold transition-colors ${selectedCategory === cat.name ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>{cat.name}</span>
-                      </div>
-                      <span className="text-gray-400 font-bold">({cat.count})</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* 3. Brands Filter */}
+            {/* 2. Brands Filter (Moved to Top) */}
             <div className="bg-gray-50 border border-gray-100 p-6 rounded-xl">
               <h2 className="text-2xl font-extrabold text-[#091522] mb-4 pb-4 border-b border-gray-100">Brands</h2>
               <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                 
                 {/* All Brands Option */}
-                <Link href={selectedCategory ? `/categories?category=${encodeURIComponent(selectedCategory)}` : '/categories'} className="flex items-center justify-between cursor-pointer group">
+                <Link href={selectedCategory ? `/brands?category=${encodeURIComponent(selectedCategory)}` : '/brands'} className="flex items-center justify-between cursor-pointer group">
                   <div className="flex items-center gap-3">
                     <div className="relative flex items-center justify-center w-5 h-5 rounded border border-gray-300 bg-white group-hover:border-red-700 transition-colors">
                       <div className={`w-3 h-3 bg-red-600 rounded-sm transition-transform ${!selectedBrand ? 'scale-100' : 'scale-0 group-hover:scale-50'}`}></div>
@@ -223,8 +196,8 @@ export default async function CategoriesPage({
                 {dynamicBrands.map((brand, idx) => {
                   const isSelected = selectedBrand === brand.name;
                   const href = isSelected 
-                    ? (selectedCategory ? `/categories?category=${encodeURIComponent(selectedCategory)}` : '/categories')
-                    : `/categories?brand=${encodeURIComponent(brand.name)}${selectedCategory ? `&category=${encodeURIComponent(selectedCategory)}` : ''}`;
+                    ? (selectedCategory ? `/brands?category=${encodeURIComponent(selectedCategory)}` : '/brands')
+                    : `/brands?brand=${encodeURIComponent(brand.name)}${selectedCategory ? `&category=${encodeURIComponent(selectedCategory)}` : ''}`;
                     
                   return (
                     <Link key={idx} href={href} className="flex items-center justify-between cursor-pointer group">
@@ -239,6 +212,33 @@ export default async function CategoriesPage({
                   );
                 })}
               </div>
+            </div>
+
+            {/* 3. Product Categories (Moved to Bottom) */}
+            <div className="bg-white">
+              <h2 className="text-2xl font-extrabold text-[#091522] mb-4 pb-4 border-b border-gray-100">Product Categories</h2>
+              <ul className="flex flex-col text-[14px]">
+                <li className="flex flex-col">
+                  <Link href="/brands" className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-1.5 h-1.5 rounded-full transition-colors ${!selectedCategory ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
+                      <span className={`font-bold transition-colors ${!selectedCategory ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>All Categories</span>
+                    </div>
+                    <span className="text-gray-400 font-bold">({validProducts.length})</span>
+                  </Link>
+                </li>
+                {dynamicCategories.map((cat, idx) => (
+                  <li key={idx} className="flex flex-col">
+                    <Link href={`/brands?category=${encodeURIComponent(cat.name)}${selectedBrand ? `&brand=${encodeURIComponent(selectedBrand)}` : ''}`} className="flex justify-between items-center py-2.5 border-b border-gray-50 group cursor-pointer">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-1.5 h-1.5 rounded-full transition-colors ${selectedCategory === cat.name ? 'bg-red-700' : 'bg-[#091522] group-hover:bg-red-700'}`}></div>
+                        <span className={`font-bold transition-colors ${selectedCategory === cat.name ? 'text-red-700' : 'text-[#091522] group-hover:text-red-700'}`}>{cat.name}</span>
+                      </div>
+                      <span className="text-gray-400 font-bold">({cat.count})</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
           </div>

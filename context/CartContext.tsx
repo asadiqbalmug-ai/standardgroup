@@ -103,8 +103,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         {notification.product && (
           <div className="bg-[#091522] border border-[#1a2d40] shadow-2xl rounded-lg p-4 pr-10 flex flex-col gap-3 relative w-[320px]">
             <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0" />
-              <span className="text-yellow-400 font-bold text-sm">Added to your cart</span>
+              <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0" />
+              <span className="text-red-600 font-bold text-sm">Added to your cart</span>
             </div>
             
             <div className="flex gap-3 items-center">
@@ -118,7 +118,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
               </div>
             </div>
 
-            <Link href="/cart" onClick={() => setNotification(prev => ({ ...prev, visible: false }))} className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 text-[#091522] text-xs font-bold py-2 rounded text-center transition-colors">
+            <Link href="/cart" onClick={() => setNotification(prev => ({ ...prev, visible: false }))} className="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded text-center transition-colors">
               View Cart & Checkout
             </Link>
 

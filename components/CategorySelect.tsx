@@ -2,28 +2,28 @@
 
 import { useState } from "react";
 
-export default function BrandSelect({ 
+export default function CategorySelect({ 
   defaultValue = "", 
-  brands = [] 
+  categories = [] 
 }: { 
   defaultValue?: string,
-  brands?: { id?: string, name: string }[] 
+  categories?: { id?: string, name: string }[] 
 }) {
-  // If the defaultValue is not empty and is not present in the brands list, it's custom
-  const isCustomDefault = defaultValue && !brands.find(b => b.name === defaultValue);
+  const isCustomDefault = defaultValue && !categories.find(c => c.name === defaultValue);
   const [isCustom, setIsCustom] = useState(!!isCustomDefault);
 
   return (
     <div className="space-y-2">
       <select 
-        name={isCustom ? "" : "brand"} // If custom is selected, this select won't submit 'brand', the input will.
+        name={isCustom ? "" : "category"} 
         defaultValue={isCustom ? "other" : defaultValue}
         onChange={(e) => setIsCustom(e.target.value === "other")}
         className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium bg-white"
+        required={!isCustom}
       >
-        <option value="">Select a brand...</option>
-        {brands.map(b => (
-          <option key={b.id || b.name} value={b.name}>{b.name}</option>
+        <option value="">Select a category...</option>
+        {categories.map(c => (
+          <option key={c.id || c.name} value={c.name}>{c.name}</option>
         ))}
         <option value="other">Other (Manual Entry)</option>
       </select>
@@ -31,10 +31,10 @@ export default function BrandSelect({
       {isCustom && (
         <input 
           type="text" 
-          name="brand" 
+          name="category" 
           defaultValue={isCustomDefault ? defaultValue : ""}
-          placeholder="Enter brand name..." 
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:ring-red-700 focus:border-red-700 text-sm font-medium"
+          placeholder="Enter category name..." 
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium"
           required
         />
       )}

@@ -12,30 +12,30 @@ export default async function TestimonialsManager() {
 
   return (
     <div className="max-w-6xl">
-      <h1 className="text-3xl font-extrabold text-[#091522] mb-2">Manage Testimonials</h1>
+      <h1 className="text-3xl font-extrabold text-[#111] mb-2">Manage Testimonials</h1>
       <p className="text-gray-500 mb-8">Add client reviews to display on the homepage.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Add Form */}
         <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm sticky top-24">
-            <h2 className="text-lg font-bold text-[#091522] mb-4 flex items-center gap-2">
-              <Plus className="w-5 h-5 text-yellow-500" />
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] sticky top-24">
+            <h2 className="text-lg font-bold text-[#111] mb-4 flex items-center gap-2">
+              <Plus className="w-5 h-5 text-[#bf5e42]" />
               Add Testimonial
             </h2>
             <form action={addTestimonial} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Author Name</label>
-                <input required type="text" name="author_name" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" placeholder="e.g. John Doe" />
+                <input required type="text" name="author_name" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium" placeholder="e.g. John Doe" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Company (Optional)</label>
-                <input type="text" name="company_name" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" placeholder="e.g. Acme Corp" />
+                <input type="text" name="company_name" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium" placeholder="e.g. Acme Corp" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Rating</label>
-                <select required name="rating" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium">
+                <select required name="rating" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium">
                   <option value="5">5 Stars</option>
                   <option value="4">4 Stars</option>
                   <option value="3">3 Stars</option>
@@ -45,10 +45,10 @@ export default async function TestimonialsManager() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Review Content</label>
-                <textarea required name="content" rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium resize-none" placeholder="Write the review here..."></textarea>
+                <textarea required name="content" rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium resize-none" placeholder="Write the review here..."></textarea>
               </div>
               
-              <button type="submit" className="w-full bg-[#091522] hover:bg-gray-800 text-white font-bold py-2.5 rounded-md transition-colors mt-2 text-sm">
+              <button type="submit" className="w-full bg-[#1b1b1b] hover:bg-black text-white font-bold py-2.5 rounded-lg transition-colors mt-2 text-sm">
                 Save Testimonial
               </button>
             </form>
@@ -57,7 +57,7 @@ export default async function TestimonialsManager() {
 
         {/* Data Table */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -79,11 +79,11 @@ export default async function TestimonialsManager() {
                   {testimonials?.map((t) => (
                     <tr key={t.id} className="hover:bg-gray-50 transition-colors group">
                       <td className="px-6 py-4">
-                        <div className="text-sm font-bold text-[#091522]">{t.author_name}</div>
+                        <div className="text-sm font-bold text-[#111]">{t.author_name}</div>
                         <div className="text-xs font-medium text-gray-500">{t.company_name || "-"}</div>
                         <div className="flex items-center gap-0.5 mt-1">
                           {[...Array(t.rating)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                            <Star key={i} className="w-3 h-3 text-[#bf5e42] fill-current" />
                           ))}
                         </div>
                       </td>
@@ -109,7 +109,7 @@ export default async function TestimonialsManager() {
                           'use server'
                           await deleteTestimonial(t.id)
                         }}>
-                          <button type="submit" className="text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-md transition-colors" title="Delete">
+                          <button type="submit" className="text-[#bf5e42] hover:text-[#b55239] hover:bg-[#bf5e42]/10 p-2 rounded-lg transition-colors" title="Delete">
                             <Trash2 className="w-5 h-5" />
                           </button>
                         </form>

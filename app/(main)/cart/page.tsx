@@ -47,7 +47,7 @@ export default function CartPage() {
           </div>
           <h1 className="text-2xl font-extrabold text-[#091522] mb-3">Your cart is empty</h1>
           <p className="text-gray-500 mb-8">Looks like you haven't added any products to your inquiry yet.</p>
-          <Link href="/categories" className="bg-[#f6c000] hover:bg-yellow-500 text-[#091522] font-bold py-3 px-8 rounded-md transition-colors w-full inline-block">
+          <Link href="/categories" className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-md transition-colors w-full inline-block">
             Start Browsing
           </Link>
         </div>
@@ -83,7 +83,7 @@ export default function CartPage() {
                         <img src={item.image_url} alt={item.name} className="w-full h-full object-contain p-2 mix-blend-multiply" />
                       </div>
                       <div className="flex flex-col">
-                        <Link href={`/product/${item.id}`} className="font-bold text-[#091522] hover:text-yellow-500 transition-colors text-sm md:text-base leading-tight mb-1">
+                        <Link href={`/product/${item.id}`} className="font-bold text-[#091522] hover:text-red-700 transition-colors text-sm md:text-base leading-tight mb-1">
                           {item.name}
                         </Link>
                         <span className="text-xs text-gray-500 md:hidden">{item.price}</span>
@@ -133,7 +133,7 @@ export default function CartPage() {
             </div>
             
             <div className="flex justify-between items-center px-2">
-              <Link href="/categories" className="text-[#091522] font-bold text-sm hover:text-yellow-500 transition-colors flex items-center gap-2">
+              <Link href="/categories" className="text-[#091522] font-bold text-sm hover:text-red-700 transition-colors flex items-center gap-2">
                 &larr; Continue Shopping
               </Link>
               <button 

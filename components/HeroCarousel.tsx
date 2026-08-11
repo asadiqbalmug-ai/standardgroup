@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileText, Truck, ShieldCheck, HeadphonesIcon } from "lucide-react";
 
 type Slide = {
   id: number;
@@ -22,78 +22,90 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
   }, [slides.length]);
 
   return (
-    <section className="relative w-full bg-[#091522] flex flex-col justify-center overflow-hidden pt-10 pb-20 md:pt-14 md:pb-28">
+    <section className="relative w-full bg-[#f5f0e6] flex flex-col justify-center overflow-hidden min-h-[750px] pt-[140px] pb-20">
       {/* Background Images Carousel */}
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 w-full h-full mix-blend-darken transition-opacity duration-1000 ease-in-out ${
             index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
           <div 
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[10000ms] ease-linear bg-gray-900"
+            className="absolute inset-0 w-full h-full bg-[position:right_bottom] bg-[length:auto_75%] md:bg-[length:auto_85%] lg:bg-[length:auto_92%] bg-no-repeat transition-transform duration-[10000ms] ease-linear"
             style={{ 
               backgroundImage: `url('${slide.image_url}')`,
-              transform: index === currentSlide ? "scale(1.05)" : "scale(1)"
+              transform: index === currentSlide ? "scale(1.01)" : "scale(1)"
             }}
           />
         </div>
       ))}
-      
-      {/* A dark gradient overlay to make text pop over the images */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#091522] via-[#091522]/80 to-transparent z-20 pointer-events-none" />
 
       {/* Main Content */}
-      <div className="relative z-30 w-full max-w-[1400px] mx-auto px-4 md:px-12 flex flex-col h-full">
-        <div className="max-w-4xl flex flex-col items-start gap-4 md:gap-5">
+      <div className="relative z-30 w-full max-w-[1400px] mx-auto px-4 md:px-12 flex flex-col h-full justify-center">
+        <div className="max-w-[650px] flex flex-col items-start gap-5">
           
+          {/* Top Tagline */}
+          <span className="text-red-600 font-extrabold tracking-widest text-xs uppercase">
+            Quality You Can Build On
+          </span>
+
           {/* Headline */}
-          <h1 className="text-3xl md:text-5xl lg:text-[56px] font-extrabold text-white leading-[1.1] tracking-tight">
-            Everything Your Project Needs — <span className="text-yellow-400">In One Place.</span>
+          <h1 className="text-5xl md:text-6xl lg:text-[68px] font-extrabold text-[#091522] leading-[1.05] tracking-tight">
+            Everything Your <br/>Project Needs — <br/>
+            <span className="text-red-600">In One Place.</span>
           </h1>
 
           {/* Description */}
-          <p className="text-gray-300 text-sm md:text-base max-w-2xl leading-relaxed mt-1">
-            Cement, Steel, Tiles, Sanitary Ware, Waterproofing, Gypsum, Paints, Plumbing & more. Serving contractors and distributors across UAE since 2003. National & international delivery available.
+          <p className="text-gray-600 text-[15px] md:text-[17px] font-medium max-w-[500px] leading-relaxed mt-2">
+            Cement, Steel, Tiles, Sanitary Ware, Waterproofing, Gypsum, Paints, Plumbing & more. Trusted by contractors and builders across UAE.
           </p>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
             <Link 
-              href="/#products" 
-              className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-colors w-full sm:w-auto rounded-sm"
+              href="/categories" 
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-colors w-full sm:w-auto rounded-sm text-sm tracking-wide shadow-md"
             >
               BROWSE ALL PRODUCTS
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
             <Link 
               href="/contact" 
-              className="bg-transparent border border-gray-400 hover:border-white hover:bg-white/5 text-white font-bold py-3.5 px-8 transition-colors w-full sm:w-auto text-center uppercase tracking-wider text-sm rounded-sm"
+              className="bg-white hover:bg-gray-50 border border-gray-200 text-[#091522] font-bold py-3.5 px-8 flex items-center justify-center gap-2 transition-colors w-full sm:w-auto uppercase tracking-wide text-sm rounded-sm shadow-sm"
             >
+              <FileText className="w-4 h-4 text-gray-500" />
               Request Price List
             </Link>
           </div>
-        </div>
 
-        {/* Bottom Stats */}
-        <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-wrap gap-8 md:gap-16">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">20+</span>
-            <span className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider">Years in UAE</span>
+          {/* Trust Badges */}
+          <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-8">
+            <div className="flex items-center gap-3">
+              <Truck className="w-6 h-6 text-red-600 stroke-[1.5]" />
+              <div className="flex flex-col">
+                <span className="text-[#091522] font-extrabold text-[13px]">Fast Delivery</span>
+                <span className="text-gray-500 font-medium text-[11px]">Across UAE</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="w-6 h-6 text-red-600 stroke-[1.5]" />
+              <div className="flex flex-col">
+                <span className="text-[#091522] font-extrabold text-[13px]">Trusted Quality</span>
+                <span className="text-gray-500 font-medium text-[11px]">100% Genuine Products</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <HeadphonesIcon className="w-6 h-6 text-red-600 stroke-[1.5]" />
+              <div className="flex flex-col">
+                <span className="text-[#091522] font-extrabold text-[13px]">Expert Support</span>
+                <span className="text-gray-500 font-medium text-[11px]">We're Here to Help</span>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">31+</span>
-            <span className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider">Global Brands</span>
-          </div>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">500+</span>
-            <span className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider">Products</span>
-          </div>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">2</span>
-            <span className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider">Locations</span>
-          </div>
+
         </div>
       </div>
 
@@ -106,8 +118,8 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
               onClick={() => setCurrentSlide(index)}
               className={`transition-all duration-300 rounded-full ${
                 index === currentSlide 
-                  ? "w-8 h-2 bg-yellow-400" 
-                  : "w-2 h-2 bg-white/50 hover:bg-white/80"
+                  ? "w-8 h-2 bg-red-600" 
+                  : "w-2 h-2 bg-[#091522]/20 hover:bg-[#091522]/40"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

@@ -40,7 +40,7 @@ export default function ProductActionBox({ product }: { product: any }) {
         {/* Add to Cart Button */}
         <button 
           onClick={handleAddToCart}
-          className="bg-[#f6c000] hover:bg-yellow-500 text-[#091522] font-extrabold px-8 h-[42px] flex items-center justify-center gap-2 transition-colors rounded-sm shadow-sm"
+          className="bg-red-600 hover:bg-red-700 text-white font-extrabold px-8 h-[42px] flex items-center justify-center gap-2 transition-colors rounded-sm shadow-sm"
         >
           <ShoppingCart className="w-5 h-5" />
           Add to cart

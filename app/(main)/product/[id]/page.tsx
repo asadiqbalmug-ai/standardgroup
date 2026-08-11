@@ -32,9 +32,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         
         {/* Breadcrumb */}
         <div className="flex flex-wrap items-center gap-1 text-[11px] font-extrabold text-[#091522] mb-8 uppercase tracking-tight">
-          <Link href="/" className="hover:text-yellow-500 flex items-center"><Home className="w-3.5 h-3.5 mr-1" /> Products</Link>
+          <Link href="/" className="hover:text-red-700 flex items-center"><Home className="w-3.5 h-3.5 mr-1" /> Products</Link>
           <ChevronRight className="w-3.5 h-3.5 mx-0.5" />
-          <Link href={`/categories?category=${encodeURIComponent(product.category)}`} className="hover:text-yellow-500">{product.category}</Link>
+          <Link href={`/categories?category=${encodeURIComponent(product.category)}`} className="hover:text-red-700">{product.category}</Link>
           <ChevronRight className="w-3.5 h-3.5 mx-0.5" />
           <span className="text-gray-500">{product.name}</span>
         </div>
@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <span className="text-[26px] font-extrabold text-[#091522] tracking-tight">
                 {formatPrice(product.price)}
               </span>
-              <span className="bg-[#091522] text-[#f6c000] text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="bg-[#091522] text-[#dc2626] text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
                 ( VAT EXL. )
               </span>
             </div>

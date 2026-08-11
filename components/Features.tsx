@@ -1,48 +1,61 @@
-import { Truck, ShieldCheck, PackageOpen, Clock } from "lucide-react";
+import { Truck, ShieldCheck, Award, RefreshCw } from "lucide-react";
 
 export default function Features() {
   const features = [
     {
-      icon: Truck,
-      title: "Fast Delivery",
-      subtitle: "Abu Dhabi same-day"
-    },
-    {
       icon: ShieldCheck,
-      title: "Certified Products",
-      subtitle: "UAE & international std."
+      title: "20+",
+      subtitle: "Years of Trust",
+      desc: "Serving the UAE since 2003"
     },
     {
-      icon: PackageOpen,
-      title: "Order on Demand",
-      subtitle: "Bulk & custom quantities"
+      icon: Award,
+      title: "500+",
+      subtitle: "Quality Products",
+      desc: "Wide range of building materials"
     },
     {
-      icon: Clock,
-      title: "Support Team",
-      subtitle: "Respond within hours"
+      icon: RefreshCw,
+      title: "1000+",
+      subtitle: "Happy Clients",
+      desc: "Builders, contractors & distributors"
+    },
+    {
+      icon: Truck,
+      title: "Nationwide\nDelivery",
+      subtitle: "Fast & reliable delivery\nacross UAE",
+      desc: ""
     }
   ];
 
   return (
-    <section className="w-full relative z-40 px-4 md:px-12 -mt-12 md:-mt-16 pb-8 md:pb-12 bg-transparent pointer-events-none">
-      <div className="max-w-[1400px] mx-auto bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 pointer-events-auto">
-        <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
+    <section className="w-full px-4 md:px-12 pt-0 pb-8 md:pb-12 bg-white">
+      <div className="max-w-[1400px] mx-auto bg-[#091522] rounded-2xl md:rounded-3xl shadow-xl overflow-hidden">
+        <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#1a2d40]">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
               <div 
                 key={idx} 
-                className="flex-1 flex items-center justify-center md:justify-start gap-5 py-6 md:py-8 px-6 md:px-10"
+                className="flex-1 flex items-start gap-4 py-8 px-6 md:px-8"
               >
-                {/* Icon Circle */}
-                <div className="w-14 h-14 rounded-full bg-[#fef3c7] flex items-center justify-center shrink-0">
-                  <Icon className="w-6 h-6 text-[#091522]" strokeWidth={1.5} />
+                {/* Icon */}
+                <div className="flex items-center justify-center shrink-0 mt-1">
+                  <Icon className="w-8 h-8 text-red-600" strokeWidth={1.5} />
                 </div>
-                {/* Text */}
-                <div className="flex flex-col gap-0.5">
-                  <span className="font-bold text-[#091522] text-base">{feature.title}</span>
-                  <span className="text-gray-500 text-[13px]">{feature.subtitle}</span>
+                {/* Text Content */}
+                <div className="flex flex-col gap-1">
+                  <span className="font-extrabold text-white text-2xl leading-none whitespace-pre-line">
+                    {feature.title}
+                  </span>
+                  <span className="font-bold text-gray-300 text-sm md:text-[15px] whitespace-pre-line mt-1">
+                    {feature.subtitle}
+                  </span>
+                  {feature.desc && (
+                    <span className="text-gray-500 text-xs md:text-[13px] leading-relaxed mt-1 pr-4">
+                      {feature.desc}
+                    </span>
+                  )}
                 </div>
               </div>
             );

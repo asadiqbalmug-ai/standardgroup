@@ -14,31 +14,31 @@ export default async function HeroManager() {
 
   return (
     <div className="max-w-6xl">
-      <h1 className="text-3xl font-extrabold text-[#091522] mb-2">Manage Hero Images</h1>
+      <h1 className="text-3xl font-extrabold text-[#111] mb-2">Manage Hero Images</h1>
       <p className="text-gray-500 mb-8">Control the large banner images that slide at the top of your homepage.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Add Form */}
         <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm sticky top-24">
-            <h2 className="text-lg font-bold text-[#091522] mb-4 flex items-center gap-2">
-              <Plus className="w-5 h-5 text-yellow-500" />
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] sticky top-24">
+            <h2 className="text-lg font-bold text-[#111] mb-4 flex items-center gap-2">
+              <Plus className="w-5 h-5 text-[#bf5e42]" />
               Add Banner Image
             </h2>
             <form action={addHeroImage} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Internal Title (Optional)</label>
-                <input type="text" name="title" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" placeholder="e.g. Summer Sale Banner" />
+                <input type="text" name="title" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium" placeholder="e.g. Summer Sale Banner" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Image File</label>
-                <input required type="file" accept="image/*" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium bg-white" />
+                <input required type="file" accept="image/*" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#bf5e42] focus:border-[#bf5e42] text-sm font-medium bg-white" />
                 <p className="text-[10px] text-gray-400 mt-1">Select a wide, high-resolution image from your computer.</p>
               </div>
               <div className="flex items-center gap-2 pt-2">
-                <input type="checkbox" id="is_active" name="is_active" value="true" defaultChecked className="w-4 h-4 text-[#091522] focus:ring-[#091522] border-gray-300 rounded" />
-                <label htmlFor="is_active" className="text-sm font-bold text-gray-700">Set Active Immediately</label>
+                <input type="checkbox" id="is_active" name="is_active" value="true" defaultChecked className="w-4 h-4 text-[#bf5e42] focus:ring-[#bf5e42] border-gray-300 rounded" />
+                <label htmlFor="is_active" className="text-sm font-bold text-[#111]">Set Active Immediately</label>
               </div>
               
               <SubmitBannerButton />
@@ -48,7 +48,7 @@ export default async function HeroManager() {
 
         {/* Data Table */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -78,7 +78,7 @@ export default async function HeroManager() {
                               <ImageIcon className="w-5 h-5 text-gray-400" />
                             )}
                           </div>
-                          <span className="text-sm font-bold text-[#091522]">{img.title || "Untitled Banner"}</span>
+                          <span className="text-sm font-bold text-[#111]">{img.title || "Untitled Banner"}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

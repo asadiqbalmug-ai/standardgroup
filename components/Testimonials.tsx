@@ -16,14 +16,14 @@ export default async function Testimonials() {
   }
 
   return (
-    <section className="w-full bg-[#091522] pt-8 pb-12 md:pt-10 md:pb-16 px-4 md:px-12 border-t border-[#1a2d40]">
+    <section className="w-full bg-[#fcfbf9] pt-12 pb-16 md:pt-16 md:pb-20 px-4 md:px-12 border-t border-gray-100">
       <div className="max-w-[1400px] mx-auto flex flex-col items-center relative">
         {/* Header */}
-        <div className="text-center mb-2">
-          <span className="text-yellow-400 font-bold text-sm tracking-widest uppercase mb-3 block">
+        <div className="text-center mb-10">
+          <span className="text-[#bf5e42] font-bold tracking-widest text-[10px] uppercase mb-4 block">
             Client Reviews
           </span>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+          <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-[#111] leading-[1.15] tracking-tight">
             What Contractors Say About Us
           </h2>
         </div>

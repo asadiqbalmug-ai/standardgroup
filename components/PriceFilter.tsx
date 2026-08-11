@@ -33,7 +33,7 @@ export default function PriceFilter() {
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
             placeholder="Min" 
-            className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-yellow-500" 
+            className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-red-700" 
           />
         </div>
         <span className="text-gray-400 font-bold">-</span>
@@ -44,13 +44,13 @@ export default function PriceFilter() {
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
             placeholder="Max" 
-            className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-yellow-500" 
+            className="w-full bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md pl-10 pr-3 py-2 outline-none focus:border-red-700" 
           />
         </div>
       </div>
       <button 
         onClick={handleApply}
-        className="w-full mt-4 bg-[#091522] hover:bg-yellow-500 hover:text-black text-white font-bold py-2 rounded-md transition-colors text-xs uppercase tracking-wider"
+        className="w-full mt-4 bg-[#091522] hover:bg-red-700 hover:text-white text-white font-bold py-2 rounded-md transition-colors text-xs uppercase tracking-wider"
       >
         Apply Filter
       </button>

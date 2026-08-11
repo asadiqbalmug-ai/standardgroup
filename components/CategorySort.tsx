@@ -17,7 +17,7 @@ export default function CategorySort() {
     <select 
       value={searchParams.get("sort") || "featured"}
       onChange={handleSortChange}
-      className="bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md px-3 py-2 outline-none focus:border-yellow-500 w-full sm:w-auto"
+      className="bg-white border border-gray-300 text-sm font-bold text-[#091522] rounded-md px-3 py-2 outline-none focus:border-red-700 w-full sm:w-auto"
     >
       <option value="featured">Featured</option>
       <option value="price_asc">Price: Low to High</option>

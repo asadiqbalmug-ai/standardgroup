@@ -15,7 +15,6 @@ export default function MainLayout({
       <div className="w-full flex-1 flex flex-col overflow-x-hidden relative">
         <TopBanner />
         <Navbar />
-        <CategoriesNav />
         
         {/* Main Content Rendered Here */}
         {children}

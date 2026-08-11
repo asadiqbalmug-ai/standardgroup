@@ -1,85 +1,93 @@
 "use client";
 
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
-const brands = [
-  { name: "Ariston", logo: "/brands/ariston.png", customClass: "scale-[1.6]" },
-  { name: "Asmaco", logo: "/brands/asmaco.png" },
-  { name: "Awazel", logo: "/brands/awazel.jpg" },
-  { name: "Bildco", logo: "/brands/bildco.jpg", customClass: "scale-150" },
-  { name: "Bosch", logo: "/brands/bosch.png", customClass: "scale-[1.6]" },
-  { name: "Bucomac", logo: "/brands/Bucomac.webp" },
-  { name: "Dubai Polymer", logo: "/brands/DubaiPolymer.png" },
-  { name: "Ducab", logo: "/brands/ducab.png", customClass: "scale-[1.3]" },
-  { name: "Everhot", logo: "/brands/everhot.png" },
-  { name: "Fosroc", logo: "/brands/fosroc.png" },
-  { name: "GCEM", logo: "/brands/gcem.png", customClass: "scale-150" },
-  { name: "GSI", logo: "/brands/gsi.jpg" }
-];
-
-export default function BrandCarousel() {
+export default function BrandCarousel({ brands = [] }: { brands?: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: "left" | "right") => {
+  const scrollRight = () => {
     if (scrollRef.current) {
-      const scrollAmount = 250; 
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
-      });
+      scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
     }
   };
 
   return (
-    <section className="w-full bg-white pt-6 pb-12 md:pt-8 md:pb-16 border-t border-gray-100">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 relative">
+    <section className="w-full bg-white pt-4 md:pt-6 pb-24 md:pb-28">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-12">
         
-        {/* Section Title */}
-        <h2 className="text-2xl md:text-3xl font-extrabold text-[#091522] mb-8">
-          Main Brands
-        </h2>
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-[#bf846b] font-extrabold tracking-widest text-[11px] uppercase">
+              Top Brands
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#091522] tracking-tight">
+              We Partner With The Best
+            </h2>
+          </div>
+          
+          <Link href="/brands" className="flex items-center text-[#c25141] hover:text-red-700 font-bold text-[13px] uppercase tracking-widest transition-colors group">
+            View All Brands
+            <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
+          </Link>
+        </div>
 
-        <div className="relative">
-          {/* Navigation Arrows */}
+        <div className="relative group mt-6">
+          {/* Left Arrow */}
           <button 
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-200 shadow-md hover:shadow-lg rounded-full flex items-center justify-center text-gray-700 hover:text-black transition-all -ml-6 hidden md:flex"
+            onClick={scrollLeft}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
             aria-label="Scroll left"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
+
+          {/* Right Arrow */}
           <button 
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-200 shadow-md hover:shadow-lg rounded-full flex items-center justify-center text-gray-700 hover:text-black transition-all -mr-6 hidden md:flex"
+            onClick={scrollRight}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
             aria-label="Scroll right"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Scrollable Container */}
-          <div 
-            ref={scrollRef}
-            className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4 pt-2 px-1 -mx-1"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {brands.map((brand, idx) => (
-              <Link 
-                key={idx}
-                href={`/categories?brand=${encodeURIComponent(brand.name)}`}
-                className="snap-start shrink-0 w-[200px] md:w-[240px] h-[120px] bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-center hover:border-[#091522] transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer overflow-hidden relative"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={brand.logo} 
-                  alt={brand.name}
-                  className={`max-w-full max-h-[80px] object-contain mix-blend-multiply ${brand.customClass || ''}`}
-                />
-              </Link>
-            ))}
+          {/* Unified Border Container */}
+          <div className="w-full border border-gray-200 rounded-2xl overflow-hidden bg-white">
+            <div 
+              ref={scrollRef}
+              className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {brands.map((brand, idx) => (
+                <Link 
+                  key={brand.id || idx}
+                  href={`/brands?brand=${encodeURIComponent(brand.name)}`}
+                  className={`snap-start shrink-0 w-[180px] md:w-[220px] h-[120px] bg-white p-6 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer relative ${idx !== brands.length - 1 ? 'border-r border-gray-200' : ''}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {brand.logo_url ? (
+                    <img 
+                      src={brand.logo_url} 
+                      alt={brand.name}
+                      className="max-w-full max-h-full object-contain mix-blend-multiply"
+                    />
+                  ) : (
+                    <span className="text-xl font-bold text-gray-400">{brand.name}</span>
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
+
       </div>
     </section>
   );

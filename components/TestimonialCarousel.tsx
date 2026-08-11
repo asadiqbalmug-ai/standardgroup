@@ -27,19 +27,19 @@ export default function TestimonialCarousel({ reviews }: { reviews: Review[] }) 
   const showArrows = reviews.length > 3;
 
   return (
-    <div className="w-full relative mt-6">
+    <div className="w-full relative mt-2 md:mt-6 px-0 md:px-4">
       {showArrows && (
         <>
           <button 
             onClick={() => scroll("left")}
-            className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-[#112133] border border-white/10 shadow-lg hover:shadow-xl rounded-full hidden md:flex items-center justify-center text-gray-300 hover:text-yellow-400 transition-all"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
             aria-label="Scroll left"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button 
             onClick={() => scroll("right")}
-            className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-[#112133] border border-white/10 shadow-lg hover:shadow-xl rounded-full hidden md:flex items-center justify-center text-gray-300 hover:text-yellow-400 transition-all"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.1)] rounded-full flex items-center justify-center text-gray-500 hover:text-black transition-all md:opacity-0 group-hover:opacity-100 hidden md:flex"
             aria-label="Scroll right"
           >
             <ChevronRight className="w-6 h-6" />
@@ -49,28 +49,28 @@ export default function TestimonialCarousel({ reviews }: { reviews: Review[] }) 
 
       <div 
         ref={scrollRef}
-        className={`w-full ${showArrows ? 'flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4' : 'grid grid-cols-1 md:grid-cols-3 gap-6 justify-center'}`}
+        className={`w-full ${showArrows ? 'flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-6 pt-4' : 'grid grid-cols-1 md:grid-cols-3 gap-6 justify-center pb-6 pt-4'}`}
         style={showArrows ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
       >
         {reviews.map((review) => (
           <div 
             key={review.id} 
-            className={`${showArrows ? 'snap-start shrink-0 w-[85vw] sm:w-[350px] md:w-[400px]' : ''} bg-[#112133] border border-white/5 rounded-lg p-6 flex flex-col justify-between gap-5 shadow-lg hover:-translate-y-1 transition-transform duration-300`}
+            className={`${showArrows ? 'snap-start shrink-0 w-[85vw] sm:w-[350px] md:w-[380px]' : ''} bg-[#1b1b1b] border border-white/5 rounded-xl p-8 flex flex-col justify-between gap-6 shadow-sm hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:border-white/10 transition-all duration-300 relative`}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-5">
               <div className="flex items-center gap-1">
                 {[...Array(review.rating || 5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  <Star key={i} className="w-[14px] h-[14px] text-[#eeb424] fill-current" />
                 ))}
               </div>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-gray-300 text-[14px] leading-relaxed italic">
                 "{review.content}"
               </p>
             </div>
 
-            <div className="flex flex-col gap-1 pt-5 border-t border-white/10 mt-auto">
-              <span className="text-white font-bold text-[15px]">{review.author_name}</span>
-              <span className="text-yellow-400 text-xs">{review.company_name}</span>
+            <div className="flex flex-col gap-1.5 pt-6 border-t border-white/10 mt-auto">
+              <span className="text-white font-bold text-[14px]">{review.author_name}</span>
+              <span className="text-gray-400 font-medium text-[11px] uppercase tracking-wider">{review.company_name}</span>
             </div>
           </div>
         ))}

@@ -15,7 +15,27 @@ export default async function Home() {
     .select("*")
     .order("created_at", { ascending: false });
 
+  const { data: brands } = await supabase
+    .from("brands")
+    .select("*")
+    .order("name", { ascending: true });
+
+  const { data: topCategories } = await supabase
+    .from("categories")
+    .select("*")
+    .eq("is_top_category", true)
+    .order("name", { ascending: true });
+
+  const { data: videos } = await supabase
+    .from("homepage_video")
+    .select("video_url")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
   const validProducts = products || [];
+  const validBrands = brands || [];
+  const validCategories = topCategories || [];
+  const videoUrl = videos && videos.length > 0 ? videos[0].video_url : null;
 
   const categoryCounts = validProducts.reduce((acc, product) => {
     acc[product.category] = (acc[product.category] || 0) + 1;
@@ -24,25 +44,30 @@ export default async function Home() {
 
   return (
     <main className="w-full flex-1 flex flex-col overflow-x-hidden">
-      {/* Section 1 - Hero & Features */}
+      {/* Section 1 - Hero */}
       <Hero />
-      <Features />
 
       {/* Section 2 - Categories */}
       <div id="products">
-        <CategoryCarousel categoryCounts={categoryCounts} />
+        <CategoryCarousel categoryCounts={categoryCounts} categories={validCategories} />
       </div>
-      <ProductSection title="Browse" showViewAll={true} products={validProducts.slice(0, 10)} />
+      
+      {/* Popular Picks (formerly Browse) */}
+      <ProductSection 
+        sectionTag="Trending Products" 
+        title="Popular Picks" 
+        showViewAll={true} 
+        products={validProducts.slice(0, 10)} 
+      />
 
       {/* Section 3 - Brands */}
-      <BrandCarousel />
-      <ProductSection title="Best Sellers" products={(products || []).slice(0, 10)} />
+      <BrandCarousel brands={validBrands} />
+
+      {/* Why Choose Us & CTA */}
+      <WhyChooseUs videoUrl={videoUrl} />
 
       {/* Section 4 - Client Reviews */}
       <Testimonials />
-
-      {/* Why Choose Us & CTA */}
-      <WhyChooseUs />
     </main>
   );
 }

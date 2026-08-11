@@ -5,6 +5,7 @@ import { X, Edit2 } from "lucide-react";
 import { updateProduct } from "@/app/admin/dashboard/products/actions";
 import { useFormStatus } from "react-dom";
 import BrandSelect from "@/components/BrandSelect";
+import CategorySelect from "@/components/CategorySelect";
 
 function UpdateButton() {
   const { pending } = useFormStatus();
@@ -19,7 +20,7 @@ function UpdateButton() {
   );
 }
 
-export default function EditProductModal({ product }: { product: any }) {
+export default function EditProductModal({ product, brands = [], categories = [] }: { product: any, brands?: any[], categories?: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -51,57 +52,29 @@ export default function EditProductModal({ product }: { product: any }) {
                 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">Product Name</label>
-                  <input required type="text" name="name" defaultValue={product.name} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" />
+                  <input required type="text" name="name" defaultValue={product.name} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 focus:border-red-700 text-sm font-medium" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">Brand</label>
-                  <BrandSelect defaultValue={product.brand} />
+                  <BrandSelect defaultValue={product.brand} brands={brands} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-gray-700 mb-1">Price</label>
-                    <input required type="text" name="price" defaultValue={product.price} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" />
+                    <input required type="text" name="price" defaultValue={product.price} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 focus:border-red-700 text-sm font-medium" />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-700 mb-1">SKU</label>
-                    <input required type="text" name="sku" defaultValue={product.sku} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium" />
+                    <input required type="text" name="sku" defaultValue={product.sku} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 focus:border-red-700 text-sm font-medium" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">Category</label>
-                  <select required name="category" defaultValue={product.category} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium">
-                    <option value="Bitumen & Chemicals">Bitumen & Chemicals</option>
-                    <option value="Cables & Wires">Cables & Wires</option>
-                    <option value="Cement Board">Cement Board</option>
-                    <option value="Fittings">Fittings</option>
-                    <option value="Glues & Adhesives">Glues & Adhesives</option>
-                    <option value="Gypsum Board">Gypsum Board</option>
-                    <option value="Gypsum Powder">Gypsum Powder</option>
-                    <option value="Insulation">Insulation</option>
-                    <optgroup label="Main Building Materials">
-                      <option value="Main Building Materials">Main Building Materials (General)</option>
-                      <option value="Cement">Cement</option>
-                      <option value="Concrete Blocks">Concrete Blocks</option>
-                      <option value="Reinforcement Steel">Reinforcement Steel</option>
-                    </optgroup>
-                    <option value="Manhole Covers">Manhole Covers</option>
-                    <option value="Paints">Paints</option>
-                    <option value="Plastering">Plastering</option>
-                    <option value="Power Tools">Power Tools</option>
-                    <option value="Safety">Safety</option>
-                    <option value="Sand">Sand</option>
-                    <option value="Sealants">Sealants</option>
-                    <option value="Tools & Hardware">Tools & Hardware</option>
-                    <option value="Water Heaters">Water Heaters</option>
-                    <option value="Water Tanks">Water Tanks</option>
-                    <option value="Waterproofing">Waterproofing</option>
-                    <option value="Wooden Products">Wooden Products</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <CategorySelect defaultValue={product.category} categories={categories} />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">Description</label>
-                  <textarea name="description" rows={4} defaultValue={product.description} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 text-sm font-medium"></textarea>
+                  <textarea name="description" rows={4} defaultValue={product.description} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 focus:border-red-700 text-sm font-medium"></textarea>
                 </div>
                 
                 <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg mt-4">
@@ -109,11 +82,11 @@ export default function EditProductModal({ product }: { product: any }) {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-xs font-bold text-gray-700 mb-1">Replace Primary Image</label>
-                      <input type="file" accept="image/*" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 text-sm bg-white" />
+                      <input type="file" accept="image/*" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 text-sm bg-white" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-700 mb-1">Replace Gallery Images</label>
-                      <input type="file" multiple accept="image/*" name="additional_images" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 text-sm bg-white" />
+                      <input type="file" multiple accept="image/*" name="additional_images" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-red-700 text-sm bg-white" />
                     </div>
                   </div>
                 </div>

@@ -1,145 +1,108 @@
-"use client";
-
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { ChevronRight, ShieldCheck, PackageSearch, RotateCcw, Truck } from "lucide-react";
 
-const categories = [
-  {
-    name: "Main Building Materials",
-    image: "/categories/MainBuildingMaterials.png",
-    link: `/categories?category=${encodeURIComponent("Main Building Materials")}`
-  },
-  {
-    name: "Wooden Products",
-    image: "/categories/WoodenProducts.png",
-    link: `/categories?category=${encodeURIComponent("Wooden Products")}`
-  },
-  {
-    name: "Bitumen & Chemicals",
-    image: "/categories/Bitumen.png",
-    link: `/categories?category=${encodeURIComponent("Bitumen & Chemicals")}`
-  },
-  {
-    name: "Cement Board",
-    image: "/categories/CementBoards.png",
-    link: `/categories?category=${encodeURIComponent("Cement Board")}`
-  },
-  {
-    name: "Gypsum Board",
-    image: "/categories/GypsumBoards.png",
-    link: `/categories?category=${encodeURIComponent("Gypsum Board")}`
-  },
-  {
-    name: "Glues & Adhesives",
-    image: "/categories/GlueandAdhesive.png",
-    link: `/categories?category=${encodeURIComponent("Glues & Adhesives")}`
-  },
-  {
-    name: "Water Tanks",
-    image: "/categories/WaterTanks.jpg",
-    link: `/categories?category=${encodeURIComponent("Water Tanks")}`
-  },
-  {
-    name: "All Categories",
-    link: "/categories"
-  }
-];
-
-export default function CategoryCarousel({ categoryCounts = {} }: { categoryCounts?: Record<string, number> }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 300; // approx width of one card + gap
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
-      });
-    }
-  };
-
+export default function CategoryCarousel({ 
+  categoryCounts = {}, 
+  categories = [] 
+}: { 
+  categoryCounts?: Record<string, number>, 
+  categories?: any[] 
+}) {
   return (
-    <section className="w-full bg-white pt-2 pb-12 md:pt-4 md:pb-16">
+    <section className="w-full bg-white pt-20 pb-12">
       <div className="max-w-[1400px] mx-auto px-4 md:px-12">
         
-        {/* Heading */}
-        <div className="mb-6 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#091522] uppercase tracking-tight">Products</h2>
-          <div className="w-12 h-1 bg-yellow-400 mt-3 rounded-full"></div>
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-red-600 font-extrabold tracking-widest text-[11px] uppercase">
+              Shop by Category
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#091522] tracking-tight">
+              Top Categories
+            </h2>
+          </div>
+          
+          <Link href="/categories" className="flex items-center text-red-600 hover:text-red-700 font-bold text-xs uppercase tracking-widest transition-colors group">
+            View All Categories
+            <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" strokeWidth={3} />
+          </Link>
         </div>
 
-        <div className="relative">
-        
-        {/* Navigation Arrows */}
-        <button 
-          onClick={() => scroll("left")}
-          className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-200 shadow-md hover:shadow-lg rounded-full flex items-center justify-center text-gray-700 hover:text-black transition-all -ml-2 md:ml-0 hidden md:flex"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button 
-          onClick={() => scroll("right")}
-          className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white border border-gray-200 shadow-md hover:shadow-lg rounded-full flex items-center justify-center text-gray-700 hover:text-black transition-all -mr-2 md:mr-0 hidden md:flex"
-          aria-label="Scroll right"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
-        {/* Scrollable Container */}
-        <div 
-          ref={scrollRef}
-          className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
+        {/* Categories Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-5">
           {categories.map((category, idx) => (
             <Link 
-              key={idx}
-              href={category.link}
-              className={`snap-start shrink-0 w-[180px] md:w-[200px] h-[220px] bg-white border border-gray-200 rounded-lg p-4 md:p-5 flex flex-col group hover:border-[#091522] hover:shadow-lg transition-all cursor-pointer ${category.image ? 'justify-between' : 'justify-center items-center'}`}
+              key={category.id || idx}
+              href={`/categories?category=${encodeURIComponent(category.name)}`}
+              className="bg-white border border-gray-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] rounded-2xl p-6 flex flex-col items-center justify-center group hover:border-gray-200 transition-all cursor-pointer aspect-square"
             >
-              {category.image ? (
-                <>
-                  {/* Image Circle Area */}
-                  <div className="w-[100px] h-[100px] md:w-[110px] md:h-[110px] mx-auto rounded-full overflow-hidden mb-4 flex items-center justify-center border-2 border-gray-50 group-hover:scale-105 transition-transform duration-300">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      src={category.image} 
-                      alt={category.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+              {/* Image Area */}
+              <div className="w-full flex-1 mb-4 flex items-center justify-center relative transition-transform duration-300 group-hover:-translate-y-1">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {category.image_url ? (
+                  <img 
+                    src={category.image_url} 
+                    alt={category.name}
+                    className="max-h-[100px] w-auto object-contain mix-blend-multiply"
+                  />
+                ) : (
+                  <span className="text-gray-400 font-bold text-3xl opacity-20">{category.name.substring(0, 2).toUpperCase()}</span>
+                )}
+              </div>
 
-                  {/* Text & Arrow */}
-                  <div className="flex items-end justify-between w-full mt-auto">
-                    <div className="flex flex-col">
-                      <span className="font-bold text-[#091522] text-xs md:text-sm leading-tight max-w-[90%] group-hover:text-yellow-500 transition-colors">
-                        {category.name}
-                      </span>
-                      {categoryCounts[category.name] !== undefined && (
-                        <span className="text-gray-400 text-[10px] font-bold mt-1">
-                          {categoryCounts[category.name]} products
-                        </span>
-                      )}
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-gray-300 transform group-hover:translate-x-1 group-hover:text-[#091522] transition-all shrink-0" />
-                  </div>
-                </>
-              ) : (
-                <div className="flex flex-col items-center justify-center gap-3 mt-4 text-center">
-                  <span className="font-bold text-[#091522] text-sm md:text-base group-hover:text-yellow-500 transition-colors">
-                    View All Categories
-                  </span>
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#091522] transition-colors mt-2">
-                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors" />
-                  </div>
-                </div>
-              )}
+              {/* Text */}
+              <span className="font-bold text-[#091522] text-[14px] text-center leading-tight group-hover:text-red-600 transition-colors">
+                {category.name}
+              </span>
             </Link>
           ))}
         </div>
-      </div>
+
+        {/* Dark Stats Banner */}
+        <div className="mt-16 w-full bg-[#1b1b1b] rounded-[2rem] py-12 px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0 shadow-2xl">
+          
+          {/* Stat 1 */}
+          <div className="flex items-start gap-4 lg:pr-8">
+            <ShieldCheck className="w-8 h-8 text-[#d3aa70] shrink-0 stroke-[1.5]" />
+            <div className="flex flex-col">
+              <span className="text-white text-2xl font-extrabold leading-none mb-1">20+</span>
+              <span className="text-gray-200 font-bold text-[13px] mb-2">Years of Trust</span>
+              <span className="text-gray-400 text-[11px] leading-relaxed font-medium pr-4">Serving the UAE since 2003</span>
+            </div>
+          </div>
+
+          {/* Stat 2 */}
+          <div className="flex items-start gap-4 lg:px-8 lg:border-l lg:border-gray-700/60">
+            <PackageSearch className="w-8 h-8 text-[#d3aa70] shrink-0 stroke-[1.5]" />
+            <div className="flex flex-col">
+              <span className="text-white text-2xl font-extrabold leading-none mb-1">500+</span>
+              <span className="text-gray-200 font-bold text-[13px] mb-2">Quality Products</span>
+              <span className="text-gray-400 text-[11px] leading-relaxed font-medium pr-4">Wide range of building materials</span>
+            </div>
+          </div>
+
+          {/* Stat 3 */}
+          <div className="flex items-start gap-4 lg:px-8 lg:border-l lg:border-gray-700/60">
+            <RotateCcw className="w-8 h-8 text-[#d3aa70] shrink-0 stroke-[1.5]" />
+            <div className="flex flex-col">
+              <span className="text-white text-2xl font-extrabold leading-none mb-1">1000+</span>
+              <span className="text-gray-200 font-bold text-[13px] mb-2">Happy Clients</span>
+              <span className="text-gray-400 text-[11px] leading-relaxed font-medium pr-4">Builders, contractors & distributors</span>
+            </div>
+          </div>
+
+          {/* Stat 4 */}
+          <div className="flex items-start gap-4 lg:pl-8 lg:border-l lg:border-gray-700/60">
+            <Truck className="w-8 h-8 text-[#d3aa70] shrink-0 stroke-[1.5]" />
+            <div className="flex flex-col">
+              <span className="text-white text-2xl font-extrabold leading-none mb-1">Nationwide<br/>Delivery</span>
+              <span className="text-gray-400 text-[11px] leading-relaxed font-medium pr-4 mt-2">Fast & reliable delivery across UAE</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );

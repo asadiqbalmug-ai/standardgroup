@@ -24,6 +24,18 @@ html {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-montserrat);
+
+  /* Custom Red Palette based on #962a23 */
+  --color-red-50: #faeaea;
+  --color-red-100: #f2c7c5;
+  --color-red-200: #e89c97;
+  --color-red-300: #db6c65;
+  --color-red-400: #cc423b;
+  --color-red-500: #b5322b;
+  --color-red-600: #962a23;
+  --color-red-700: #7d201a;
+  --color-red-800: #661a15;
+  --color-red-900: #541713;
 }
 
 body {
